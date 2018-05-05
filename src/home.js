@@ -5,6 +5,8 @@ import {
   View,
   TouchableOpacity
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import Icons from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
 import { increase, decrease, reset } from './actions';
 
@@ -24,6 +26,8 @@ class Home extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <Icon name="ios-home" size={30} color="red" />
+        <Icons name="rocket" size={30} color="#900" />
         <Text style={styles.counter}>{this.props.counter.count}</Text>
         <TouchableOpacity style={styles.reset} onPress={() => this._onPressReset()}>
           <Text>归零</Text>
