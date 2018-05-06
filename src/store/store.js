@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import createLogger from 'redux-logger';
-import rootReducer from './reducers';
+import rootReducer from '../reducers';
 
 const configureStore = preloadedState => {
     return createStore(
@@ -12,6 +12,6 @@ const configureStore = preloadedState => {
     );
 }
 
-const store = configureStore();
+// const store = configureStore();
 
-export default store;
+export default configureStore;

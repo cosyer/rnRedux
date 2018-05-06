@@ -1,5 +1,4 @@
-import { combineReducers } from 'redux';
-import { INCREASE, DECREASE, RESET } from './actionsTypes';
+import { INCREASE, DECREASE, RESET } from '../constants/actionsTypes';
 
 // 原始默认state
 const defaultState = {
@@ -20,6 +19,4 @@ function counter(state = defaultState, action) {
     }
 }
 
-export default combineReducers({
-    counter
-});
+export default counter

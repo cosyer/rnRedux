@@ -8,11 +8,11 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icons from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
-import { increase, decrease, reset } from './actions';
+import { increase, decrease, reset } from '../actions/actions';
 
 class Home extends Component {
   _onPressReset() {
-    this.props.dispatch(reset());
+    this.props.dispatch(reset()); // this.props.dispatch({type:"reset"});
   }
 
   _onPressInc() {

@@ -1,4 +1,7 @@
-import React, { Component } from 'react';
+import {
+    StackNavigator,
+    TabNavigator
+} from 'react-navigation';
 import {
     StyleSheet,
     View,
@@ -7,70 +10,17 @@ import {
     Image,
     Platform
 } from 'react-native';
-import {
-    StackNavigator,
-    TabNavigator
-} from 'react-navigation';
-import SplashScreen from 'react-native-splash-screen'
-import { Provider } from 'react-redux';
-import Icon from 'react-native-vector-icons/Ionicons';
 import Home from './views/home';
 import Mine from './views/mine';
 import Login from './views/login'
-import store from './store/store';
-
-class HomePage extends Component {
-    constructor(props) {
-        super(props);
-        // 不提示 warning
-        console.disableYellowBox = true;
-    }
-
-    componentDidMount() {
-        SplashScreen.hide();
-    }
-
-    static navigationOptions = {
-        title: '首页',//设置标题内容
-        header: {
-            backTitle: '',//返回按钮标题内容（默认为上一级标题内容）
-        }
-    }
-
-    render() {
-        const { navigate } = this.props.navigation;
-        return (
-            <Provider store={store}>
-                <View style={styles.container}>
-                    <Text style={{ padding: 10 }}>Hello, Navigation!!!</Text>
-                    <Button
-                        onPress={() => navigate('Login', { user: 'Sybil' })}
-                        title="点击跳转" />
-                </View>
-            </Provider>
-        );
-    }
-}
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff'
-    },
-    icon: {
-        height: 22,
-        width: 22,
-        resizeMode: 'contain'
-    }
-});
+// import store from './store/store';
 
 const MainScreenNavigator = TabNavigator({
     Home: {
-        screen: HomePage,
+        screen: Home,
         navigationOptions: ({ navigation, screenProps }) => ({
             tabBarLabel: '首页', // 设置标签栏的title。推荐这个方式。
             tabBarIcon: (({ tintColor, focused }) => {
-                console.log("1212", focused)
                 return (
                     <Icon name="ios-home" size={30} color="#5AA9FA" />
                 )
@@ -107,20 +57,20 @@ const MainScreenNavigator = TabNavigator({
         }
     });
 
-MainScreenNavigator.navigationOptions = ({ navigation }) => {
-    let title;
-    let focusedRouteName =
-        navigation.state.routes[navigation.state.index].routeName;
-    if (focusedRouteName === 'Home') {
-        // of course in this case it's the same, but do whatever you want here
-        title = '列表首页';
-    } else if (focusedRouteName === 'Mine') {
-        title = '我的设置';
-    }
-    return {
-        title,
-    };
-}
+// MainScreenNavigator.navigationOptions = ({ navigation }) => {
+//     let title;
+//     let focusedRouteName =
+//         navigation.state.routes[navigation.state.index].routeName;
+//     if (focusedRouteName === 'Home') {
+//         // of course in this case it's the same, but do whatever you want here
+//         title = '列表首页';
+//     } else if (focusedRouteName === 'Mine') {
+//         title = '我的设置';
+//     }
+//     return {
+//         title,
+//     };
+// }
 
 const SimpleApp = StackNavigator({
     Home: {
