@@ -3,41 +3,74 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity
+  Image,
+  FlatList,
+  TouchableOpacity,
+  Dimensions
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icons from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
-import { increase, decrease, reset } from '../actions/actions';
+import { increase, decrease, reset ,refresh} from '../actions/actions';
 
-class Home extends Component {
-  _onPressReset() {
-    this.props.dispatch(reset()); // this.props.dispatch({type:"reset"});
+const width=Dimensions.get("window").width
+@connect(state => ({
+  list: state.list
+}))
+export default class Home extends Component {
+  constructor(props){
+    super(props)
+    this.state={
+      up:false
+    }
   }
 
-  _onPressInc() {
-    this.props.dispatch(increase());
+  componentDidMount(){
+    this.props.dispatch(refresh());
   }
 
-  _onPressDec() {
-    this.props.dispatch(decrease());
+  _renderItem=({item,index})=>{
+    return (
+      <TouchableOpacity onPress={this.props.onSelect}>
+        <View style={styles.item}>
+          <Text style={styles.title}>{item.title}</Text>
+          <Image
+            source={{uri:item.thumb}}
+            style={styles.thumb}/>
+          <View style={styles.itemFooter}>
+            <View style={styles.handleBox}>
+              <Icon
+                name={this.state.up ? "ios-heart" : "ios-heart-outline"}
+                size={28}
+                style={[styles.up,this.state.up ? null : styles.down]}
+                onPress={this._up}
+              />
+              <Text style={styles.handleText} onPress={this._up}>喜欢</Text>
+            </View>
+            <View style={styles.handleBox}>
+              <Icon
+                name="ios-chatboxes-outline"
+                size={28}
+                style={styles.commentIcon}
+              />
+              <Text style={styles.handleText}>评论</Text>
+            </View>
+          </View>
+        </View>
+      </TouchableOpacity>)
   }
-
+  
   render() {
+    console.log("111111111",this.props.list)
+
     return (
       <View style={styles.container}>
-        <Icon name="ios-home" size={30} color="red" />
-        <Icons name="rocket" size={30} color="#900" />
-        <Text style={styles.counter}>{this.props.counter.count}</Text>
-        <TouchableOpacity style={styles.reset} onPress={() => this._onPressReset()}>
-          <Text>归零</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.start} onPress={() => this._onPressInc()}>
-          <Text>加1</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.stop} onPress={() => this._onPressDec()}>
-          <Text>减1</Text>
-        </TouchableOpacity>
+        <FlatList
+          data={this.props.list.dataList}
+          extraData={this.props.list}
+          keyExtractor={(item, index) => item._id}
+          renderItem={this._renderItem}
+        />
       </View>
     );
   }
@@ -46,30 +79,70 @@ class Home extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'column'
+    backgroundColor:"#F5FCFF"
   },
-  counter: {
-    fontSize: 50,
-    marginBottom: 70
+  row:{
+    width:width,
+    marginBottom:10,
+    backgroundColor:"#FFF"
   },
-  reset: {
-    margin: 10,
-    backgroundColor: 'yellow'
+  thumb : {
+    width: width,
+    height: width * 0.5,
+    resizeMode:'cover'
   },
-  start: {
-    margin: 10,
-    backgroundColor: 'yellow'
+  title : {
+    padding:10,
+    fontSize:18,
+    color:'#333'
   },
-  stop: {
-    margin: 10,
-    backgroundColor: 'yellow'
+  itemFooter : {
+    flexDirection:'row',
+    justifyContent:'space-between',
+    backgroundColor:'#eee'
+  },
+  handleBox : {
+    padding:10,
+    flexDirection:'row',
+    width:width / 2 - 0.5,
+    justifyContent:'center',
+    backgroundColor:'#fff'
+  },
+  play : {
+    position:'absolute',
+    bottom:14,
+    right:14,
+    width:46,
+    height:46,
+    paddingTop:9,
+    paddingLeft:18,
+    backgroundColor:'transparent',
+    borderColor:'#fff',
+    borderWidth:1,
+    borderRadius:23,
+    color:'#ed7b66'
+  },
+  handleText : {
+    paddingLeft:12,
+    fontSize:18,
+    color:'#333'
+  },
+  up:{
+    fontSize:22,
+    color:'#ed7b66'
+  },
+  dowm:{
+    fontSize:22,
+    color:'#333'
+  },
+  commentIcon:{
+    fontSize:22,
+    color:'#333'
   }
 })
 
-const mapStateToProps = state => ({
-  counter: state.counter
-})
+// const mapStateToProps = state => ({
+//   list: state.list
+// })
 
-export default connect(mapStateToProps)(Home);
+// export default connect(mapStateToProps)(Home);
