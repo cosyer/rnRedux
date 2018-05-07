@@ -12,6 +12,6 @@ const configureStore = preloadedState => {
     );
 }
 
-// const store = configureStore();
+const store = configureStore(); // 这里直接调用会报错
 
 export default configureStore;

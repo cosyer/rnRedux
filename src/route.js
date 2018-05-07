@@ -1,20 +1,16 @@
+import React, { Component } from 'react';
 import {
     StackNavigator,
     TabNavigator
 } from 'react-navigation';
-import {
-    StyleSheet,
-    View,
-    Text,
-    Button,
-    Image,
-    Platform
-} from 'react-native';
+import { Platform } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+
 import Home from './views/home';
 import Mine from './views/mine';
 import Login from './views/login'
-// import store from './store/store';
 
+// tab
 const MainScreenNavigator = TabNavigator({
     Home: {
         screen: Home,
@@ -57,21 +53,22 @@ const MainScreenNavigator = TabNavigator({
         }
     });
 
-// MainScreenNavigator.navigationOptions = ({ navigation }) => {
-//     let title;
-//     let focusedRouteName =
-//         navigation.state.routes[navigation.state.index].routeName;
-//     if (focusedRouteName === 'Home') {
-//         // of course in this case it's the same, but do whatever you want here
-//         title = '列表首页';
-//     } else if (focusedRouteName === 'Mine') {
-//         title = '我的设置';
-//     }
-//     return {
-//         title,
-//     };
-// }
+MainScreenNavigator.navigationOptions = ({ navigation }) => {
+    let title;
+    let focusedRouteName =
+        navigation.state.routes[navigation.state.index].routeName;
+    if (focusedRouteName === 'Home') {
+        // of course in this case it's the same, but do whatever you want here
+        title = '列表首页';
+    } else if (focusedRouteName === 'Mine') {
+        title = '我的设置';
+    }
+    return {
+        title,
+    };
+}
 
+// 路由
 const SimpleApp = StackNavigator({
     Home: {
         screen: MainScreenNavigator,
@@ -94,8 +91,9 @@ const SimpleApp = StackNavigator({
             headerTitleStyle: {
                 fontSize: 18,
                 color: 'white',
-                flex: 1,
-                textAlign: 'center',
+                alignSelf: 'center'
+                // flex: 1,
+                // textAlign: 'center',
             }
         }
     }
