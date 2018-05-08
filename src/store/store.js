@@ -8,7 +8,7 @@ const configureStore = preloadedState => {
         rootReducer,
         preloadedState,
         compose(
-            applyMiddleware(createLogger,thunkMiddleware)
+            applyMiddleware(thunkMiddleware, createLogger) // 日志放在最后
         )
     );
 }
