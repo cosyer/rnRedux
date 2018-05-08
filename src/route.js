@@ -3,12 +3,23 @@ import {
     StackNavigator,
     TabNavigator
 } from 'react-navigation';
-import { Platform } from 'react-native';
+import { Platform, AsyncStorage } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import Home from './views/home';
 import Mine from './views/mine';
 import Login from './views/login'
+
+let loginState = false
+// 判断用户是否登陆过
+AsyncStorage.getItem('user')
+    .then((data) => {
+        var user
+        if (data) {
+            loginState = true
+        }
+    })
+
 
 // tab
 const MainScreenNavigator = TabNavigator({
@@ -95,7 +106,8 @@ const SimpleApp = StackNavigator({
                 // flex: 1,
                 // textAlign: 'center',
             }
-        }
+        },
+        initialRouteName: loginState ? "Home" : "Login"
     }
 );
 

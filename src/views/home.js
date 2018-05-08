@@ -6,13 +6,15 @@ import {
   Image,
   FlatList,
   TouchableOpacity,
-  Dimensions
+  Dimensions,
+  AsyncStorage
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icons from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
 import { increase, decrease, reset, refresh, stateChange } from '../actions/actions';
 import Loading from '../component/default-loading'
+import Login from './login'
 
 const width = Dimensions.get("window").width
 @connect(state => ({
@@ -21,9 +23,6 @@ const width = Dimensions.get("window").width
 export default class Home extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      up: false
-    }
   }
 
   componentDidMount() {
@@ -76,11 +75,10 @@ export default class Home extends Component {
   }
 
   render() {
-    console.log("111111111", this.props.list)
     let list = this.props.list
     return (
       <View style={styles.container}>
-        {list.loading?<Loading />:<FlatList
+        {list.loading ? <Loading /> : <FlatList
           data={list.dataList}
           extraData={list}
           onRefresh={this._pullDownRefresh}
