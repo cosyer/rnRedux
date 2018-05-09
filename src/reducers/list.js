@@ -1,4 +1,4 @@
-import { FETCH_START, FETCH_SUCCESS, FETCH_FAILURE, STATE_CHANGE, FACTOR_CHANGE } from '../constants/actionsTypes';
+import { LIST_FETCH_START, LIST_FETCH_SUCCESS, LIST_FETCH_FAILURE, LIST_STATE_CHANGE, LIST_FACTOR_CHANGE } from '../constants/actionsTypes';
 // 原始默认state
 const defaultState = {
     dataList: [],
@@ -9,20 +9,20 @@ const defaultState = {
 
 function list(state = defaultState, action) {
     switch (action.type) {
-        case FETCH_START:
+        case LIST_FETCH_START:
             state.loading = true
             return Object.assign({}, state);
-        case FETCH_SUCCESS:
+        case LIST_FETCH_SUCCESS:
             return Object.assign({}, state, {
-                dataList: [...state.dataList, ...action.data.data],
-                totalCount: action.data.total,
+                dataList: [...state.dataList, ...action.payload.data],
+                totalCount: action.payload.data.total,
                 loading: false
             });
-        case STATE_CHANGE:
-            state.dataList[action.index].up = !state.dataList[action.index].up
+        case LIST_STATE_CHANGE:
+            state.dataList[action.payload].up = !state.dataList[action.payload].up
             return Object.assign({}, state);
-        case FACTOR_CHANGE:
-            state[action.name] = action.value
+        case LIST_FACTOR_CHANGE:
+            state[action.payload.name] = action.payload.value
             return Object.assign({}, state);
         default:
             return state;

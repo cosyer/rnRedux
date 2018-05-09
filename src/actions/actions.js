@@ -1,4 +1,4 @@
-import { INCREASE, DECREASE, RESET, FETCH_START, FETCH_SUCCESS, FETCH_FAILURE, STATE_CHANGE } from '../constants/actionsTypes';
+import { INCREASE, DECREASE, RESET, LIST_FETCH_START, LIST_FETCH_SUCCESS, LIST_FETCH_FAILURE, LIST_STATE_CHANGE } from '../constants/actionsTypes';
 import Request from '../utils/request'
 import Mock from 'mockjs'
 
@@ -8,13 +8,13 @@ const decrease = () => ({ type: DECREASE });
 const reset = () => ({ type: RESET });
 
 // 接口状态
-const fetchStart = () => ({ type: FETCH_START });
-const fetchSuccess = (data) => ({ type: FETCH_SUCCESS, data });
-const fetchFailure = () => ({ type: FETCH_FAILURE });
+const fetchStart = () => ({ type: LIST_FETCH_START });
+const fetchSuccess = (data) => ({ type: LIST_FETCH_SUCCESS, payload: data });
+const fetchFailure = () => ({ type: LIST_FETCH_FAILURE });
 
-const stateChange = (index) => ({ type: STATE_CHANGE, index });
+const stateChange = (index) => ({ type: LIST_STATE_CHANGE, payload: index });
 
-const factorChange = (obj) => ({ type: STATE_CHANGE, ...obj });
+const factorChange = (obj) => ({ type: LIST_STATE_CHANGE, payload: obj });
 
 // 列表
 function refresh() {

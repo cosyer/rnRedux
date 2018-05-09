@@ -1,10 +1,15 @@
+// 计时器
+
 export const INCREASE = 'INCREASE';
 export const DECREASE = 'DECREASE';
 export const RESET = 'RESET';
 
-export const FETCH_START = 'FETCH_START';
-export const FETCH_SUCCESS = 'FETCH_SUCCESS';
-export const FETCH_FAILURE = 'FETCH_FAILURE';
+// LIST
 
-export const STATE_CHANGE = 'STATE_CHANGE';
-export const FACTOR_CHANGE = 'FACTOR_CHANGE';
+export const LIST_FETCH_START = 'LIST_FETCH_START';
+export const LIST_FETCH_SUCCESS = 'LIST_FETCH_SUCCESS';
+export const LIST_FETCH_FAILURE = 'LIST_FETCH_FAILURE';
+export const LIST_STATE_CHANGE = 'LIST_STATE_CHANGE';
+export const LIST_FACTOR_CHANGE = 'LIST_FACTOR_CHANGE';
+
+// LOGIN
