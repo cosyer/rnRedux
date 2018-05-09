@@ -12,7 +12,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icons from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
-import { increase, decrease, reset, refresh, stateChange } from '../actions/actions';
+import { increase, decrease, reset, refresh, listStateChange } from '../actions';
 import Loading from '../component/default-loading'
 import Login from './login'
 
@@ -40,7 +40,7 @@ export default class Home extends Component {
 
   // 喜欢切换
   _up = (index) => {
-    this.props.dispatch(stateChange(index));
+    this.props.dispatch(listStateChange(index));
   }
 
   _renderItem = ({ item, index }) => {
