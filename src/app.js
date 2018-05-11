@@ -15,7 +15,7 @@ import {
 import SplashScreen from 'react-native-splash-screen'
 import { Provider, connect } from 'react-redux';
 
-import configureStore from './store/store';
+import configureStore from './store';
 import Router from './route';
 
 const store = configureStore()

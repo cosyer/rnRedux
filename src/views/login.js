@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
     Button,
     Image,
@@ -8,11 +8,13 @@ import {
     StyleSheet,
     Dimensions,
     Platform,
-    ToastAndroid
+    ToastAndroid,
 } from 'react-native';
 import { connect } from 'react-redux'
 import CountDown from '../component/count-down'
 import Toast from '../component/toast'
+import Loading from '../component/dialog-loading'
+import CModal from '../component/custom-modal'
 import Action from '../actions'
 const width = Dimensions.get("window").width
 const isAndroid = Platform.OS === 'android'
@@ -20,18 +22,18 @@ const isAndroid = Platform.OS === 'android'
 // let obj={a:1,b:2}
 // const {a}=obj
 
-const {loginCodeSendChange,loginParamsChange}=Action
+const { loginCodeSendChange, loginParamsChange, sendVerifyCode } = Action
 @connect(state => ({
     login: state.login
 }))
-export default class Login extends React.Component {
+export default class Login extends Component {
     static navigationOptions = {
         headerTitle: '快速登录'
     };
 
     // 发送验证码 多个dispatch多次渲染
     _sendCode = () => {
-        this.props.dispatch(loginCodeSendChange())
+        this.props.dispatch(sendVerifyCode())
     }
 
     // 倒计时结束
@@ -148,14 +150,15 @@ export default class Login extends React.Component {
                     style={styles.btn}
                     onPress={this._onLogin}
                 />
-                {/* <Toast
-                    visible={this.props.login.codeSend}
-                    position={50}
-                    shadow={false}
-                    animation={false}
-                    hideOnPress={true}
-                >This is a message</Toast> */}
-            </View>
+                {/*  <Toast
+                visible={this.props.login.codeSend}
+                position={50}
+                shadow={false}
+                animation={false}
+                hideOnPress={true}
+            >This is a message</Toast>  */}
+                <CModal modalVisible={true} title="确定" />
+            </View >
         );
     }
 }

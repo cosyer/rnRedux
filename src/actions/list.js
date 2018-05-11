@@ -24,7 +24,7 @@ const listFactorChange = (obj) => ({ type: LIST_STATE_CHANGE, payload: obj });
 function refresh() {
     return dispatch => {
         dispatch(listFetchStart())
-        return Request.get(Config.api.base + config.api.creations, {}, (data) => {
+        return Request.get(Config.api.base + Config.api.creations, {}, (data) => {
             console.log(Mock.mock(data))
             dispatch(listFetchSuccess(data && Mock.mock(data)));
         })
