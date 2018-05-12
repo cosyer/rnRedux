@@ -1,10 +1,11 @@
-import { LOGIN_CODE_SEND_CHANGE, LOGIN_PARAMS_CHANGE,LOGIN_TO_HOME } from '../constants/actionsTypes';
+import { LOGIN_CODE_SEND_CHANGE, LOGIN_PARAMS_CHANGE, LOGIN_TO_HOME } from '../constants/actionsTypes';
 // 原始默认state
 const defaultState = {
     codeSend: false, // 验证码发送状态
     phone: "",// 手机号
     verifyCode: "",// 验证码
-    loading:false, // 登录状态
+    loading: false, // 登录状态
+    modalVisible: false
 }
 
 function login(state = defaultState, action) {
@@ -16,7 +17,8 @@ function login(state = defaultState, action) {
             state[action.payload.name] = action.payload.value
             return Object.assign({}, state);
         case LOGIN_TO_HOME:
-             
+            state['modalVisible'] = true
+            return Object.assign({}, state);
         default:
             return state;
     }

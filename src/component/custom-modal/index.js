@@ -2,7 +2,7 @@
  * @Author: chenyu 
  * @Date: 2018-04-18 15:21:09 
  * @Last Modified by: chenyu
- * @Last Modified time: 2018-05-11 22:04:31
+ * @Last Modified time: 2018-05-12 09:04:43
  */
 
 // 'use strict'
@@ -27,7 +27,7 @@ export default class CustomModal extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            modalVisible: this.props.modalVisible, // 显示 组件自身状态
+            modalVisible: false, // 显示 组件自身状态 组件初始化 this.props.modalVisible
         }
     }
 
@@ -42,7 +42,7 @@ export default class CustomModal extends Component {
     }
 
     componentWillReceiveProps(props) {
-        console.log(props)
+        console.log("ggggggggg", props)
         this.setState({ modalVisible: props.modalVisible })
     }
 
