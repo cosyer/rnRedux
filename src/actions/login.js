@@ -1,4 +1,4 @@
-import { LOGIN_CODE_SEND_CHANGE, LOGIN_PARAMS_CHANGE,LOGIN_TO_HOME} from '../constants/actionsTypes';
+import { LOGIN_CODE_SEND_CHANGE, LOGIN_PARAMS_CHANGE, LOGIN_TO_HOME } from '../constants/actionsTypes';
 import Request from '../utils/request'
 import Config from '../utils/config'
 import Mock from 'mockjs'
@@ -14,21 +14,22 @@ function sendVerifyCode() {
         dispatch(loginCodeSendChange())
         return Request.get(Config.api.base + Config.api.verify, {}, (data) => {
             console.log(Mock.mock(data))
-            dispatch(loginParamsChange({name:"verifyCode",value:1234}))
+            dispatch(loginParamsChange({ name: "verifyCode", value: 1234 }))
         })
     }
 }
 
 function startLogin() {
     return dispatch => {
-        return Request.get(Config.api.base + Config.api.signup, {}, (data) => {
+        dispatch(loginParamsChange({ name: "loading", value: true }))
+        return Request.get(Config.api.base + Config.api.verify, {}, (data) => {
             console.log(Mock.mock(data))
-            dispatch(loginToHome())
+            dispatch(loginToHome({ name: "loading", value: false }))
         })
     }
 }
 
-export default{
+export default {
     loginCodeSendChange,
     loginParamsChange,
     sendVerifyCode,

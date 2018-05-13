@@ -22,7 +22,7 @@ const isAndroid = Platform.OS === 'android'
 // let obj={a:1,b:2}
 // const {a}=obj
 
-const { loginCodeSendChange, loginParamsChange, sendVerifyCode, loginToHome } = Action
+const { loginCodeSendChange, loginParamsChange, sendVerifyCode, startLogin } = Action
 @connect(state => ({
     login: state.login
 }))
@@ -86,7 +86,7 @@ export default class Login extends Component {
             });
             return
         }
-        this.props.dispatch(loginToHome())
+        this.props.dispatch(startLogin())
     }
 
     /**
@@ -158,7 +158,7 @@ export default class Login extends Component {
                 animation={false}
                 hideOnPress={true}
             >This is a message</Toast>  */}
-                <Loading visible={true} />
+                <Loading visible={this.props.login.loading} />
                 <CModal modalVisible={false} title="确定" onRightPress={() => this.props.dispatch(loginParamsChange({ name: "modalVisible", value: false }))} />
             </View >
         );

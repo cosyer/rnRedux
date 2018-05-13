@@ -2,7 +2,7 @@
  * @Author: chenyu 
  * @Date: 2018-04-18 15:21:09 
  * @Last Modified by: chenyu
- * @Last Modified time: 2018-05-12 09:04:43
+ * @Last Modified time: 2018-05-12 18:14:30
  */
 
 // 'use strict'
@@ -42,7 +42,6 @@ export default class CustomModal extends Component {
     }
 
     componentWillReceiveProps(props) {
-        console.log("ggggggggg", props)
         this.setState({ modalVisible: props.modalVisible })
     }
 
