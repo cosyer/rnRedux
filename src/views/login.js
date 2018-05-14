@@ -142,15 +142,14 @@ export default class Login extends Component {
                                 time={60}
                                 afterEnd={this._countingDone}
                             /> :
-                            <Button style={styles.countBtn} title="发送验证码" onPress={this._sendCode} />
+                            <Button style={styles.countBtn} textStyle={styles.countBtnText} onPress={this._sendCode}>发送验证码</Button>
                     }
 
                 </View>
                 <Button
-                    title="登录"
                     style={styles.btn}
                     onPress={this._onLogin}
-                />
+                >登录</Button>
                 {/*  <Toast
                 visible={this.props.login.codeSend}
                 position={50}
@@ -168,9 +167,10 @@ export default class Login extends Component {
 const styles = StyleSheet.create({
     inputField: {
         height: 40,
-        padding: 0, // android底边框
+        paddingTop: 10, // android底边框
         paddingLeft: 10,
         color: '#666',
+        lineHeight: 16,
         fontSize: 16,
         borderRadius: 4,
         backgroundColor: '#fff',
@@ -178,10 +178,11 @@ const styles = StyleSheet.create({
         borderColor: '#CCC'
     },
     verifyCodeInput: {
-        width: width - 120,
+        width: 200,
         height: 40,
         padding: 0, // android底边框
         paddingLeft: 10,
+        marginRight: 10,
         color: '#666',
         fontSize: 16,
         borderRadius: 4,
@@ -199,26 +200,24 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     countBtn: {
-        width: 110,
+        flex: 1,
         height: 40,
         paddingTop: 10,
         paddingBottom: 10,
-        backgroundColor: '#ee735c',
+        backgroundColor: '#5aa9fa',
+        borderRadius: 2
+    },
+    countBtnText: {
         color: '#fff',
-        borderColor: '#ee735c',
         textAlign: 'center',
         fontWeight: '600',
-        fontSize: 15,
-        borderRadius: 2
+        fontSize: 14,
     },
     btn: {
         marginTop: 10,
         padding: 10,
-        backgroundColor: 'transparent',
-        borderColor: '#EE735C',
-        borderWidth: 1,
-        borderRadius: 4,
-        color: '#ee735c'
+        backgroundColor: '#5aa9fa',
+        borderRadius: 2,
     }
 })
 

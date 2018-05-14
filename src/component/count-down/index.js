@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import {
-    Button,
     View
 } from 'react-native';
+import Button from '../button';
 
 export default class CountDown extends Component {
     // getInitialState() {
@@ -37,7 +37,7 @@ export default class CountDown extends Component {
 
     render() {
         return (
-            <Button style={this.props.style} title={this.props.text + '(' + this.state.iTime + ')'} onPress={() => { }} />
+            <Button style={this.props.style} onPress={() => { }} textStyle={{ color: '#fff', fontSize: 14 }}>{this.props.text + '(' + this.state.iTime + ')'}</Button>
         )
     }
 }

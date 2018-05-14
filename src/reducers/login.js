@@ -17,7 +17,7 @@ function login(state = defaultState, action) {
             state[action.payload.name] = action.payload.value
             return Object.assign({}, state);
         case LOGIN_TO_HOME:
-            state['modalVisible'] = true
+            state['loading'] = false
             return Object.assign({}, state);
         default:
             return state;

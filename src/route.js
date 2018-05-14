@@ -95,7 +95,7 @@ const SimpleApp = StackNavigator({
         navigationOptions: {
             headerStyle: {
                 backgroundColor: '#5AA9FA',
-                height: Platform.OS === 'ios' ? 64 : 44,
+                height: Platform.OS === 'ios' ? 44 : 44,
                 elevation: 0,
                 shadowOpacity: 0,
             },

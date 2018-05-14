@@ -24,7 +24,7 @@ function startLogin() {
         dispatch(loginParamsChange({ name: "loading", value: true }))
         return Request.get(Config.api.base + Config.api.verify, {}, (data) => {
             console.log(Mock.mock(data))
-            dispatch(loginToHome({ name: "loading", value: false }))
+            dispatch(loginToHome())
         })
     }
 }
