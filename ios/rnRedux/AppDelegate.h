@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-#import <UIKit/UIKit.h>
+#import <UIKit/UIKit.h>/Users/chenyu/treasure/rnRedux/ios/rnRedux/Images.xcassets
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

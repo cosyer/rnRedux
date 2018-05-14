@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {
-    Button,
     Image,
     View,
     Text,
@@ -15,6 +14,7 @@ import CountDown from '../component/count-down'
 import Toast from '../component/toast'
 import Loading from '../component/dialog-loading'
 import CModal from '../component/custom-modal'
+import Button from '../component/button'
 import Action from '../actions'
 const width = Dimensions.get("window").width
 const isAndroid = Platform.OS === 'android'
