@@ -86,7 +86,7 @@ export default class Login extends Component {
             });
             return
         }
-        this.props.dispatch(startLogin())
+        this.props.dispatch(startLogin(this))
     }
 
     /**
@@ -157,7 +157,7 @@ export default class Login extends Component {
                 animation={false}
                 hideOnPress={true}
             >This is a message</Toast>  */}
-                <Loading visible={this.props.login.loading} />
+                <Loading visible={this.props.login.loading} title="登录中..." />
                 <CModal modalVisible={false} title="确定" onRightPress={() => this.props.dispatch(loginParamsChange({ name: "modalVisible", value: false }))} />
             </View >
         );

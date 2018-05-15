@@ -19,12 +19,13 @@ function sendVerifyCode() {
     }
 }
 
-function startLogin() {
+function startLogin(that) {
     return dispatch => {
         dispatch(loginParamsChange({ name: "loading", value: true }))
         return Request.get(Config.api.base + Config.api.verify, {}, (data) => {
             console.log(Mock.mock(data))
             dispatch(loginToHome())
+            that.props.navigation.navigate("Home")
         })
     }
 }

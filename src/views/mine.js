@@ -14,12 +14,23 @@ import {
 
 export default class Mine extends Component {
 
-
     static navigationOptions = ({ navigation, screenProps }) => ({
         // 这里面的属性和App.js的navigationOptions是一样的。
         headerTitle: "我的账户",
-        gestureResponseDistance: { horizontal: 300 },
-
+        headerRight: <Text />,
+        headerStyle: {
+            backgroundColor: '#5AA9FA',
+            height: Platform.OS === 'ios' ? 44 : 44,
+            elevation: 0,
+            shadowOpacity: 0,
+        },
+        headerTitleStyle: {
+            fontSize: 18,
+            color: 'white',
+            alignSelf: 'center'
+            // flex: 1,
+            // textAlign: 'center',
+        }
     });
 
     componentDidMount() {

@@ -7,22 +7,42 @@ import {
   FlatList,
   TouchableOpacity,
   Dimensions,
-  AsyncStorage
+  AsyncStorage,
+  Platform
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icons from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
-import { increase, decrease, reset, refresh, listStateChange } from '../actions';
+import Actions from '../actions';
 import Loading from '../component/default-loading'
 import Login from './login'
 
 const width = Dimensions.get("window").width
+const { increase, decrease, reset, refresh, listStateChange } = Actions
+
 @connect(state => ({
   list: state.list
 }))
 export default class Home extends Component {
   constructor(props) {
     super(props)
+  }
+
+  static navigationOptions = {
+    headerRight: <Text />,
+    headerStyle: {
+      backgroundColor: '#5AA9FA',
+      height: Platform.OS === 'ios' ? 44 : 44,
+      elevation: 0,
+      shadowOpacity: 0,
+    },
+    headerTitleStyle: {
+      fontSize: 18,
+      color: 'white',
+      alignSelf: 'center'
+      // flex: 1,
+      // textAlign: 'center',
+    }
   }
 
   componentDidMount() {
