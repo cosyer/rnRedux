@@ -60,7 +60,7 @@ export default class Home extends Component {
 
   // 喜欢切换
   _up = (index) => {
-    this.props.dispatch(listStateChange(index));
+    this.props.dispatch(onLiked(index));
   }
 
   _renderItem = ({ item, index }) => {

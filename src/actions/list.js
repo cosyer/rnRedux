@@ -20,7 +20,7 @@ const listStateChange = (index) => ({ type: LIST_STATE_CHANGE, payload: index })
 
 const listFactorChange = (obj) => ({ type: LIST_STATE_CHANGE, payload: obj });
 
-// list获取列表
+// list获取列表 为什么要尾调 函数嵌套 俄罗斯套娃
 function refresh() {
     return dispatch => {
         dispatch(listFetchStart())
@@ -31,7 +31,17 @@ function refresh() {
     }
 }
 
-export default{
+// 点赞
+function onLiked(index) {
+    return dispatch => {
+        return Request.get(Config.api.base + Config.api.up, {}, (data) => {
+            console.log(Mock.mock(data))
+            dispatch(listStateChange(index))
+        })
+    }
+}
+
+export default {
     increase,
     decrease,
     reset,

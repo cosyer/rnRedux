@@ -8,6 +8,7 @@ import {
     Dimensions,
     Platform,
     ToastAndroid,
+    AsyncStorage
 } from 'react-native';
 import { connect } from 'react-redux'
 import CountDown from '../component/count-down'
@@ -86,7 +87,12 @@ export default class Login extends Component {
             });
             return
         }
-        this.props.dispatch(startLogin(this))
+        // 存储首页的key!!!
+        let that =this
+        AsyncStorage.setItem('Login',this.props.navigation.state.key)
+        .then(() => {
+            that.props.dispatch(startLogin(this))
+        })
     }
 
     /**
@@ -104,7 +110,7 @@ export default class Login extends Component {
     }
 
     render() {
-        console.log(this.props)
+        console.log("1111111111111111",this.props)
         return (
             <View style={{ backgroundColor: '#f9f9f9', flex: 1, padding: 10 }}>
                 <TextInput
