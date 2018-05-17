@@ -87,12 +87,7 @@ export default class Login extends Component {
             });
             return
         }
-        // 存储首页的key!!!
-        let that =this
-        AsyncStorage.setItem('Login',this.props.navigation.state.key)
-        .then(() => {
-            that.props.dispatch(startLogin(this))
-        })
+        this.props.dispatch(startLogin(this))
     }
 
     /**
@@ -110,7 +105,7 @@ export default class Login extends Component {
     }
 
     render() {
-        console.log("1111111111111111",this.props)
+        console.log("1111111111111111", this.props)
         return (
             <View style={{ backgroundColor: '#f9f9f9', flex: 1, padding: 10 }}>
                 <TextInput

@@ -18,7 +18,8 @@ import {
     Platform,
     TouchableOpacity
 } from 'react-native';
-import {NavigationActions} from 'react-navigation'
+import { NavigationActions } from 'react-navigation'
+import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icons from 'react-native-vector-icons/FontAwesome';
 import * as Progress from 'react-native-progress'; // 需要手动添加libraries
@@ -36,6 +37,9 @@ const headRightView = (
         />
     </TouchableOpacity>)
 
+@connect(state => ({
+    nav: state.nav
+}))
 export default class Mine extends Component {
 
     static navigationOptions = ({ navigation, screenProps }) => ({
@@ -68,21 +72,23 @@ export default class Mine extends Component {
     }
 
     // 退出登录
-    _logout=()=>{
-        // 取出首页的key
-        let that =this
-        AsyncStorage.getItem('Login')
-        .then((data) => {
-            // that.props.navigation.goBack(data)
-            // that.props.navigation.dispatch(NavigationActions.back({
-            //     key: data
-            // }));
-        })
-    
+    _logout = () => {
+        console.log(this.props)
+        this.props.navigation.goBack(this.props.nav.routes[1].key) // is goback from not gobackto
+        // const resetAction = NavigationActions.reset({
+        //     index: 1,
+        //     actions: [
+        //         NavigationActions.navigate({ routeName: 'Home' }),
+        //     ]
+        // })
+        // that.props.navigation.dispatch(resetAction)
+        // that.props.navigation.dispatch(NavigationActions.back({
+        //     key: this.props.nav.routes[1].key
+        // }));
     }
 
     render() {
-        console.log("1111111111111111",this.props)
+        console.log("1111111111111111", this.props)
         return (
             <View style={styles.container}>
                 {
