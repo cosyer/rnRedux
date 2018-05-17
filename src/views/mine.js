@@ -22,10 +22,12 @@ import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icons from 'react-native-vector-icons/FontAwesome';
+import ImagePickerManager from 'react-native-image-picker' // 需要rnpm link
 import * as Progress from 'react-native-progress'; // 需要手动添加libraries
 import Button from '../component/button'
 
 const width = Dimensions.get("window").width
+
 const headRightView = (
     <TouchableOpacity activeOpacity={1} style={{ marginRight: 16 }}>
         <Icons
@@ -36,6 +38,21 @@ const headRightView = (
             }}
         />
     </TouchableOpacity>)
+
+// 选取图片的参数
+const photoOptions = {
+    title: '选择头像',
+    cancelButtonTitle: '取消',
+    takePhotoButtonTitle: '拍照',
+    chooseFromLibraryButtonTitle: '选择相册',
+    quality: 0.8,
+    allowsEditing: true,
+    noData: false, // 设置成false，图片转成base
+    storageOptions: {
+        skipBackup: true,
+        path: 'images'
+    }
+};
 
 @connect(state => ({
     nav: state.nav
@@ -69,6 +86,132 @@ export default class Mine extends Component {
 
     navigatePress = () => {
         alert('点击headerRight');
+    }
+
+    _getQiniuToken() {
+        var accessToken = this.state.user.accessToken
+        var signatureURL = config.api.base + config.api.signature
+        return request.post(signatureURL, {
+            accessToken: accessToken,
+            type: 'avatar',
+            cloud: 'qiniu'
+        })
+            .catch(e => {
+                console.log(e)
+            })
+    }
+
+    // 选取图片
+    _pickPhoto() {
+        var that = this
+        // ios10 需要在info.plist中增加NSPhotoLibraryUsageDescription和NSCameraUsageDescription
+        ImagePickerManager.showImagePicker(photoOptions, (res) => {
+            if (res.didCancel) {
+                return
+            }
+            console.log(res.data)
+            let avatarData = 'data:image/jpeg;base64,' + res.data
+            //  生成七牛签名并上传图片
+            var uri = res.uri
+            that._getQiniuToken()
+                .then(data => {
+                    console.log(data)
+                    if (data && data.success) {
+                        var token = data.data.token
+                        var key = data.data.key
+                        var body = new FormData()
+
+                        body.append('token', token)
+                        body.append('key', key)
+                        body.append('file', {
+                            type: 'image/jpeg',
+                            uri: uri,
+                            name: key
+                        })
+                        that._upload(body)
+                    }
+                })
+        })
+    }
+
+    // 上传图片到七牛
+    _upload(body) {
+        console.log(body)
+        var that = this
+        var xhr = new XMLHttpRequest()
+        var url = config.qiniu.upload
+
+        that.setState({
+            avatarUploading: true,
+            avatarProgress: 0
+        })
+
+        xhr.open('POST', url)
+        xhr.onload = () => {
+            // 请求失败
+            if (xhr.status !== 200) {
+                AlertIOS.alert('上传失败，请重试')
+                console.log(xhr.responseText)
+                return
+            }
+
+            if (!xhr.responseText) {
+                AlertIOS.alert('上传失败，请重试')
+                return
+            }
+
+            var response
+            try {
+                console.log(xhr.response)
+                response = JSON.parse(xhr.response)
+            } catch (e) {
+                console.log(e)
+                console.log("parse fails")
+            }
+
+            if (response) {
+                // 来自七牛
+                if (response.key) {
+                    var user = this.state.user
+                    user.avatar = response.key
+                    that.setState({
+                        user: user, // 这个貌似可以去掉
+                        avatarProgress: 0,
+                        avatarUploading: false
+                    })
+                    // 上传到自己的服务器
+                    that._asyncUser(true)
+                }
+
+                // 来自cloudinary
+                // if (response.public_id) {
+                //   var user = this.state.user
+                //   user.avatar = response.public_id
+                //   that.setState({
+                //     user: user, // 这个貌似可以去掉
+                //     avatarProgress: 0,
+                //     avatarUploading: false
+                //   })
+                //   // 上传到服务器
+                //   that._asyncUser(true)
+                // }
+            }
+        }
+
+        // 进度条
+        if (xhr.upload) {
+            xhr.upload.onprogress = (event) => {
+                if (event.lengthComputable) {
+                    var percent = Number((event.loaded / event.total).toFixed(2))
+                    console.log(percent)
+                    that.setState({
+                        avatarProgress: percent
+                    })
+                }
+            }
+        }
+
+        xhr.send(body)
     }
 
     // 退出登录
