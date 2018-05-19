@@ -1,4 +1,6 @@
-import { LOGIN_CODE_SEND_CHANGE, LOGIN_PARAMS_CHANGE, LOGIN_TO_HOME } from '../constants/actionsTypes';
+import { LOGIN_CODE_SEND_CHANGE, LOGIN_PARAMS_CHANGE } from '../constants/actionsTypes';
+import { AsyncStorage } from 'react-native'
+import Toast from '../component/toast'
 import Request from '../utils/request'
 import Config from '../utils/config'
 import Mock from 'mockjs'
@@ -6,26 +8,41 @@ import Mock from 'mockjs'
 // Login
 const loginCodeSendChange = () => ({ type: LOGIN_CODE_SEND_CHANGE });
 const loginParamsChange = (obj) => ({ type: LOGIN_PARAMS_CHANGE, payload: obj });
-const loginToHome = () => ({ type: LOGIN_TO_HOME });
 
 // Login 发送验证码
-function sendVerifyCode() {
+function sendVerifyCode(phone) {
     return dispatch => {
         dispatch(loginCodeSendChange())
-        return Request.get(Config.api.base + Config.api.verify, {}, (data) => {
+        return Request.post(Config.api.base + Config.api.signup, { phoneNumber: phone }, (data) => {
             console.log(Mock.mock(data))
-            dispatch(loginParamsChange({ name: "verifyCode", value: 1234 }))
         })
     }
 }
 
-function startLogin(that) {
+// 登录
+function startLogin(payload, that) {
     return dispatch => {
         dispatch(loginParamsChange({ name: "loading", value: true }))
-        return Request.get(Config.api.base + Config.api.verify, {}, (data) => {
+        return Request.post(Config.api.base + Config.api.verify, payload, (data) => {
             console.log(Mock.mock(data))
-            dispatch(loginToHome())
-            that.props.navigation.navigate("Home")
+            if (!data.success) {
+                dispatch(loginParamsChange({ name: "loading", value: false }))
+                Toast.show(data.err, {
+                    duration: Toast.durations.SHORT,
+                    position: Toast.positions.CENTER,
+                    shadow: true,
+                    animation: true,
+                    hideOnPress: true,
+                    delay: 0,
+                });
+            } else {
+                // 存储用户信息
+                AsyncStorage.setItem('user', JSON.stringify(data.data))
+                    .then(() => {
+                        dispatch(loginParamsChange({ name: "loading", value: false }))
+                        that.props.navigation.navigate("Home")
+                    })
+            }
         })
     }
 }
@@ -34,6 +51,5 @@ export default {
     loginCodeSendChange,
     loginParamsChange,
     sendVerifyCode,
-    startLogin,
-    loginToHome
+    startLogin
 }

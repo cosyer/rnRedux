@@ -46,7 +46,21 @@ export default class Home extends Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(refresh());
+    var that = this
+    AsyncStorage.getItem('user')
+      .then((data) => {
+        var user
+        if (data) {
+          user = JSON.parse(data)
+        }
+        if (user && user.accessToken) {
+          that.props.dispatch(relistFactorChangefresh({ name: 'user', value: user }));
+          let payload = {}
+          payload.accessToken = user.accessToken
+          payload.page = that.props.list.page
+          that.props.dispatch(refresh(payload));
+        }
+      })
   }
 
   _onSelect = () => {

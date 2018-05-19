@@ -231,14 +231,13 @@ export default class Mine extends Component {
     }
 
     render() {
-        console.log("1111111111111111", this.props)
         return (
             <View style={styles.container}>
                 {
                     true
                         ?
                         <TouchableOpacity onPress={this._pickPhoto} style={styles.avatarContainer} >
-                            <Image source={{ uri: 'http://mydearest.cn/static/img/avatar.jpg' }} style={styles.avatarContainer} />
+                            <Image source={{ uri: 'https://mydearest.cn/static/img/avatar.jpg' }} style={styles.avatarContainer} />
                             <View style={styles.avatarBox}>
                                 {
                                     false ?
@@ -249,7 +248,7 @@ export default class Mine extends Component {
                                             progress={10} />
                                         :
                                         <Image
-                                            source={{ uri: 'http://mydearest.cn/static/img/avatar.jpg' }}
+                                            source={{ uri: 'https://mydearest.cn/static/img/avatar.jpg' }}
                                             style={styles.avatar} />
                                 }
                             </View>

@@ -96,16 +96,18 @@ const SimpleApp = StackNavigator({
             headerStyle: {
                 backgroundColor: '#5AA9FA',
                 height: Platform.OS === 'ios' ? 44 : 44,
-                elevation: 0,
-                shadowOpacity: 0,
+                elevation: 0, // android导航底部阴影
+                shadowOpacity: 0, // ios导航底部阴影
             },
             headerTitleStyle: {
                 fontSize: 18,
                 color: 'white',
                 alignSelf: 'center'
+                // 新版android居中处理
                 // flex: 1,
                 // textAlign: 'center',
-            }
+            },
+            headerBackTitle: null // 箭头后面文字
         },
         initialRouteName: loginState ? "Home" : "Login"
     }

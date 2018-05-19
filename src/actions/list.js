@@ -21,11 +21,11 @@ const listStateChange = (index) => ({ type: LIST_STATE_CHANGE, payload: index })
 const listFactorChange = (obj) => ({ type: LIST_STATE_CHANGE, payload: obj });
 
 // list获取列表 为什么要尾调 函数嵌套 俄罗斯套娃
-function refresh() {
+function refresh(payload) {
     return dispatch => {
         dispatch(listFetchStart())
-        return Request.get(Config.api.base + Config.api.creations, {}, (data) => {
-            console.log(Mock.mock(data))
+        return Request.get(Config.api.base + Config.api.creations, payload, (data) => {
+            console.log("list000", Mock.mock(data))
             dispatch(listFetchSuccess(data && Mock.mock(data)));
         })
     }

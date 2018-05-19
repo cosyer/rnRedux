@@ -34,7 +34,7 @@ export default class Login extends Component {
 
     // 发送验证码 多个dispatch多次渲染
     _sendCode = () => {
-        this.props.dispatch(sendVerifyCode())
+        this.props.dispatch(sendVerifyCode(this.props.login.phone))
     }
 
     // 倒计时结束
@@ -87,7 +87,11 @@ export default class Login extends Component {
             });
             return
         }
-        this.props.dispatch(startLogin(this))
+        let payload = {}
+        let login = this.props.login
+        payload.phoneNumber = login.phone
+        payload.verifyCode = login.verifyCode
+        this.props.dispatch(startLogin(payload, this))
     }
 
     /**
@@ -105,7 +109,6 @@ export default class Login extends Component {
     }
 
     render() {
-        console.log("1111111111111111", this.props)
         return (
             <View style={{ backgroundColor: '#f9f9f9', flex: 1, padding: 10 }}>
                 <TextInput

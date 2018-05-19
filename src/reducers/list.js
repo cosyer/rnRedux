@@ -1,7 +1,9 @@
 import { LIST_FETCH_START, LIST_FETCH_SUCCESS, LIST_FETCH_FAILURE, LIST_STATE_CHANGE, LIST_FACTOR_CHANGE } from '../constants/actionsTypes';
 // 原始默认state
 const defaultState = {
+    user: {},
     dataList: [],
+    page: 0,
     totalCount: 0,
     refreshing: false,
     loading: false

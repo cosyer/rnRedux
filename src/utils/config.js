@@ -1,6 +1,6 @@
 'use strict'
 // true 表示使用阿里的rap接口
-var debug = true
+var debug = false
 module.exports = {
     debug: debug,
     header: {
