@@ -18,7 +18,7 @@ import Loading from '../component/default-loading'
 import Login from './login'
 
 const width = Dimensions.get("window").width
-const { increase, decrease, reset, refresh, listStateChange } = Actions
+const { increase, decrease, reset, refresh, listStateChange, listFactorChange } = Actions
 
 @connect(state => ({
   list: state.list
@@ -54,7 +54,7 @@ export default class Home extends Component {
           user = JSON.parse(data)
         }
         if (user && user.accessToken) {
-          that.props.dispatch(relistFactorChangefresh({ name: 'user', value: user }));
+          that.props.dispatch(listFactorChange({ name: 'user', value: user }));
           let payload = {}
           payload.accessToken = user.accessToken
           payload.page = that.props.list.page

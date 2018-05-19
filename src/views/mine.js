@@ -22,12 +22,13 @@ import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icons from 'react-native-vector-icons/FontAwesome';
+import Actions from '../actions';
 import ImagePickerManager from 'react-native-image-picker' // 需要rnpm link
 import * as Progress from 'react-native-progress'; // 需要手动添加libraries
 import Button from '../component/button'
 
 const width = Dimensions.get("window").width
-
+const { getQiniuToken } = Actions
 const headRightView = (
     <TouchableOpacity activeOpacity={1} style={{ marginRight: 16 }}>
         <Icons
@@ -55,7 +56,8 @@ const photoOptions = {
 };
 
 @connect(state => ({
-    nav: state.nav
+    nav: state.nav,
+    list: state.list
 }))
 export default class Mine extends Component {
 
@@ -88,49 +90,44 @@ export default class Mine extends Component {
         alert('点击headerRight');
     }
 
-    _getQiniuToken() {
-        var accessToken = this.state.user.accessToken
-        var signatureURL = config.api.base + config.api.signature
-        return request.post(signatureURL, {
-            accessToken: accessToken,
-            type: 'avatar',
-            cloud: 'qiniu'
-        })
-            .catch(e => {
-                console.log(e)
-            })
+    _getQiniuToken = (uri) => {
+        let payload = {}
+        payload.accessToken = this.props.list.user.accessToken
+        payload.uri = uri
+        payload.type = 'avatar'
+        payload.cloud = 'qiniu'
+        this.props.dispatch(getQiniuToken(payload))
     }
 
     // 选取图片
-    _pickPhoto() {
+    _pickPhoto = () => {
         var that = this
         // ios10 需要在info.plist中增加NSPhotoLibraryUsageDescription和NSCameraUsageDescription
         ImagePickerManager.showImagePicker(photoOptions, (res) => {
             if (res.didCancel) {
                 return
             }
-            console.log(res.data)
             let avatarData = 'data:image/jpeg;base64,' + res.data
             //  生成七牛签名并上传图片
             var uri = res.uri
-            that._getQiniuToken()
-                .then(data => {
-                    console.log(data)
-                    if (data && data.success) {
-                        var token = data.data.token
-                        var key = data.data.key
-                        var body = new FormData()
+            that._getQiniuToken(uri)
+            // .then(data => {
+            //     console.log('ttttt', data)
+            // if (data && data.success) {
+            //     var token = data.data.token
+            //     var key = data.data.key
+            //     var body = new FormData()
 
-                        body.append('token', token)
-                        body.append('key', key)
-                        body.append('file', {
-                            type: 'image/jpeg',
-                            uri: uri,
-                            name: key
-                        })
-                        that._upload(body)
-                    }
-                })
+            //     body.append('token', token)
+            //     body.append('key', key)
+            //     body.append('file', {
+            //         type: 'image/jpeg',
+            //         uri: uri,
+            //         name: key
+            //     })
+            //     that._upload(body)
+            // }
+            // })
         })
     }
 
@@ -172,15 +169,16 @@ export default class Mine extends Component {
             if (response) {
                 // 来自七牛
                 if (response.key) {
-                    var user = this.state.user
-                    user.avatar = response.key
-                    that.setState({
-                        user: user, // 这个貌似可以去掉
-                        avatarProgress: 0,
-                        avatarUploading: false
-                    })
-                    // 上传到自己的服务器
-                    that._asyncUser(true)
+                    console.log(response)
+                    // var user = this.state.user
+                    // user.avatar = response.key
+                    // that.setState({
+                    //     user: user, // 这个貌似可以去掉
+                    //     avatarProgress: 0,
+                    //     avatarUploading: false
+                    // })
+                    // // 上传到自己的服务器
+                    // that._asyncUser(true)
                 }
 
                 // 来自cloudinary
