@@ -6,7 +6,8 @@ const defaultState = {
     page: 0,
     totalCount: 0,
     refreshing: false,
-    loading: false
+    loading: false,
+    modalVisible: false
 }
 
 function list(state = defaultState, action) {

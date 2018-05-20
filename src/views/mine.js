@@ -28,9 +28,9 @@ import * as Progress from 'react-native-progress'; // 需要手动添加librarie
 import Button from '../component/button'
 
 const width = Dimensions.get("window").width
-const { getQiniuToken } = Actions
+const { getQiniuToken, listFactorChange } = Actions
 const headRightView = (
-    <TouchableOpacity activeOpacity={1} style={{ marginRight: 16 }}>
+    <TouchableOpacity activeOpacity={1} style={{ marginRight: 16 }} onPress={() => console.log(this)}>
         <Icons
             name='edit'
             style={{
@@ -86,8 +86,9 @@ export default class Mine extends Component {
         });
     }
 
-    navigatePress = () => {
-        alert('点击headerRight');
+    _onEdit = () => {
+        console.log(11111)
+        this.props.dispatch(listFactorChange({ name: 'modalVisible', value: true }))
     }
 
     _getQiniuToken = (uri) => {
@@ -96,6 +97,7 @@ export default class Mine extends Component {
         payload.uri = uri
         payload.type = 'avatar'
         payload.cloud = 'qiniu'
+        payload.user = this.props.list.user
         this.props.dispatch(getQiniuToken(payload))
     }
 
@@ -109,112 +111,13 @@ export default class Mine extends Component {
             }
             let avatarData = 'data:image/jpeg;base64,' + res.data
             //  生成七牛签名并上传图片
-            var uri = res.uri
-            that._getQiniuToken(uri)
-            // .then(data => {
-            //     console.log('ttttt', data)
-            // if (data && data.success) {
-            //     var token = data.data.token
-            //     var key = data.data.key
-            //     var body = new FormData()
-
-            //     body.append('token', token)
-            //     body.append('key', key)
-            //     body.append('file', {
-            //         type: 'image/jpeg',
-            //         uri: uri,
-            //         name: key
-            //     })
-            //     that._upload(body)
-            // }
-            // })
+            that._getQiniuToken(res.uri)
         })
-    }
-
-    // 上传图片到七牛
-    _upload(body) {
-        console.log(body)
-        var that = this
-        var xhr = new XMLHttpRequest()
-        var url = config.qiniu.upload
-
-        that.setState({
-            avatarUploading: true,
-            avatarProgress: 0
-        })
-
-        xhr.open('POST', url)
-        xhr.onload = () => {
-            // 请求失败
-            if (xhr.status !== 200) {
-                AlertIOS.alert('上传失败，请重试')
-                console.log(xhr.responseText)
-                return
-            }
-
-            if (!xhr.responseText) {
-                AlertIOS.alert('上传失败，请重试')
-                return
-            }
-
-            var response
-            try {
-                console.log(xhr.response)
-                response = JSON.parse(xhr.response)
-            } catch (e) {
-                console.log(e)
-                console.log("parse fails")
-            }
-
-            if (response) {
-                // 来自七牛
-                if (response.key) {
-                    console.log(response)
-                    // var user = this.state.user
-                    // user.avatar = response.key
-                    // that.setState({
-                    //     user: user, // 这个貌似可以去掉
-                    //     avatarProgress: 0,
-                    //     avatarUploading: false
-                    // })
-                    // // 上传到自己的服务器
-                    // that._asyncUser(true)
-                }
-
-                // 来自cloudinary
-                // if (response.public_id) {
-                //   var user = this.state.user
-                //   user.avatar = response.public_id
-                //   that.setState({
-                //     user: user, // 这个貌似可以去掉
-                //     avatarProgress: 0,
-                //     avatarUploading: false
-                //   })
-                //   // 上传到服务器
-                //   that._asyncUser(true)
-                // }
-            }
-        }
-
-        // 进度条
-        if (xhr.upload) {
-            xhr.upload.onprogress = (event) => {
-                if (event.lengthComputable) {
-                    var percent = Number((event.loaded / event.total).toFixed(2))
-                    console.log(percent)
-                    that.setState({
-                        avatarProgress: percent
-                    })
-                }
-            }
-        }
-
-        xhr.send(body)
     }
 
     // 退出登录
     _logout = () => {
-        console.log(this.props)
+        AsyncStorage.removeItem("user")
         this.props.navigation.goBack(this.props.nav.routes[1].key) // is goback from not gobackto
         // const resetAction = NavigationActions.reset({
         //     index: 1,
@@ -229,13 +132,15 @@ export default class Mine extends Component {
     }
 
     render() {
+        let list = this.props.list
+        let user = this.props.list.user
         return (
             <View style={styles.container}>
                 {
                     true
                         ?
                         <TouchableOpacity onPress={this._pickPhoto} style={styles.avatarContainer} >
-                            <Image source={{ uri: 'https://mydearest.cn/static/img/avatar.jpg' }} style={styles.avatarContainer} />
+                            <Image source={{ uri: user.avatar ? 'http://p33v4b0bc.bkt.clouddn.com/' + user.avatar : 'https://mydearest.cn/static/img/avatar.jpg' }} style={styles.avatarContainer} />
                             <View style={styles.avatarBox}>
                                 {
                                     false ?
@@ -246,7 +151,7 @@ export default class Mine extends Component {
                                             progress={10} />
                                         :
                                         <Image
-                                            source={{ uri: 'https://mydearest.cn/static/img/avatar.jpg' }}
+                                            source={{ uri: user.avatar ? 'http://p33v4b0bc.bkt.clouddn.com/' + user.avatar : 'https://mydearest.cn/static/img/avatar.jpg' }}
                                             style={styles.avatar} />
                                 }
                             </View>
@@ -272,7 +177,7 @@ export default class Mine extends Component {
                         </TouchableOpacity>
                 }
                 <Modal
-                    visible={false}>
+                    visible={list.modalVisible}>
                     <View style={styles.modalContainer}>
                         <Icon
                             onPress={this._closeModal}

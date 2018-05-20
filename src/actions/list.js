@@ -1,7 +1,10 @@
 import {
     INCREASE, DECREASE, RESET, LIST_FETCH_START, LIST_FETCH_SUCCESS,
-    LIST_FETCH_FAILURE, LIST_STATE_CHANGE
+    LIST_FETCH_FAILURE, LIST_STATE_CHANGE, LIST_FACTOR_CHANGE
 } from '../constants/actionsTypes';
+import {
+    AsyncStorage
+} from 'react-native';
 import Request from '../utils/request'
 import Config from '../utils/config'
 import Mock from 'mockjs'
@@ -18,7 +21,7 @@ const listFetchFailure = () => ({ type: LIST_FETCH_FAILURE });
 
 const listStateChange = (index) => ({ type: LIST_STATE_CHANGE, payload: index });
 
-const listFactorChange = (obj) => ({ type: LIST_STATE_CHANGE, payload: obj });
+const listFactorChange = (obj) => ({ type: LIST_FACTOR_CHANGE, payload: obj });
 
 // list获取列表 为什么要尾调 函数嵌套 俄罗斯套娃
 function refresh(payload) {
@@ -26,7 +29,7 @@ function refresh(payload) {
         dispatch(listFetchStart())
         return Request.get(Config.api.base + Config.api.creations, payload, (data) => {
             console.log(Mock.mock(data))
-            dispatch(listFetchSuccess(data && Mock.mock(data)));
+            dispatch(listFetchSuccess(data.length > 0 ? Mock.mock(data) : { data: [], total: 0 }));
         })
     }
 }
@@ -58,7 +61,7 @@ function getQiniuToken(payload) {
                     uri: payload.uri,
                     name: key
                 })
-                _upload(body)
+                _upload(body, payload.user, dispatch)
             }
         })
     }
@@ -73,7 +76,7 @@ function updateUserInfo() {
 }
 
 // 上传图片到七牛
-function _upload(body) {
+function _upload(body, user, dispatch) {
     var that = this
     var xhr = new XMLHttpRequest()
     var url = Config.qiniu.upload
@@ -96,16 +99,10 @@ function _upload(body) {
             }
             if (response && response.key) {
                 // 来自七牛
-                console.log('77777', response)
-                // var user = this.state.user
-                // user.avatar = response.key
-                // that.setState({
-                //     user: user, // 这个貌似可以去掉
-                //     avatarProgress: 0,
-                //     avatarUploading: false
-                // })
-                // // 上传到自己的服务器
-                // that._asyncUser(true)
+                user.avatar = response.key
+                // 上传到自己的服务器
+                asyncUser(user)
+                dispatch(listFactorChange({ name: 'user', value: user }));
             }
         }
 
@@ -126,6 +123,15 @@ function _upload(body) {
         }
     }
     xhr.send(body)
+}
+
+// 更新用户数据
+function asyncUser(user) {
+    if (user && user.accessToken) {
+        Request.post(Config.api.base + Config.api.update, user, (data) => {
+            AsyncStorage.setItem('user', JSON.stringify(user))
+        })
+    }
 }
 
 export default {
