@@ -32,6 +32,18 @@ export default class Login extends Component {
         headerTitle: '快速登录'
     };
 
+    componentDidMount() {
+        // 判断用户是否登陆过
+        let that = this
+        AsyncStorage.getItem('user')
+            .then((data) => {
+                console.log(data)
+                if (data) {
+                    that.props.navigation.navigate("Home")
+                }
+            })
+    }
+
     // 发送验证码 多个dispatch多次渲染
     _sendCode = () => {
         this.props.dispatch(sendVerifyCode(this.props.login.phone))

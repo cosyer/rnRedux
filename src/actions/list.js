@@ -64,39 +64,38 @@ function getQiniuToken(payload) {
     }
 }
 
+// 更新用户信息
+function updateUserInfo() {
+    Request.get(Config.api.base + Config.api.creations, payload, (data) => {
+        console.log(Mock.mock(data))
+        dispatch(listFetchSuccess(data && Mock.mock(data)));
+    })
+}
+
 // 上传图片到七牛
 function _upload(body) {
-    console.log(body)
     var that = this
     var xhr = new XMLHttpRequest()
     var url = Config.qiniu.upload
 
     xhr.open('POST', url)
-    xhr.onload = () => {
+    xhr.onreadystatechange = (e) => {
         // 请求失败
-        if (xhr.status !== 200) {
-            // AlertIOS.alert('上传失败，请重试')
-            console.log(xhr.responseText)
+        if (xhr.readyState !== 4) {
             return
         }
-
-        if (!xhr.responseText) {
-            // AlertIOS.alert('上传失败，请重试')
-            return
-        }
-
-        var response
-        try {
-            console.log(xhr.response)
-            response = JSON.parse(xhr.response)
-        } catch (e) {
-            console.log(e)
-            console.log("parse fails")
-        }
-        console.log(9999, response)
-        if (response) {
-            // 来自七牛
-            if (response.key) {
+        if (xhr.status == 200) {
+            console.log(xhr)
+            var response
+            try {
+                console.log(xhr.response)
+                response = JSON.parse(xhr.response)
+            } catch (e) {
+                console.log(e)
+                console.log("parse fails")
+            }
+            if (response && response.key) {
+                // 来自七牛
                 console.log('77777', response)
                 // var user = this.state.user
                 // user.avatar = response.key
@@ -108,34 +107,24 @@ function _upload(body) {
                 // // 上传到自己的服务器
                 // that._asyncUser(true)
             }
+        }
 
-            // 来自cloudinary
-            // if (response.public_id) {
-            //   var user = this.state.user
-            //   user.avatar = response.public_id
-            //   that.setState({
-            //     user: user, // 这个貌似可以去掉
-            //     avatarProgress: 0,
-            //     avatarUploading: false
-            //   })
-            //   // 上传到服务器
-            //   that._asyncUser(true)
-            // }
+        // 进度条
+        // if (xhr.upload) {
+        //     xhr.upload.onprogress = (event) => {
+        //         if (event.lengthComputable) {
+        //             var percent = Number((event.loaded / event.total).toFixed(2))
+        //             console.log(percent)
+        //             that.setState({
+        //                 avatarProgress: percent
+        //             })
+        //         }
+        //     }
+        // }
+        else {
+            console.log(error)
         }
     }
-
-    // 进度条
-    // if (xhr.upload) {
-    //     xhr.upload.onprogress = (event) => {
-    //         if (event.lengthComputable) {
-    //             var percent = Number((event.loaded / event.total).toFixed(2))
-    //             console.log(percent)
-    //             that.setState({
-    //                 avatarProgress: percent
-    //             })
-    //         }
-    //     }
-    // }
     xhr.send(body)
 }
 

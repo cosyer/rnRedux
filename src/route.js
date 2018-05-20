@@ -10,17 +10,6 @@ import Home from './views/home';
 import Mine from './views/mine';
 import Login from './views/login'
 
-let loginState = false
-// 判断用户是否登陆过
-AsyncStorage.getItem('user')
-    .then((data) => {
-        var user
-        if (data) {
-            loginState = true
-        }
-    })
-
-
 // tab
 const MainScreenNavigator = TabNavigator({
     Home: {
@@ -109,7 +98,7 @@ const SimpleApp = StackNavigator({
             },
             headerBackTitle: null // 箭头后面文字
         },
-        initialRouteName: loginState ? "Home" : "Login"
+        initialRouteName: "Login"
     }
 );
 
