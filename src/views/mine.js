@@ -28,19 +28,7 @@ import * as Progress from 'react-native-progress'; // 需要手动添加librarie
 import Button from '../component/button'
 
 const width = Dimensions.get("window").width
-const { getQiniuToken, listFactorChange } = Actions
-
-const images = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAHgAeADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD5qooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAbS9BSZ9KfFG8r7IkZ2boFBJP4CkEU5Oy3GD60Vqf8ACP6sFJOnz4/3f/r1nzQyW8hjlRkYdVYcii6NqmGrUVepBpeaa/Mj7GjjFA5zmrWlWM2o3sdrbD53PU9AO5PsKDGMXN8sVdvRFUDJ4BJPAArUTQdVkQMlhMVPQhetdqI9J8I2alwZrxxx0Lv9PQf55rEn8d3rOfs9rbonYPlj+YIqT25ZfhMGrY2o+ey0ja6v3b026afNanOXemXl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"
-const headRightView = (
-    <TouchableOpacity activeOpacity={1} style={{ marginRight: 16 }} onPress={() => console.log(this)}>
-        <Icons
-            name='edit'
-            style={{
-                color: '#fff',
-                fontSize: 20,
-            }}
-        />
-    </TouchableOpacity>)
+const { getQiniuToken, listFactorChange, listUserFactorChange, getQiniuTokenBase64, saveUser } = Actions
 
 // 选取图片的参数
 const photoOptions = {
@@ -63,33 +51,62 @@ const photoOptions = {
 }))
 export default class Mine extends Component {
 
-    static navigationOptions = ({ navigation, screenProps }) => ({
-        // 这里面的属性和App.js的navigationOptions是一样的。
-        headerTitle: "我的账户",
-        headerRight: headRightView,
-        headerStyle: {
-            backgroundColor: '#5AA9FA',
-            height: Platform.OS === 'ios' ? 44 : 44,
-            elevation: 0,
-            shadowOpacity: 0,
-        },
-        headerTitleStyle: {
-            fontSize: 18,
-            color: 'white',
-            alignSelf: 'center'
-            // flex: 1,
-            // textAlign: 'center',
-        }
-    });
+    constructor(props) {
+        super(props)
+    }
 
     componentDidMount() {
         this.props.navigation.setParams({
-            headerTitle: '我的账户',
+            onEdit: () => this._onEdit()
         });
+    }
+
+    static navigationOptions = ({ navigation, screenProps }) => {
+        const headRightView = (
+            <TouchableOpacity activeOpacity={1} style={{ marginRight: 16 }} onPress={() => navigation.state.params.onEdit()}>
+                <Icons
+                    name='edit'
+                    style={{
+                        color: '#fff',
+                        fontSize: 20,
+                    }}
+                />
+            </TouchableOpacity>)
+        return {
+            // 这里面的属性和App.js的navigationOptions是一样的。
+            headerTitle: "我的设置",
+            headerRight: headRightView,
+            headerStyle: {
+                backgroundColor: '#5AA9FA',
+                height: Platform.OS === 'ios' ? 44 : 44,
+                elevation: 0,
+                shadowOpacity: 0,
+            },
+            headerTitleStyle: {
+                fontSize: 18,
+                color: 'white',
+                alignSelf: 'center'
+                // flex: 1,
+                // textAlign: 'center',
+            }
+        }
     }
 
     _onEdit = () => {
         this.props.dispatch(listFactorChange({ name: 'modalVisible', value: true }))
+    }
+
+    _closeModal = () => {
+        this.props.dispatch(listFactorChange({ name: 'modalVisible', value: false }))
+    }
+
+    _changeUserState = (name, value) => {
+        this.props.dispatch(listUserFactorChange({ name: name, value: value }))
+    }
+
+    //  保存用户资料
+    _submit = () => {
+        this.props.dispatch(saveUser(this.props.list.user))
     }
 
     _getQiniuToken = (uri) => {
@@ -102,6 +119,17 @@ export default class Mine extends Component {
         this.props.dispatch(getQiniuToken(payload))
     }
 
+    _getQiniuTokenBase64 = (data, fileSize) => {
+        let payload = {}
+        payload.accessToken = this.props.list.user.accessToken
+        payload.data = data
+        payload.fileSize = fileSize
+        payload.type = 'avatar'
+        payload.cloud = 'qiniu'
+        payload.user = this.props.list.user
+        this.props.dispatch(getQiniuTokenBase64(payload))
+    }
+
     // 选取图片
     _pickPhoto = () => {
         var that = this
@@ -112,8 +140,12 @@ export default class Mine extends Component {
             }
             console.log(res)
             let avatarData = 'data:image/jpeg;base64,' + res.data
-            //  生成七牛签名并上传图片
-            that._getQiniuToken(avatarData)
+            if (Platform.OS == 'android') {
+                that._getQiniuTokenBase64(res.data, res.fileSize)
+            } else {
+                //  生成七牛签名并上传图片
+                that._getQiniuToken(res.uri)
+            }
         })
     }
 
@@ -192,7 +224,7 @@ export default class Mine extends Component {
                                 style={styles.inputField}
                                 autoCapitalize={'none'}
                                 autoCorrect={false}
-                                defaultValue={""}
+                                defaultValue={user.nickname}
                                 onChangeText={(text) => {
                                     this._changeUserState('nickname', text)
                                 }} />
@@ -204,7 +236,7 @@ export default class Mine extends Component {
                                 style={styles.inputField}
                                 autoCapitalize={'none'}
                                 autoCorrect={false}
-                                defaultValue={""}
+                                defaultValue={user.breed}
                                 onChangeText={(text) => {
                                     this._changeUserState('breed', text)
                                 }} />
@@ -216,7 +248,7 @@ export default class Mine extends Component {
                                 style={styles.inputField}
                                 autoCapitalize={'none'}
                                 autoCorrect={false}
-                                defaultValue={""}
+                                defaultValue={user.age}
                                 onChangeText={(text) => {
                                     this._changeUserState('age', text)
                                 }} />
@@ -227,22 +259,22 @@ export default class Mine extends Component {
                                 onPress={() => {
                                     this._changeUserState('gender', 'male')
                                 }}
-                                style={[styles.gender,
-                                styles.genderChecked]}
+                                style={[styles.gender, user.gender == 'male' ?
+                                    styles.genderChecked : {}]}
                                 name='ios-paw-outline'>男</Icon.Button>
                             <Icon.Button
                                 onPress={() => {
                                     this._changeUserState('gender', 'female')
                                 }}
-                                style={[styles.gender,
-                                styles.genderChecked]}
+                                style={[styles.gender, user.gender == 'female' ?
+                                    styles.genderChecked : {}]}
                                 name='ios-paw'>女</Icon.Button>
                         </View>
-                        <Button style={styles.btn}
+                        <Button style={styles.btn} textStyle={styles.countBtnText}
                             onPress={this._submit}>保存</Button>
                     </View>
                 </Modal>
-                <Button style={styles.btn}
+                <Button style={styles.btn} textStyle={styles.countBtnText}
                     onPress={this._logout}>退出登录</Button>
             </View>
         )
@@ -359,5 +391,10 @@ const styles = StyleSheet.create({
         borderColor: '#EE735C',
         borderWidth: 1,
         borderRadius: 4,
+    },
+    countBtnText: {
+        color: '#5aa9fa',
+        textAlign: 'center',
+        fontSize: 14,
     }
 });

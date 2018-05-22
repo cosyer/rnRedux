@@ -1,10 +1,11 @@
 import {
     INCREASE, DECREASE, RESET, LIST_FETCH_START, LIST_FETCH_SUCCESS,
-    LIST_FETCH_FAILURE, LIST_STATE_CHANGE, LIST_FACTOR_CHANGE
+    LIST_FETCH_FAILURE, LIST_STATE_CHANGE, LIST_FACTOR_CHANGE, LIST_USER_FACTOR_CHANGE
 } from '../constants/actionsTypes';
 import {
     AsyncStorage
 } from 'react-native';
+import Toast from '../component/toast'
 import Request from '../utils/request'
 import Config from '../utils/config'
 import Mock from 'mockjs'
@@ -23,6 +24,8 @@ const listStateChange = (index) => ({ type: LIST_STATE_CHANGE, payload: index })
 
 const listFactorChange = (obj) => ({ type: LIST_FACTOR_CHANGE, payload: obj });
 
+const listUserFactorChange = (obj) => ({ type: LIST_USER_FACTOR_CHANGE, payload: obj });
+
 // list获取列表 为什么要尾调 函数嵌套 俄罗斯套娃
 function refresh(payload) {
     return dispatch => {
@@ -40,6 +43,24 @@ function onLiked(index) {
         return Request.get(Config.api.base + Config.api.up, {}, (data) => {
             console.log(Mock.mock(data))
             dispatch(listStateChange(index))
+        })
+    }
+}
+
+// 保存用户
+function saveUser(user) {
+    return dispatch => {
+        Request.post(Config.api.base + Config.api.update, user, (data) => {
+            AsyncStorage.setItem('user', JSON.stringify(user))
+            dispatch(listFactorChange({ name: 'modalVisible', value: false }))
+            Toast.show("保存成功", {
+                duration: Toast.durations.SHORT,
+                position: Toast.positions.CENTER,
+                shadow: true,
+                animation: true,
+                hideOnPress: true,
+                delay: 0,
+            });
         })
     }
 }
@@ -67,12 +88,41 @@ function getQiniuToken(payload) {
     }
 }
 
-// 更新用户信息
-function updateUserInfo() {
-    Request.get(Config.api.base + Config.api.creations, payload, (data) => {
-        console.log(Mock.mock(data))
-        dispatch(listFetchSuccess(data && Mock.mock(data)));
-    })
+// 获取七牛Token base64
+function getQiniuTokenBase64(payload) {
+    return dispatch => {
+        return Request.post(Config.api.base + Config.api.signature, payload, (data) => {
+            console.log(data)
+            if (data && data.success) {
+                var token = data.data.token
+                var pic = payload.data;
+                var url = "https://upload.qiniup.com/putb64/" + payload.fileSize; //非华东空间需要根据注意事项 1 修改上传域名
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.status == 200) {
+                        var response
+                        try {
+                            response = JSON.parse(xhr.response)
+                        } catch (e) {
+                            console.log(e)
+                            console.log("parse fails")
+                        }
+                        if (response && response.key) {
+                            // 来自七牛
+                            payload.user.avatar = response.key
+                            // 上传到自己的服务器
+                            asyncUser(payload.user)
+                            dispatch(listFactorChange({ name: 'user', value: payload.user }));
+                        }
+                    }
+                }
+                xhr.open("POST", url, true);
+                xhr.setRequestHeader("Content-Type", "application/octet-stream");
+                xhr.setRequestHeader("Authorization", "UpToken " + token);
+                xhr.send(pic);
+            }
+        })
+    }
 }
 
 // 上传图片到七牛
@@ -139,9 +189,12 @@ export default {
     decrease,
     reset,
     refresh,
+    saveUser,
     getQiniuToken,
+    getQiniuTokenBase64,
     listStateChange,
-    listFactorChange
+    listFactorChange,
+    listUserFactorChange
 }
 
 // 组装的话需要default

@@ -1,7 +1,17 @@
-import { LIST_FETCH_START, LIST_FETCH_SUCCESS, LIST_FETCH_FAILURE, LIST_STATE_CHANGE, LIST_FACTOR_CHANGE } from '../constants/actionsTypes';
+import { LIST_FETCH_START, LIST_FETCH_SUCCESS, LIST_FETCH_FAILURE, LIST_STATE_CHANGE, LIST_FACTOR_CHANGE, LIST_USER_FACTOR_CHANGE } from '../constants/actionsTypes';
 // 原始默认state
 const defaultState = {
-    user: {},
+    user: {
+        nickname: '',
+        avatar: '',
+        breed: '',
+        age: '',
+        gender: '',
+        phoneNumber: '',
+        verifyCode: '',
+        accessToken: '',
+        verified: false
+    },
     dataList: [],
     page: 0,
     totalCount: 0,
@@ -26,6 +36,9 @@ function list(state = defaultState, action) {
             return Object.assign({}, state);
         case LIST_FACTOR_CHANGE:
             state[action.payload.name] = action.payload.value
+            return Object.assign({}, state);
+        case LIST_USER_FACTOR_CHANGE:
+            state['user'][action.payload.name] = action.payload.value
             return Object.assign({}, state);
         default:
             return state;
