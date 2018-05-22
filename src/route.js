@@ -3,7 +3,7 @@ import {
     StackNavigator,
     TabNavigator
 } from 'react-navigation';
-import { Platform, AsyncStorage } from 'react-native';
+import { Platform, AsyncStorage, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import Home from './views/home';
@@ -18,7 +18,9 @@ const MainScreenNavigator = TabNavigator({
             tabBarLabel: '首页', // 设置标签栏的title。推荐这个方式。
             tabBarIcon: (({ tintColor, focused }) => {
                 return (
-                    <Icon name="ios-home" size={30} color="#5AA9FA" />
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <Icon name="ios-home" size={24} color="#5AA9FA" style={{ width: 24, height: 24, fontSize: 24 }} />
+                    </View>
                 )
             }),
         })
@@ -29,7 +31,7 @@ const MainScreenNavigator = TabNavigator({
             tabBarLabel: '我的', // 设置标签栏的title。推荐这个方式。
             tabBarIcon: (({ tintColor, focused }) => {
                 return (
-                    <Icon name="ios-person" size={30} color="#5AA9FA" />
+                    <Icon name="ios-person" size={24} color="#5AA9FA" style={{ width: 24, height: 24, fontSize: 24 }} />
                 )
             })
         })
