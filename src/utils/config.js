@@ -11,7 +11,7 @@ module.exports = {
         }
     },
     api: {
-        base: debug ? 'http://rap.taobao.org/mockjs/8417/' : 'http://localhost:1234/',
+        base: debug ? 'http://rap.taobao.org/mockjs/8417/' : 'http://172.19.6.56:1234/',// 安卓不能localhost得采用本机ip
         creations: 'api/creations',
         up: 'api/up',
         video: 'api/creations/video',

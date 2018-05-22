@@ -119,7 +119,7 @@ function _upload(body, user, dispatch) {
         //     }
         // }
         else {
-            console.log(error)
+            console.log("失败")
         }
     }
     xhr.send(body)
