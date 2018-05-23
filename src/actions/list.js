@@ -96,6 +96,7 @@ function getQiniuTokenBase64(payload) {
             if (data && data.success) {
                 var token = data.data.token
                 var pic = payload.data;
+                // var url = "http://up.qiniu.com/putb64/-1"
                 var url = "https://upload.qiniup.com/putb64/" + payload.fileSize; //非华东空间需要根据注意事项 1 修改上传域名
                 var xhr = new XMLHttpRequest();
                 xhr.onreadystatechange = function () {
