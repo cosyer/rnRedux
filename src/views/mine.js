@@ -12,7 +12,7 @@ import {
     View,
     Image,
     TextInput,
-    Modal,
+    // Modal,
     Dimensions,
     AsyncStorage,
     Platform,
@@ -26,6 +26,7 @@ import Actions from '../actions';
 import ImagePickerManager from 'react-native-image-picker' // 需要rnpm link
 import * as Progress from 'react-native-progress'; // 需要手动添加libraries
 import Button from '../component/button'
+import Modal from 'react-native-root-modal'
 
 const width = Dimensions.get("window").width
 const { getQiniuToken, listFactorChange, listUserFactorChange, getQiniuTokenBase64, saveUser } = Actions
@@ -211,7 +212,15 @@ export default class Mine extends Component {
                         </TouchableOpacity>
                 }
                 <Modal
-                    visible={list.modalVisible}>
+                    visible={list.modalVisible}
+                    style={{
+                        top: 0,
+                        right: 0,
+                        bottom: 0,
+                        left: 0,
+                        position: 'absolute'
+                    }}
+                >
                     <View style={styles.modalContainer}>
                         <Icon
                             onPress={this._closeModal}

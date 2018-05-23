@@ -19,7 +19,20 @@ const MainScreenNavigator = TabNavigator({
             tabBarIcon: (({ tintColor, focused }) => {
                 return (
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        <Icon name="ios-home" size={24} color="#5AA9FA" style={{ width: 24, height: 24, fontSize: 24 }} />
+                        <Icon name={focused ? 'ios-home' : 'ios-home-outline'} size={24} color="#5AA9FA" style={{ width: 24, height: 24, fontSize: 24 }} />
+                    </View>
+                )
+            }),
+        })
+    },
+    Video: {
+        screen: Home,
+        navigationOptions: ({ navigation, screenProps }) => ({
+            tabBarLabel: '视频', // 设置标签栏的title。推荐这个方式。
+            tabBarIcon: (({ tintColor, focused }) => {
+                return (
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <Icon name={focused ? 'ios-videocam' : 'ios-videocam-outline'} size={24} color="#5AA9FA" style={{ width: 24, height: 24, fontSize: 24 }} />
                     </View>
                 )
             }),
@@ -31,7 +44,7 @@ const MainScreenNavigator = TabNavigator({
             tabBarLabel: '我的', // 设置标签栏的title。推荐这个方式。
             tabBarIcon: (({ tintColor, focused }) => {
                 return (
-                    <Icon name="ios-person" size={24} color="#5AA9FA" style={{ width: 24, height: 24, fontSize: 24 }} />
+                    <Icon name={focused ? 'ios-person' : 'ios-person-outline'} size={24} color="#5AA9FA" style={{ width: 24, height: 24, fontSize: 24 }} />
                 )
             })
         })

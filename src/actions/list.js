@@ -52,7 +52,7 @@ function saveUser(user) {
     return dispatch => {
         Request.post(Config.api.base + Config.api.update, user, (data) => {
             AsyncStorage.setItem('user', JSON.stringify(user))
-            dispatch(listFactorChange({ name: 'modalVisible', value: false }))
+            // dispatch(listFactorChange({ name: 'modalVisible', value: false }))
             Toast.show("保存成功", {
                 duration: Toast.durations.SHORT,
                 position: Toast.positions.CENTER,
