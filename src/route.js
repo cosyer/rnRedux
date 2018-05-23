@@ -3,7 +3,7 @@ import {
     StackNavigator,
     TabNavigator
 } from 'react-navigation';
-import { Platform, AsyncStorage, View } from 'react-native';
+import { Platform, AsyncStorage, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import Home from './views/home';
@@ -15,38 +15,36 @@ const MainScreenNavigator = TabNavigator({
     Home: {
         screen: Home,
         navigationOptions: ({ navigation, screenProps }) => ({
-            tabBarLabel: '首页', // 设置标签栏的title。推荐这个方式。
-            tabBarIcon: (({ tintColor, focused }) => {
+            tabBarLabel: '首页', // 设置标签栏的title。推荐这个方式。screenProps用于设置通用的theme
+            tabBarIcon: ({ tintColor, focused }) => {
                 return (
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        <Icon name={focused ? 'ios-home' : 'ios-home-outline'} size={24} color="#5AA9FA" style={{ width: 24, height: 24, fontSize: 24 }} />
+                        <Icon name={focused ? 'ios-home' : 'ios-home-outline'} size={20} color="#5AA9FA" style={{ width: 20, height: 20, fontSize: 20 }} />
                     </View>
                 )
-            }),
+            },
         })
     },
     Video: {
         screen: Home,
         navigationOptions: ({ navigation, screenProps }) => ({
             tabBarLabel: '视频', // 设置标签栏的title。推荐这个方式。
-            tabBarIcon: (({ tintColor, focused }) => {
+            tabBarIcon: ({ tintColor, focused }) => {
                 return (
-                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        <Icon name={focused ? 'ios-videocam' : 'ios-videocam-outline'} size={24} color="#5AA9FA" style={{ width: 24, height: 24, fontSize: 24 }} />
-                    </View>
+                    <Icon name={focused ? 'ios-videocam' : 'ios-videocam-outline'} size={20} color="#5AA9FA" style={{ width: 20, height: 20, fontSize: 20 }} />
                 )
-            }),
+            },
         })
     },
     Mine: {
         screen: Mine,
         navigationOptions: ({ navigation, screenProps }) => ({
             tabBarLabel: '我的', // 设置标签栏的title。推荐这个方式。
-            tabBarIcon: (({ tintColor, focused }) => {
+            tabBarIcon: ({ tintColor, focused }) => {
                 return (
-                    <Icon name={focused ? 'ios-person' : 'ios-person-outline'} size={24} color="#5AA9FA" style={{ width: 24, height: 24, fontSize: 24 }} />
+                    <Icon name={focused ? 'ios-person' : 'ios-person-outline'} size={20} color="#5AA9FA" style={{ width: 20, height: 20, fontSize: 20 }} />
                 )
-            })
+            }
         })
     },
 }, {
@@ -63,6 +61,8 @@ const MainScreenNavigator = TabNavigator({
                 backgroundColor: '#fff', // TabBar 背景色
             },
             labelStyle: {
+                margin: 0,
+                padding: 0, // 处理间距
                 fontSize: 12, // 文字大小
             },
         }
@@ -76,7 +76,7 @@ MainScreenNavigator.navigationOptions = ({ navigation }) => {
         // of course in this case it's the same, but do whatever you want here
         title = '列表首页';
     } else if (focusedRouteName === 'Mine') {
-        title = '我的设置';
+        title = '我的';
     }
     return {
         title,
@@ -96,13 +96,19 @@ const SimpleApp = StackNavigator({
 },
     // 通用配置
     {
-        navigationOptions: {
+        navigationOptions: ({ navigation, screenProps }) => ({
             headerStyle: {
                 backgroundColor: '#5AA9FA',
                 height: Platform.OS === 'ios' ? 44 : 44,
                 elevation: 0, // android导航底部阴影
                 shadowOpacity: 0, // ios导航底部阴影
             },
+            headerLeft: null && (<TouchableOpacity style={{ width: 44, height: 44, justifyContent: 'center', alignItems: 'center' }}>
+                <Icon name={'ios-arrow-back'} size={25} color="#fff" style={{ width: 25, height: 25, fontSize: 25 }}
+                    onPress={() => { console.log("navigation", navigation); navigation.goBack() }}
+                />
+            </TouchableOpacity>),
+            headerRight: null && <View />,
             headerTitleStyle: {
                 fontSize: 18,
                 color: 'white',
@@ -112,7 +118,7 @@ const SimpleApp = StackNavigator({
                 // textAlign: 'center',
             },
             headerBackTitle: null // 箭头后面文字
-        },
+        }),
         initialRouteName: "Login"
     }
 );

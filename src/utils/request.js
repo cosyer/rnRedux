@@ -2,7 +2,7 @@
  * @Author: chenyu 
  * @Date: 2018-04-30 17:43:12 
  * @Last Modified by: chenyu
- * @Last Modified time: 2018-05-19 23:23:26
+ * @Last Modified time: 2018-05-23 16:17:08
  */
 
 import Toast from '../component/toast'
@@ -28,7 +28,7 @@ export default class Request {
         fetch(url, { method: 'GET', })
             .then((response) => response.json())
             .then((responseJSON) => {
-                callback(responseJSON.data)
+                callback(responseJSON)
             })
             .catch((error) => {
                 Toast.show(error, {

@@ -27,12 +27,13 @@ const listFactorChange = (obj) => ({ type: LIST_FACTOR_CHANGE, payload: obj });
 const listUserFactorChange = (obj) => ({ type: LIST_USER_FACTOR_CHANGE, payload: obj });
 
 // list获取列表 为什么要尾调 函数嵌套 俄罗斯套娃
-function refresh(payload) {
+function refresh() {
     return dispatch => {
         dispatch(listFetchStart())
-        return Request.get(Config.api.base + Config.api.creations, payload, (data) => {
+        //Config.api.base + Config.api.creations
+        return Request.get('http://rap.taobao.org/mockjs/8417/api/creations', {}, (data) => {
             console.log(Mock.mock(data))
-            dispatch(listFetchSuccess(data.length > 0 ? Mock.mock(data) : { data: [], total: 0 }));
+            dispatch(listFetchSuccess(Mock.mock(data).data.length > 0 ? Mock.mock(data) : { data: [], total: 0 }));
         })
     }
 }

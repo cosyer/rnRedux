@@ -284,6 +284,8 @@ export default class Mine extends Component {
                     </View>
                 </Modal>
                 <Button style={styles.btn} textStyle={styles.countBtnText}
+                    onPress={this._go2Component}>封装的组件</Button>
+                <Button style={styles.btn} textStyle={styles.countBtnText}
                     onPress={this._logout}>退出登录</Button>
             </View>
         )
