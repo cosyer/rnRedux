@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-var Icon = require('react-native-vector-icons/Ionicons')
-// var Video = require('react-native-video').default
+import Icon from 'react-native-vector-icons/Ionicons';
+import Icons from 'react-native-vector-icons/FontAwesome';
+import Video from 'react-native-video'
 // var Button = require('react-native-button').default
 import Button from '../component/button'
 // var config = require('../common/config.js')
@@ -34,7 +35,7 @@ export default class Detail extends Component {
 
     constructor(props) {
         super(props)
-        var data = this.props.data
+        var data = []
         var ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
         this.state = {
             // 评论数据
@@ -57,6 +58,24 @@ export default class Detail extends Component {
             resizeMode: 'contain',
             repeat: false,
             rate: 1
+        }
+    }
+
+    static navigationOptions = ({ navigation, screenProps }) => {
+        const headRightView = (
+            <TouchableOpacity activeOpacity={1} style={{ marginRight: 16 }} onPress={() => navigation.state.params.onEdit()}>
+                <Icons
+                    name='edit'
+                    style={{
+                        color: '#fff',
+                        fontSize: 20,
+                    }}
+                />
+            </TouchableOpacity>)
+        return {
+            // 这里面的属性和App.js的navigationOptions是一样的。
+            headerTitle: "视频详情",
+            headerRight: headRightView
         }
     }
 
@@ -131,21 +150,7 @@ export default class Detail extends Component {
     }
 
     componentDidMount() {
-        // var that = this
-        // AsyncStorage.getItem('user')
-        //     .then((data) => {
-        //         var user
-        //         if (data) {
-        //             user = JSON.parse(data)
-        //         }
-        //         if (user && user.accessToken) {
-        //             that.setState({
-        //                 user: user
-        //             }, function () {
-        //                 that._fetchData(1);
-        //             })
-        //         }
-        //     })
+
     }
 
     // 获取评论
@@ -333,26 +338,26 @@ export default class Detail extends Component {
     }
 
     render() {
-        var data = this.props.data
+        var data = []
         return (
             <View style={styles.container}>
                 <View style={styles.videoBox}>
-                    {/* <Video
+                    <Video
                         ref="videoPlayer"
-                        source={{ uri: util.video(config.debug ? data.video : data.qiniu_video) }}
+                        source={{ uri: 'http://mydearest.cn/responsive/video/small.mp4' }}
                         style={styles.video}
                         volumn={5}
-                        paused={this.state.paused}
+                        paused={false}
                         rate={this.state.rate}
                         muted={this.state.muted}
                         resizeMode={this.state.resizeMode}
                         repeat={this.state.repeat}
-                        onLoadStart={this._onLoadStart}
-                        onLoad={this._onLoad}
-                        onProgress={this._onProgress}
-                        onEnd={this._onEnd}
-                        onError={this._onError}
-                    /> */}
+                    // onLoadStart={this._onLoadStart}
+                    // onLoad={this._onLoad}
+                    // onProgress={this._onProgress}
+                    // onEnd={this._onEnd}
+                    // onError={this._onError}
+                    />
                     {
                         !this.state.videoOk &&
                         <Text style={styles.errorText}>视频播放错误</Text>
@@ -404,7 +409,7 @@ export default class Detail extends Component {
                         }]}></View>
                     </View>
                 </View>
-                <ListView
+                {/* <ListView
                     dataSource={this.state.dataSource}
                     renderRow={this._renderRow}
                     renderFooter={this._renderFooter}
@@ -414,7 +419,7 @@ export default class Detail extends Component {
                     enableEmptySections={true}
                     showsVerticalScrollIndicator={false}
                     automaticallyAdjustContentInsets={false}
-                />
+                /> */}
                 <Modal
                     visible={this.state.modalVisible}>
                     <View style={styles.modalContainer}>

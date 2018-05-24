@@ -31,9 +31,9 @@ function refresh() {
     return dispatch => {
         dispatch(listFetchStart())
         //Config.api.base + Config.api.creations http://rap.taobao.org/mockjs/8417/api/creations
-        return Request.get(Config.api.base + Config.api.creations, {}, (data) => {
+        return Request.get('http://rap.taobao.org/mockjs/8417/api/creations', {}, (data) => {
             console.log(Mock.mock(data))
-            // dispatch(listFetchSuccess(Mock.mock(data).data.length > 0 ? Mock.mock(data) : { data: [], total: 0 }));
+            dispatch(listFetchSuccess(Mock.mock(data).data.length > 0 ? Mock.mock(data) : { data: [], total: 0 }));
         })
     }
 }
