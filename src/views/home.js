@@ -64,7 +64,8 @@ export default class Home extends Component {
   }
 
   _onSelect = () => {
-
+    console.log(1111111111, this)
+    this.props.navigation.navigate("Detail")
   }
 
   // 下拉
@@ -79,33 +80,33 @@ export default class Home extends Component {
 
   _renderItem = ({ item, index }) => {
     return (
-      <TouchableOpacity onPress={this._onSelect}>
-        <View style={styles.row}>
+      <View style={styles.row}>
+        <TouchableOpacity onPress={this._onSelect}>
           <Text style={styles.title}>{item.title}</Text>
           <Image
             source={{ uri: item.thumb }}
             style={styles.thumb} />
-          <View style={styles.itemFooter}>
-            <TouchableOpacity activeOpacity={0.5} onPress={() => this._up(index)} style={styles.handleBox}>
-              <Icon
-                name={item.up ? "ios-heart" : "ios-heart-outline"}
-                size={28}
-                style={[styles.up, item.up ? null : styles.down]}
-                onPress={this._up}
-              />
-              <Text style={styles.handleText} >喜欢</Text>
-            </TouchableOpacity >
-            <TouchableOpacity activeOpacity={0.5} onPress={() => this._up(index)} style={styles.handleBox}>
-              <Icon
-                name="ios-chatboxes-outline"
-                size={28}
-                style={styles.commentIcon}
-              />
-              <Text style={styles.handleText}>评论</Text>
-            </TouchableOpacity >
-          </View>
+        </TouchableOpacity>
+        <View style={styles.itemFooter}>
+          <TouchableOpacity activeOpacity={0.5} onPress={() => this._up(index)} style={styles.handleBox}>
+            <Icon
+              name={item.up ? "ios-heart" : "ios-heart-outline"}
+              size={28}
+              style={[styles.up, item.up ? null : styles.down]}
+              onPress={this._up}
+            />
+            <Text style={styles.handleText} >喜欢</Text>
+          </TouchableOpacity >
+          <TouchableOpacity activeOpacity={0.5} onPress={() => this._up(index)} style={styles.handleBox}>
+            <Icon
+              name="ios-chatboxes-outline"
+              size={28}
+              style={styles.commentIcon}
+            />
+            <Text style={styles.handleText}>评论</Text>
+          </TouchableOpacity >
         </View>
-      </TouchableOpacity>)
+      </View>)
   }
 
   render() {

@@ -13,6 +13,7 @@ const defaultState = {
         verified: false
     },
     dataList: [],
+    avatarProgress: 0,
     page: 0,
     totalCount: 0,
     refreshing: false,

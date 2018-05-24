@@ -9,6 +9,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Home from './views/home';
 import Mine from './views/mine';
 import Login from './views/login'
+import Detail from './views/detail'
 
 // tab
 const MainScreenNavigator = TabNavigator({
@@ -93,6 +94,7 @@ const SimpleApp = StackNavigator({
         }
     },
     Login: { screen: Login },
+    Detail: { screen: Detail },
 },
     // 通用配置
     {
@@ -103,12 +105,12 @@ const SimpleApp = StackNavigator({
                 elevation: 0, // android导航底部阴影
                 shadowOpacity: 0, // ios导航底部阴影
             },
-            headerLeft: null && (<TouchableOpacity style={{ width: 44, height: 44, justifyContent: 'center', alignItems: 'center' }}>
-                <Icon name={'ios-arrow-back'} size={25} color="#fff" style={{ width: 25, height: 25, fontSize: 25 }}
-                    onPress={() => { console.log("navigation", navigation); navigation.goBack() }}
-                />
-            </TouchableOpacity>),
-            headerRight: null && <View />,
+            // headerLeft: null && (<TouchableOpacity style={{ width: 44, height: 44, justifyContent: 'center', alignItems: 'center' }}>
+            //     <Icon name={'ios-arrow-back'} size={25} color="#fff" style={{ width: 25, height: 25, fontSize: 25 }}
+            //         onPress={() => { console.log("navigation", navigation); navigation.goBack() }}
+            //     />
+            // </TouchableOpacity>),
+            // headerRight: null && <View />,
             headerTitleStyle: {
                 fontSize: 18,
                 color: 'white',
