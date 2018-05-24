@@ -14,6 +14,7 @@ const defaultState = {
     },
     dataList: [],
     avatarProgress: 0,
+    avatarUploadState: false,
     page: 0,
     totalCount: 0,
     refreshing: false,

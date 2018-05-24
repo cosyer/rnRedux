@@ -30,10 +30,10 @@ const listUserFactorChange = (obj) => ({ type: LIST_USER_FACTOR_CHANGE, payload:
 function refresh() {
     return dispatch => {
         dispatch(listFetchStart())
-        //Config.api.base + Config.api.creations
-        return Request.get('http://rap.taobao.org/mockjs/8417/api/creations', {}, (data) => {
+        //Config.api.base + Config.api.creations http://rap.taobao.org/mockjs/8417/api/creations
+        return Request.get(Config.api.base + Config.api.creations, {}, (data) => {
             console.log(Mock.mock(data))
-            dispatch(listFetchSuccess(Mock.mock(data).data.length > 0 ? Mock.mock(data) : { data: [], total: 0 }));
+            // dispatch(listFetchSuccess(Mock.mock(data).data.length > 0 ? Mock.mock(data) : { data: [], total: 0 }));
         })
     }
 }
@@ -92,6 +92,7 @@ function getQiniuToken(payload) {
 // 获取七牛Token base64
 function getQiniuTokenBase64(payload) {
     return dispatch => {
+        dispatch(listFactorChange({ name: 'avatarUploadState', value: true }));
         return Request.post(Config.api.base + Config.api.signature, payload, (data) => {
             console.log(data)
             if (data && data.success) {
@@ -100,6 +101,15 @@ function getQiniuTokenBase64(payload) {
                 // var url = "http://up.qiniu.com/putb64/-1"
                 var url = "https://upload.qiniup.com/putb64/" + payload.fileSize; //非华东空间需要根据注意事项 1 修改上传域名
                 var xhr = new XMLHttpRequest();
+                // 进度条
+                if (xhr.upload) {
+                    xhr.upload.onprogress = (event) => {
+                        if (event.lengthComputable) {
+                            let percent = Number((event.loaded / event.total).toFixed(2))
+                            dispatch(listFactorChange({ name: 'avatarProgress', value: percent }));
+                        }
+                    }
+                }
                 xhr.onreadystatechange = function () {
                     if (xhr.status == 200) {
                         var response
@@ -114,6 +124,7 @@ function getQiniuTokenBase64(payload) {
                             payload.user.avatar = response.key
                             // 上传到自己的服务器
                             asyncUser(payload.user)
+                            dispatch(listFactorChange({ name: 'avatarUploadState', value: false }));
                             dispatch(listFactorChange({ name: 'user', value: payload.user }));
                         }
                     }
@@ -129,11 +140,21 @@ function getQiniuTokenBase64(payload) {
 
 // 上传图片到七牛
 function _upload(body, user, dispatch) {
-    var that = this
-    var xhr = new XMLHttpRequest()
-    var url = Config.qiniu.upload
+    dispatch(listFactorChange({ name: 'avatarUploadState', value: true }));
+    let that = this
+    let xhr = new XMLHttpRequest()
+    let url = Config.qiniu.upload
 
     xhr.open('POST', url)
+    // 进度条
+    if (xhr.upload) {
+        xhr.upload.onprogress = (event) => {
+            if (event.lengthComputable) {
+                let percent = Number((event.loaded / event.total).toFixed(2))
+                dispatch(listFactorChange({ name: 'avatarProgress', value: percent }));
+            }
+        }
+    }
     xhr.onreadystatechange = (e) => {
         // 请求失败
         if (xhr.readyState !== 4) {
@@ -141,7 +162,7 @@ function _upload(body, user, dispatch) {
         }
         if (xhr.status == 200) {
             console.log(xhr)
-            var response
+            let response
             try {
                 console.log(xhr.response)
                 response = JSON.parse(xhr.response)
@@ -154,6 +175,7 @@ function _upload(body, user, dispatch) {
                 user.avatar = response.key
                 // 上传到自己的服务器
                 asyncUser(user)
+                dispatch(listFactorChange({ name: 'avatarUploadState', value: false }));
                 dispatch(listFactorChange({ name: 'user', value: user }));
             }
         }

@@ -168,22 +168,22 @@ export default class Mine extends Component {
 
     render() {
         let list = this.props.list
-        let user = this.props.list.user
+        const { user, avatarProgress, avatarUploadState } = list
         return (
             <View style={styles.container}>
                 {
-                    true
+                    user.avatar
                         ?
                         <TouchableOpacity onPress={this._pickPhoto} style={styles.avatarContainer} >
                             <Image source={{ uri: user.avatar ? 'http://p33v4b0bc.bkt.clouddn.com/' + user.avatar : 'https://mydearest.cn/static/img/avatar.jpg' }} style={styles.avatarContainer} />
                             <View style={styles.avatarBox}>
                                 {
-                                    false ?
+                                    avatarUploadState ?
                                         <Progress.Circle
                                             showsText={true}
                                             color={'#ee735c'}
                                             size={75}
-                                            progress={10} />
+                                            progress={avatarProgress} />
                                         :
                                         <Image
                                             source={{ uri: user.avatar ? 'http://p33v4b0bc.bkt.clouddn.com/' + user.avatar : 'https://mydearest.cn/static/img/avatar.jpg' }}
@@ -197,7 +197,7 @@ export default class Mine extends Component {
                             <Text style={styles.avatarTip}>添加头像</Text>
                             <View style={styles.avatarBox}>
                                 {
-                                    false ?
+                                    avatarUploadState ?
                                         <Progress.Circle
                                             showsText={true}
                                             color={'#ee735c'}

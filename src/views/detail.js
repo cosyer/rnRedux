@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 var Icon = require('react-native-vector-icons/Ionicons')
-var Video = require('react-native-video').default
-var Button = require('react-native-button').default
-var config = require('../common/config.js')
-var request = require('../common/request.js')
-var util = require('../common/util.js')
+// var Video = require('react-native-video').default
+// var Button = require('react-native-button').default
+import Button from '../component/button'
+// var config = require('../common/config.js')
+// var request = require('../common/request.js')
+// var util = require('../common/util.js')
 
 import {
     StyleSheet,
@@ -336,7 +337,7 @@ export default class Detail extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.videoBox}>
-                    <Video
+                    {/* <Video
                         ref="videoPlayer"
                         source={{ uri: util.video(config.debug ? data.video : data.qiniu_video) }}
                         style={styles.video}
@@ -351,7 +352,7 @@ export default class Detail extends Component {
                         onProgress={this._onProgress}
                         onEnd={this._onEnd}
                         onError={this._onError}
-                    />
+                    /> */}
                     {
                         !this.state.videoOk &&
                         <Text style={styles.errorText}>视频播放错误</Text>

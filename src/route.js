@@ -94,7 +94,7 @@ const SimpleApp = StackNavigator({
         }
     },
     Login: { screen: Login },
-    Detail: { screen: Detail },
+    // Detail: { screen: Detail },
 },
     // 通用配置
     {
