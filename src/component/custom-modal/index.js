@@ -2,7 +2,7 @@
  * @Author: chenyu 
  * @Date: 2018-04-18 15:21:09 
  * @Last Modified by: chenyu
- * @Last Modified time: 2018-05-12 18:14:30
+ * @Last Modified time: 2018-05-25 18:11:17
  */
 
 // 'use strict'
@@ -104,56 +104,59 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     modalContainer: {
+        height: 150,
         marginLeft: 20,
         marginRight: 20,
-        borderRadius: 3,
-        backgroundColor: "white",
-        alignItems: 'center',
+        borderRadius: 10,
+        backgroundColor: 'white',
+        alignItems: 'center'
     },
     modalTitle: {
         color: '#000000',
         fontSize: 16,
-        marginTop: 10,
+        marginTop: 10
     },
     modalContent: {
-        color: '#8a8a8a',
-        fontSize: 14,
-        margin: 10,
+        color: '#333333',
+        fontSize: 16
     },
     row: {
         flexDirection: 'row',
-        alignItems: 'center',
+        alignItems: 'center'
     },
     horizonLine: {
-        backgroundColor: '#9f9fa3',
+        backgroundColor: '#dcdcdc',
         height: 0.5,
         alignSelf: 'stretch'
     },
     verticalLine: {
-        backgroundColor: '#9f9fa3',
+        backgroundColor: '#dcdcdc',
         width: 1,
+        height: 50,
         alignSelf: 'stretch'
     },
     leftBn: {
+        height: 50,
         borderBottomLeftRadius: 3,
         padding: 7,
         flexGrow: 1,
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'center'
     },
     leftBnText: {
         fontSize: 16,
-        color: '#8a8a8a',
+        color: '#666666'
     },
     rightBn: {
+        height: 50,
         borderBottomRightRadius: 3,
         padding: 7,
         flexGrow: 1,
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'center'
     },
     rightBnText: {
         fontSize: 16,
-        color: '#00A9F2'
+        color: '#FFA61A'
     }
-})
+});
