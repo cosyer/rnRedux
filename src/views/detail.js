@@ -1,64 +1,43 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icons from 'react-native-vector-icons/FontAwesome';
-import Video from 'react-native-video'
-// var Button = require('react-native-button').default
+import Video from 'react-native-video';
 import Button from '../component/button'
-// var config = require('../common/config.js')
-// var request = require('../common/request.js')
-// var util = require('../common/util.js')
-
 import {
     StyleSheet,
     Dimensions,
     Text,
     Image,
     ActivityIndicator,
-    AlertIOS,
-    ListView,
+    FlatList,
     Modal,
     TextInput,
     TouchableOpacity,
     AsyncStorage,
     View
 } from 'react-native'
+import Actions from '../actions';
+const width = Dimensions.get('window').width
+const { detailParamsChange } = Actions
 
-var width = Dimensions.get('window').width
-
-var cachedResults = {
+const cachedResults = {
     nextPage: 1,
     items: [],
     total: 0
 }
 
+@connect(state => ({
+    detail: state.detail
+}))
 export default class Detail extends Component {
 
     constructor(props) {
         super(props)
-        var data = []
-        var ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
-        this.state = {
-            // 评论数据
-            dataSource: ds.cloneWithRows([]),
-            // video load
-            videoOk: true,
-            videoLoaded: false,
-            playing: false,
-            paused: false,
-            videoProgress: 0.01,
-            videoTotal: 0,
-            currentTime: 0,
-            data: data,
-            //  modal
-            animationType: 'none',
-            modalVisible: false,
-            isSending: false,
-            // video player
-            muted: false,
-            resizeMode: 'contain',
-            repeat: false,
-            rate: 1
-        }
+    }
+
+    componentDidMount() {
+
     }
 
     static navigationOptions = ({ navigation, screenProps }) => {
@@ -79,78 +58,59 @@ export default class Detail extends Component {
         }
     }
 
-    _backToList() {
+    _backToList = () => {
         this.props.navigator.pop()
     }
 
-    _onLoadStart() {
+    _onLoadStart = () => {
         console.log('start')
     }
 
-    _onLoad() {
+    _onLoad = () => {
         console.log('load')
     }
 
-    _onProgress(data) {
-        var duration = data.playableDuration
-        var currentTime = data.currentTime
-        var percent = Number((currentTime / duration).toFixed(2))
-        var newState = {
-            videoTotal: duration,
-            currentTime: Number(data.currentTime.toFixed(2)),
-            videoProgress: percent
+    _onProgress = (data) => {
+        let { videoOptions } = this.props.detail
+
+        let duration = data.playableDuration
+        let currentTime = data.currentTime
+        let percent = Number((currentTime / duration).toFixed(2))
+        videoOptions.videoTotal = duration
+        videoOptions.currentTime = Number(data.currentTime.toFixed(2))
+        videoOptions.videoProgress = percent
+
+        if (!videoOptions.videoLoaded) {
+            videoOptions.videoLoaded = true
         }
-        if (!this.state.videoLoaded) {
-            newState.videoLoaded = true
+        if (!videoOptions.playing) {
+            videoOptions.playing = true
         }
-        if (!this.state.playing) {
-            newState.playing = true
-        }
-        this.setState(newState)
+        this.props.dispatch(detailParamsChange({ name: 'videoOptions', value: videoOptions }))
     }
+
     _onEnd() {
-        this.setState({
-            playing: false,
-            videoProgress: 1
-        })
+        let { videoOptions } = this.props.detail
+        videoOptions.playing = false
+        videoOptions.videoProgress = 1
+        this.props.dispatch(detailParamsChange({ name: 'videoOptions', value: videoOptions }))
     }
-    _onError(err) {
+
+    _onError = (err) => {
         console.log(err)
         console.log('error')
     }
 
-    _rePlay() {
-        this.refs.videoPlayer.seek(0);
-    }
-
-    _pause() {
-        if (!this.state.paused) {
-            this.setState({
-                paused: true
-            })
-        }
-    }
-
-    _resume() {
-        if (this.state.paused) {
-            this.setState({
-                paused: false
-            })
-        }
+    _togglePause = () => {
+        let { videoOptions } = this.props.detail
+        videoOptions.pause = !videoOptions.pause
+        this.props.dispatch(detailParamsChange({ name: 'videoOptions', value: videoOptions }))
     }
 
     _onError() {
-        this.setState({
-            videoOk: false
-        })
-    }
-
-    _pop() {
-        this.props.navigator.pop()
-    }
-
-    componentDidMount() {
-
+        let { videoOptions } = this.props.detail
+        videoOptions.videoOk = false
+        this.props.dispatch(detailParamsChange({ name: 'videoOptions', value: videoOptions }))
     }
 
     // 获取评论
@@ -224,10 +184,6 @@ export default class Detail extends Component {
                 style={styles.loadingMore}
             />
         )
-    }
-
-    _focus() {
-
     }
 
     // 评论列表的头
@@ -338,33 +294,34 @@ export default class Detail extends Component {
     }
 
     render() {
-        var data = []
+        let { videoOptions } = this.props.detail
+
         return (
             <View style={styles.container}>
-                <View style={styles.videoBox}>
+                <TouchableOpacity style={styles.videoBox} onPress={this._togglePause} activeOpacity={1}>
                     <Video
                         ref="videoPlayer"
-                        source={{ uri: 'http://mydearest.cn/responsive/video/small.mp4' }}
+                        source={{ uri: videoOptions.source }}
                         style={styles.video}
-                        volumn={5}
-                        paused={false}
-                        rate={this.state.rate}
-                        muted={this.state.muted}
-                        resizeMode={this.state.resizeMode}
-                        repeat={this.state.repeat}
-                    // onLoadStart={this._onLoadStart}
-                    // onLoad={this._onLoad}
-                    // onProgress={this._onProgress}
-                    // onEnd={this._onEnd}
-                    // onError={this._onError}
+                        volumn={videoOptions.volumn}
+                        paused={videoOptions.pause}
+                        rate={videoOptions.rate}
+                        muted={videoOptions.muted}
+                        resizeMode={videoOptions.resizeMode}
+                        repeat={videoOptions.repeat}
+                        onLoadStart={this._onLoadStart}
+                        onLoad={this._onLoad}
+                        onProgress={this._onProgress}
+                        onEnd={this._onEnd}
+                        onError={this._onError}
                     />
                     {
-                        !this.state.videoOk &&
+                        !videoOptions.videoOk &&
                         <Text style={styles.errorText}>视频播放错误</Text>
                     }
                     {
                         // 加载动画
-                        !this.state.videoLoaded &&
+                        !videoOptions.videoLoaded &&
                         <ActivityIndicator
                             color='#ee735c' style={styles.loading}
                         />
@@ -372,56 +329,25 @@ export default class Detail extends Component {
 
                     {
                         // 播放按钮
-                        this.state.videoLoaded && !this.state.playing
+                        videoOptions.videoLoaded && videoOptions.pause
                             ?
                             <Icon
-                                onPress={this._rePlay}
                                 name='ios-play'
                                 size={48}
                                 style={styles.playIcon} />
                             : null
                     }
-                    {
-                        // 暂停
-                        this.state.videoLoaded && this.state.playing
-                            ?
-                            <TouchableOpacity
-                                onPress={this._pause}
-                                style={styles.pauseBtn}>
-                                {
-                                    this.state.paused ?
-                                        <Icon onPress={this._resume}
-                                            size={48}
-                                            name='ios-play'
-                                            style={styles.resumeIcon} />
-                                        : <Text></Text>
-                                }
-                            </TouchableOpacity>
-                            : null
-                    }
-
                     <View
                         style={styles.progressBox}
                     >
                         <View style={[styles.progressBar, {
-                            width: width * this.
-                                state.videoProgress
+                            width: width * videoOptions.videoProgress
                         }]}></View>
                     </View>
-                </View>
-                {/* <ListView
-                    dataSource={this.state.dataSource}
-                    renderRow={this._renderRow}
-                    renderFooter={this._renderFooter}
-                    renderHeader={this._renderHeader}
-                    onEndReached={this._fetchMoreData}
-                    onEndReachedThreshold={20}
-                    enableEmptySections={true}
-                    showsVerticalScrollIndicator={false}
-                    automaticallyAdjustContentInsets={false}
-                /> */}
+                </TouchableOpacity>
+
                 <Modal
-                    visible={this.state.modalVisible}>
+                    visible={false}>
                     <View style={styles.modalContainer}>
                         <Icon
                             onPress={this._closeModal}
@@ -433,11 +359,9 @@ export default class Detail extends Component {
                                 <TextInput placeholder="敢不敢评论一个..."
                                     style={styles.content}
                                     multiline={true}
-                                    defaultValue={this.state.content}
+                                    defaultValue={''}
                                     onChangeText={(text) => {
-                                        this.setState({
-                                            content: text
-                                        })
+                                        console.log(112121)
                                     }} />
                             </View>
                         </View>
@@ -478,7 +402,7 @@ const styles = StyleSheet.create({
     loading: {
         position: 'absolute',
         left: 0,
-        top: 80,
+        top: width * 0.28,
         width: width,
         alignSelf: 'center',
         backgroundColor: 'transparent'
@@ -495,7 +419,7 @@ const styles = StyleSheet.create({
     },
     playIcon: {
         position: 'absolute',
-        top: 80,
+        top: width * 0.28 - 30,
         left: width / 2 - 30,
         width: 60,
         height: 60,

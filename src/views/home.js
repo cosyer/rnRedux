@@ -14,8 +14,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Icons from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
 import Actions from '../actions';
-import Loading from '../component/default-loading'
-import Login from './login'
+import Loading from '../component/default-loading';
+import Login from './login';
 
 const width = Dimensions.get("window").width
 const { increase, decrease, reset, refresh, listStateChange, listFactorChange } = Actions

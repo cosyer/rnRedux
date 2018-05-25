@@ -1,7 +1,9 @@
 import login from './login'
 import list from './list'
+import detail from './detail'
 
-export default{
+export default {
     ...login,
-    ...list
+    ...list,
+    ...detail
 }
