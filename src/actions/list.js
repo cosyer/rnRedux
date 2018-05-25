@@ -161,7 +161,6 @@ function _upload(body, user, dispatch) {
             return
         }
         if (xhr.status == 200) {
-            console.log(xhr)
             let response
             try {
                 console.log(xhr.response)
@@ -179,19 +178,6 @@ function _upload(body, user, dispatch) {
                 dispatch(listFactorChange({ name: 'user', value: user }));
             }
         }
-
-        // 进度条
-        // if (xhr.upload) {
-        //     xhr.upload.onprogress = (event) => {
-        //         if (event.lengthComputable) {
-        //             var percent = Number((event.loaded / event.total).toFixed(2))
-        //             console.log(percent)
-        //             that.setState({
-        //                 avatarProgress: percent
-        //             })
-        //         }
-        //     }
-        // }
         else {
             console.log("失败")
         }
@@ -200,7 +186,7 @@ function _upload(body, user, dispatch) {
 }
 
 // 更新用户数据
-function asyncUser(user) {
+function asyncUser(user, dispatch) {
     if (user && user.accessToken) {
         Request.post(Config.api.base + Config.api.update, user, (data) => {
             AsyncStorage.setItem('user', JSON.stringify(user))

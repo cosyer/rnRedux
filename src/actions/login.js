@@ -37,6 +37,7 @@ function startLogin(payload, that) {
                 });
             } else {
                 // 存储用户信息
+                console.log(111111, data)
                 AsyncStorage.setItem('user', JSON.stringify(data.data))
                     .then(() => {
                         dispatch(loginParamsChange({ name: "loading", value: false }))

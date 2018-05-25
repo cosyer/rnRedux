@@ -84,7 +84,7 @@ export default class Home extends Component {
         <TouchableOpacity onPress={this._onSelect}>
           <Text style={styles.title}>{item.title}</Text>
           <Image
-            source={{ uri: item.thumb }}
+            source={{ uri: 'https://mydearest.cn/static/img/avatar.jpg' }}
             style={styles.thumb} />
         </TouchableOpacity>
         <View style={styles.itemFooter}>
