@@ -9,14 +9,18 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Icons from 'react-native-vector-icons/FontAwesome';
 import Button from '../component/button'
 import Button1 from '../component/button/rn-button'
+import Button2 from '../component/button/rn-button2'
 import CModal from '../component/custom-modal'
 import Toast from '../component/toast'
 import { showHUDMessage } from '../component/hud-tips'
+import DialogLoading from '../component/dialog-loading'
+
 export default class Rice extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            modalVisible: false
+            modalVisible: false,
+            dialogVisible: false
         }
     }
 
@@ -49,7 +53,14 @@ export default class Rice extends Component {
                     }>
                     Tips按钮
                 </Button1>
-            </View >
+                <Button2 style={styles.btn} textStyle={{ fontSize: 14 }} onPress={() => {
+                    this.setState({ dialogVisible: true })
+                    setTimeout(() => this.setState({ dialogVisible: false }), 3000)
+                }}>
+                    Hello! dialogLoading
+                </Button2>
+                <DialogLoading visible={this.state.dialogVisible} title="加载中..." />
+            </View>
         );
     }
 }

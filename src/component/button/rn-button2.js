@@ -11,7 +11,7 @@ import {
     Platform
 } from 'react-native';
 import PropTypes from 'prop-types';
-import isEqual from 'lodash.isequal';
+import { isEqual } from 'lodash';
 
 class Button extends Component {
     static propTypes = {
