@@ -10,7 +10,7 @@ import Icons from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
 import { increase, decrease, reset } from '../actions';
 
-class Home extends Component {
+class Count extends Component {
   _onPressReset() {
     this.props.dispatch(reset()); // this.props.dispatch({type:"reset"});
   }
@@ -72,4 +72,4 @@ const mapStateToProps = state => ({
   counter: state.counter
 })
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps)(Count);

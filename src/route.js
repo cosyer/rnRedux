@@ -10,6 +10,7 @@ import Home from './views/home';
 import Mine from './views/mine';
 import Login from './views/login'
 import Detail from './views/detail'
+import Rice from './views/rice'
 
 // tab
 const MainScreenNavigator = TabNavigator({
@@ -95,6 +96,7 @@ const SimpleApp = StackNavigator({
     },
     Login: { screen: Login },
     Detail: { screen: Detail },
+    Rice: { screen: Rice }
 },
     // 通用配置
     {

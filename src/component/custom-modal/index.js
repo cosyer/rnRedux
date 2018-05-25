@@ -46,6 +46,7 @@ export default class CustomModal extends Component {
                 onRequestClose={() => { }}>
                 <View style={styles.container}>
                     <View style={styles.modalContainer}>
+                        {this.props.title ? <Text style={styles.modalTitle}>{this.props.title}</Text> : null}
                         <View
                             style={{
                                 flex: 1,
@@ -111,7 +112,7 @@ const styles = StyleSheet.create({
     modalTitle: {
         color: '#000000',
         fontSize: 16,
-        marginTop: 10
+        marginTop: 25
     },
     modalContent: {
         color: '#333',

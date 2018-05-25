@@ -1,8 +1,8 @@
 /*
  * @Author: chenyu 
  * @Date: 2018-05-14 22:00:03 
- * @Last Modified by:   chenyu 
- * @Last Modified time: 2018-05-14 22:00:03 
+ * @Last Modified by: chenyu
+ * @Last Modified time: 2018-05-25 21:46:25
  */
 
 import React, { Component } from 'react';
@@ -35,18 +35,17 @@ export default class Button extends Component {
         // 默认透明度
         activeOpacity: 0.5,
 
-        // umEventId 用于友盟统计,如果为空则认为不需要友盟统计
-        eventId: null,
-        // umEventData 用于友盟统计 ， 可以为空
-        eventData: null,
+        // 不可用
+        disabled: false
     };
 
     render() {
+        console.log(this.props.style.backgroundColor)
         return (
             <TouchableOpacity
                 activeOpacity={this.props.activeOpacity}
                 onPress={this._onPress}
-                style={[styles.container, this.props.style]}>
+                style={this.props.disabled ? [styles.container, this.props.style, { backgroundColor: '#eee' }] : [styles.container, this.props.style]}>
                 {this.loadContent()}
             </TouchableOpacity>
         );
@@ -54,14 +53,10 @@ export default class Button extends Component {
 
     // 点击事件
     _onPress = () => {
-        this.props.onPress();
-        // 如果有eventId 表示需要友盟统计，此时应当调用友盟api
-        if (this.props.eventId && NativeModules.Umeng) {
-            NativeModules.Umeng.onEventWithMap(this.props.eventId, this.props.eventData);
-        };
+        if (!this.props.disabled) {
+            this.props.onPress();
+        }
     };
-
-
 
     loadContent() {
         if (this.props.type == 'text') {

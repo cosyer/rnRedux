@@ -2,7 +2,7 @@
  * @Author: chenyu 
  * @Date: 2018-04-18 17:19:31 
  * @Last Modified by: chenyu
- * @Last Modified time: 2018-04-19 19:07:32
+ * @Last Modified time: 2018-05-25 22:11:52
  */
 import React, { Component } from 'react';
 
@@ -13,7 +13,8 @@ import {
     Dimensions,
     Image,
     Animated,
-    Easing
+    Easing,
+    Modal
 } from 'react-native';
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
@@ -43,14 +44,16 @@ let _initializeRotationAnimation = () => {
  */
 exports.showHUDLoading = (text, style) => {
     const hud = (
-        <View style={styles.maskView}>
-            <View style={[styles.iconContainer, styles.shadowStyle]}>
-                <Animated.Image
-                    style={styles.iconStyle}
-                    source={require('./loading.png')} />
-                <Text style={[{ color: '#fff', fontSize: 12 }, style]} allowFontScaling={false}>{text}</Text>
+        <Modal visible={true} animationType={'none'} transparent={true}>
+            <View style={styles.maskView}>
+                <View style={[styles.iconContainer, styles.shadowStyle]}>
+                    <Animated.Image
+                        style={styles.iconStyle}
+                        source={require('./loading.png')} />
+                    <Text style={[{ color: '#fff', fontSize: 12 }, style]} allowFontScaling={false}>{text}</Text>
+                </View>
             </View>
-        </View>
+        </Modal>
     );
 
     if (loadingView) {
@@ -81,11 +84,13 @@ exports.showHUDMessage = (message, timeout) => {
     }
 
     const hud = (
-        <View style={styles.maskView}>
-            <View style={[styles.textContainer, styles.shadowStyle]}>
-                <Text style={styles.textStyle} allowFontScaling={false}>{message}</Text>
+        <Modal visible={true} animationType={'none'} transparent={true}>
+            <View style={styles.maskView}>
+                <View style={[styles.textContainer, styles.shadowStyle]}>
+                    <Text style={styles.textStyle} allowFontScaling={false}>{message}</Text>
+                </View>
             </View>
-        </View>
+        </Modal>
     );
 
     setTimeout(() => {
@@ -114,10 +119,7 @@ exports.showHUDMessage = (message, timeout) => {
 
 const styles = StyleSheet.create({
     maskView: {
-        left: 0,
-        right: 0,
-        top: 0,
-        bottom: 0,
+        flex: 1,
         backgroundColor: 'rgba(0,0,0,0)',
         justifyContent: 'center',
         alignItems: 'center'

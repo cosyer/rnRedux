@@ -137,6 +137,11 @@ export default class Mine extends Component {
         })
     }
 
+    // 组件页
+    _go2Component = () => {
+        this.props.navigation.navigate("Rice")
+    }
+
     // 退出登录
     _logout = () => {
         AsyncStorage.removeItem("user")
