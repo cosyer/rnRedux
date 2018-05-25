@@ -17,7 +17,37 @@ function queryDetail(phone) {
     }
 }
 
+// 查询评论列表
+function queryCommentList(user, data, pageNum) {
+    return dispatch => {
+        return Request.get(Config.api.base + Config.api.comments, {
+            accessToken: user.accessToken,
+            creation: data._id,
+            page: pageNum
+        }, (res) => {
+            console.log(res)
+        })
+    }
+}
+
+// 新增评论
+function addComment(user, data, content) {
+    return dispatch => {
+        return Request.get(Config.api.base + Config.api.comments, {
+            accessToken: user.accessToken,
+            comment: {
+                creation: data._id,
+                content: content
+            }
+        }, (res) => {
+            console.log(res)
+        })
+    }
+}
+
 export default {
     detailParamsChange,
+    queryCommentList,
+    addComment,
     queryDetail
 }

@@ -63,9 +63,8 @@ export default class Home extends Component {
       })
   }
 
-  _onSelect = () => {
-    console.log(1111111111, this)
-    this.props.navigation.navigate("Detail")
+  _onSelect = (item) => {
+    this.props.navigation.navigate("Detail", { data: item })
   }
 
   // 下拉
@@ -81,7 +80,7 @@ export default class Home extends Component {
   _renderItem = ({ item, index }) => {
     return (
       <View style={styles.row}>
-        <TouchableOpacity onPress={this._onSelect}>
+        <TouchableOpacity onPress={() => this._onSelect(item)}>
           <Text style={styles.title}>{item.title}</Text>
           <Image
             source={{ uri: 'https://mydearest.cn/static/img/avatar.jpg' }}

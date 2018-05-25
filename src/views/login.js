@@ -174,7 +174,7 @@ export default class Login extends Component {
                 hideOnPress={true}
             >This is a message</Toast>  */}
                 <Loading visible={this.props.login.loading} title="登录中..." />
-                <CModal modalVisible={false} title="确定" onRightPress={() => this.props.dispatch(loginParamsChange({ name: "modalVisible", value: false }))} />
+                <CModal modalVisible={this.props.login.modalVisible} title="确定" content="131231231231" onRightPress={() => this.props.dispatch(loginParamsChange({ name: "modalVisible", value: false }))} />
             </View >
         );
     }

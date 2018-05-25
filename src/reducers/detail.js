@@ -18,8 +18,7 @@ const defaultState = {
         videoProgress: 0, // 播放进度
         videoOk: true, // video是否能正常播放
     },
-
-
+    pageNum: 0
 }
 
 function detail(state = defaultState, action) {

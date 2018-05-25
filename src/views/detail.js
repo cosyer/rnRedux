@@ -19,7 +19,7 @@ import {
 } from 'react-native'
 import Actions from '../actions';
 const width = Dimensions.get('window').width
-const { detailParamsChange } = Actions
+const { detailParamsChange, queryCommentList, addComment } = Actions
 
 const cachedResults = {
     nextPage: 1,
@@ -28,7 +28,8 @@ const cachedResults = {
 }
 
 @connect(state => ({
-    detail: state.detail
+    detail: state.detail,
+    list: state.list
 }))
 export default class Detail extends Component {
 
@@ -37,7 +38,9 @@ export default class Detail extends Component {
     }
 
     componentDidMount() {
-
+        // 获取评论
+        // this._queryCommentList()
+        this._addComment()
     }
 
     static navigationOptions = ({ navigation, screenProps }) => {
@@ -56,6 +59,18 @@ export default class Detail extends Component {
             headerTitle: "视频详情",
             headerRight: headRightView
         }
+    }
+
+    _queryCommentList = () => {
+        let pageNum = this.props.detail.pageNum
+        let user = this.props.list.user
+        this.props.dispatch(queryCommentList(user, this.props.navigation.state.params.data, pageNum))
+    }
+
+    _addComment = () => {
+        let pageNum = this.props.detail.pageNum
+        let user = this.props.list.user
+        this.props.dispatch(queryCommentList(user, this.props.navigation.state.params.data, '1212121'))
     }
 
     _backToList = () => {

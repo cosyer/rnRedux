@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { MainStyle } from '/configs';
 
 import { StyleSheet, View, Text, TouchableOpacity, Modal } from 'react-native';
 
@@ -115,7 +114,7 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
     modalContent: {
-        color: MainStyle.font.color.color2,
+        color: '#333',
         fontSize: 16
     },
     row: {
@@ -123,12 +122,12 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     horizonLine: {
-        backgroundColor: MainStyle.border.color.main,
+        backgroundColor: '#dcdcdc',
         height: 0.5,
         alignSelf: 'stretch'
     },
     verticalLine: {
-        backgroundColor: MainStyle.border.color.main,
+        backgroundColor: '#dcdcdc',
         width: 1,
         height: 50,
         alignSelf: 'stretch'
@@ -143,7 +142,7 @@ const styles = StyleSheet.create({
     },
     leftBnText: {
         fontSize: 16,
-        color: MainStyle.font.color.color3
+        color: '#666'
     },
     rightBn: {
         height: 50,
@@ -155,6 +154,6 @@ const styles = StyleSheet.create({
     },
     rightBnText: {
         fontSize: 16,
-        color: MainStyle.font.color.color13
+        color: '#ffa61a'
     }
 });
