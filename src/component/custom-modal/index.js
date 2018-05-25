@@ -1,98 +1,96 @@
-/*
- * @Author: chenyu 
- * @Date: 2018-04-18 15:21:09 
- * @Last Modified by: chenyu
- * @Last Modified time: 2018-05-25 18:11:17
- */
-
-// 'use strict'
 import React, { Component } from 'react';
-import PropTypes from 'prop-types'
-import {
-    StyleSheet,
-    View,
-    Text,
-    TouchableHighlight,
-    TouchableOpacity,
-    Modal,
-} from 'react-native';
+import PropTypes from 'prop-types';
+import { MainStyle } from '/configs';
+
+import { StyleSheet, View, Text, TouchableOpacity, Modal } from 'react-native';
 
 export default class CustomModal extends Component {
-
     PropTypes = {
         onLeftPress: PropTypes.func, // 左侧点击回调
-        onRightPress: PropTypes.func, // 右侧点击回调
-    }
+        onRightPress: PropTypes.func // 右侧点击回调
+    };
 
     constructor(props) {
-        super(props)
-        this.state = {
-            modalVisible: false, // 显示 组件自身状态 组件初始化 this.props.modalVisible
-        }
+        super(props);
+        this.state = {};
     }
 
     static defaultProps = {
         title: '', // 标题
         content: '', // 内容
         type: 'confirm', // comfim:用于确认 info:用于提示(以右边操作为优先)
-        leftBnText: '取消',  // 左侧文本
+        leftBnText: '取消', // 左侧文本
         rightBnText: '确定', // 右侧文本
         transparent: true, // 是否透明
-        animationType: 'fade'// 动画类型 slide、fade、none
-    }
-
-    componentWillReceiveProps(props) {
-        this.setState({ modalVisible: props.modalVisible })
-    }
+        animationType: 'fade', // 动画类型 slide、fade、none
+        modalVisible: false // 显示 组件自身状态 组件初始化 this.props.modalVisible
+    };
 
     _onLeftPress = () => {
-        this.props.onLeftPress ? this.props.onLeftPress() : this.setState({ modalVisible: false })
-    }
+        this.props.onLeftPress ? this.props.onLeftPress() : '';
+    };
 
     _onRightPress = () => {
-        this.props.onRightPress ? this.props.onRightPress() : this.setState({ modalVisible: false })
-    }
+        this.props.onRightPress ? this.props.onRightPress() : '';
+    };
 
     _onInfo = () => {
-        this.props.onRightPress ? this.props.onRightPress() : (this.props.onLeftPress ? this.props.onLeftPress() : this.setState({ modalVisible: false }))
-    }
+        this.props.onRightPress ? this.props.onRightPress() : this.props.onLeftPress ? this.props.onLeftPress() : '';
+    };
 
     render() {
         return (
             <Modal
-                visible={this.state.modalVisible}
+                visible={this.props.modalVisible}
                 transparent={this.props.transparent}
                 animationType={this.props.animationType}
-                onRequestClose={() => this.setState({ modalVisible: false })}
-            >
+                onRequestClose={() => { }}>
                 <View style={styles.container}>
                     <View style={styles.modalContainer}>
-                        <Text style={styles.modalTitle}>{this.props.title}</Text>
-                        <Text style={styles.modalContent}>{this.props.content}</Text>
+                        <View
+                            style={{
+                                flex: 1,
+                                height: 100,
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}>
+                            <Text style={styles.modalContent}>{this.props.content}</Text>
+                        </View>
                         <View style={styles.horizonLine} />
-                        {
-                            this.props.type === 'confirm' && <View style={styles.row}>
-                                <TouchableOpacity style={styles.leftBn} onPress={this._onLeftPress} underlayColor={'#C5C5C5'} activeOpacity={0.5}>
+                        {this.props.type === 'confirm' && (
+                            <View style={styles.row}>
+                                <TouchableOpacity
+                                    style={styles.leftBn}
+                                    onPress={this._onLeftPress}
+                                    underlayColor={'#C5C5C5'}
+                                    activeOpacity={0.5}>
                                     <Text style={styles.leftBnText}>{this.props.leftBnText}</Text>
                                 </TouchableOpacity>
                                 <View style={styles.verticalLine} />
-                                <TouchableOpacity style={styles.rightBn} onPress={this._onRightPress}
-                                    underlayColor={'#C5C5C5'} activeOpacity={0.5}>
+                                <TouchableOpacity
+                                    style={styles.rightBn}
+                                    onPress={this._onRightPress}
+                                    underlayColor={'#C5C5C5'}
+                                    activeOpacity={0.5}>
                                     <Text style={styles.rightBnText}>{this.props.rightBnText}</Text>
                                 </TouchableOpacity>
                             </View>
-                        }
-                        {
-                            this.props.type === 'info' && <View style={styles.row}>
-                                <TouchableOpacity style={styles.leftBn} onPress={this._onInfo} underlayColor={'#C5C5C5'} activeOpacity={0.5}>
+                        )}
+                        {this.props.type === 'info' && (
+                            <View style={styles.row}>
+                                <TouchableOpacity
+                                    style={styles.leftBn}
+                                    onPress={this._onInfo}
+                                    underlayColor={'#C5C5C5'}
+                                    activeOpacity={0.5}>
                                     <Text style={styles.rightBnText}>{this.props.rightBnText || this.props.leftBnText}</Text>
                                 </TouchableOpacity>
                             </View>
-                        }
+                        )}
                     </View>
                 </View>
             </Modal>
-        )
+        );
     }
 }
 
@@ -117,7 +115,7 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
     modalContent: {
-        color: '#333333',
+        color: MainStyle.font.color.color2,
         fontSize: 16
     },
     row: {
@@ -125,12 +123,12 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     horizonLine: {
-        backgroundColor: '#dcdcdc',
+        backgroundColor: MainStyle.border.color.main,
         height: 0.5,
         alignSelf: 'stretch'
     },
     verticalLine: {
-        backgroundColor: '#dcdcdc',
+        backgroundColor: MainStyle.border.color.main,
         width: 1,
         height: 50,
         alignSelf: 'stretch'
@@ -145,7 +143,7 @@ const styles = StyleSheet.create({
     },
     leftBnText: {
         fontSize: 16,
-        color: '#666666'
+        color: MainStyle.font.color.color3
     },
     rightBn: {
         height: 50,
@@ -157,6 +155,6 @@ const styles = StyleSheet.create({
     },
     rightBnText: {
         fontSize: 16,
-        color: '#FFA61A'
+        color: MainStyle.font.color.color13
     }
 });
