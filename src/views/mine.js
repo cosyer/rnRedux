@@ -186,7 +186,6 @@ export default class Mine extends Component {
                         </TouchableOpacity>
                         :
                         <TouchableOpacity onPress={this._pickPhoto} style={styles.avatarContainer}>
-                            <Text style={styles.avatarTip}>添加头像</Text>
                             <View style={styles.avatarBox}>
                                 {
                                     avatarUploadState ?
@@ -201,6 +200,7 @@ export default class Mine extends Component {
                                             style={styles.plusIcon} />
                                 }
                             </View>
+                            <Text style={[styles.avatarTip, { marginTop: 10 }]}>添加头像</Text>
                         </TouchableOpacity>
                 }
                 <Modal
@@ -286,7 +286,8 @@ export default class Mine extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        backgroundColor: "#f3f4f5"
     },
     toolbar: {
         flexDirection: 'row',
@@ -323,6 +324,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     plusIcon: {
+        marginTop: 70 + 0.1 * width,
         padding: 20,
         paddingLeft: 25,
         paddingRight: 25,

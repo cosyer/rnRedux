@@ -6,8 +6,10 @@
 - 返回按钮样式(已解决:自定义)
 - Image报错Missing request token for request: <NSMutableURLRequest: 0x..>{URL:...png}(已解决:网络图必须不能为空能够访问)
 ### 第三方依赖库
-react-native-video
-react-native-root-toast
-react-native-root-modal
-react-native-image-picker
-react-native-scrollable-tab-view
+- react-native-video
+- react-native-button     ![progress](http://progressed.io/bar/100)
+- react-native-picker     ![progress](http://progressed.io/bar/100)
+- react-native-root-toast ![progress](http://progressed.io/bar/100)
+- react-native-root-modal
+- react-native-image-picker
+- react-native-scrollable-tab-view
