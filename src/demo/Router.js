@@ -1,34 +1,32 @@
-
-import React, { Component } from 'react';
-import { StackNavigator } from 'react-navigation';
+import React, { Component } from "react";
+import { StackNavigator } from "react-navigation";
 // import CardStackStyleInterpolator from 'react-navigation/src/views/CardStackStyleInterpolator';
 
 /**
  * 界面组件
  */
-import SplashScene from './login';
-
+import SplashScene from "./login";
 
 /**
- * 路由导航 
+ * 路由导航
  */
 const AppNavigator = StackNavigator(
-    {
-        Splash: { screen: SplashScene },
-    },
+  {
+    Splash: { screen: SplashScene }
+  },
 
-    {
-        navigationOptions: {
-            headerBackTitle: null,
-            headerTintColor: '',
-            showIcon: true
-        },
-        modal: 'card',
-        headerMode: 'screen',
-        // transitionConfig: () => ({
-        //     screenInterpolator: CardStackStyleInterpolator.forHorizontal,
-        // })
-    }
+  {
+    navigationOptions: {
+      headerBackTitle: null,
+      headerTintColor: "",
+      showIcon: true
+    },
+    modal: "card",
+    headerMode: "screen"
+    // transitionConfig: () => ({
+    //     screenInterpolator: CardStackStyleInterpolator.forHorizontal,
+    // })
+  }
 );
 
 export default AppNavigator;

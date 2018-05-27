@@ -4,10 +4,13 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "jest",
+    "jsformat": "prettier --write \"./src/**/*.js\""
   },
   "dependencies": {
     "loadsh": "^1.0.1",
+    "moment": "^2.22.1",
+    "prettier": "^1.12.1",
     "prop-types": "^15.6.1",
     "react": "16.3.1",
     "react-native": "0.55.3",

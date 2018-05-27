@@ -1,14 +1,9 @@
-import React, { Component } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity
-} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import Icons from 'react-native-vector-icons/FontAwesome';
-import { connect } from 'react-redux';
-import { increase, decrease, reset } from '../actions';
+import React, { Component } from "react";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import Icon from "react-native-vector-icons/Ionicons";
+import Icons from "react-native-vector-icons/FontAwesome";
+import { connect } from "react-redux";
+import { increase, decrease, reset } from "../actions";
 
 class Count extends Component {
   _onPressReset() {
@@ -29,13 +24,22 @@ class Count extends Component {
         <Icon name="ios-home" size={30} color="red" />
         <Icons name="rocket" size={30} color="#900" />
         <Text style={styles.counter}>{this.props.counter.count}</Text>
-        <TouchableOpacity style={styles.reset} onPress={() => this._onPressReset()}>
+        <TouchableOpacity
+          style={styles.reset}
+          onPress={() => this._onPressReset()}
+        >
           <Text>归零</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.start} onPress={() => this._onPressInc()}>
+        <TouchableOpacity
+          style={styles.start}
+          onPress={() => this._onPressInc()}
+        >
           <Text>加1</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.stop} onPress={() => this._onPressDec()}>
+        <TouchableOpacity
+          style={styles.stop}
+          onPress={() => this._onPressDec()}
+        >
           <Text>减1</Text>
         </TouchableOpacity>
       </View>
@@ -46,9 +50,9 @@ class Count extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'column'
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "column"
   },
   counter: {
     fontSize: 50,
@@ -56,20 +60,20 @@ const styles = StyleSheet.create({
   },
   reset: {
     margin: 10,
-    backgroundColor: 'yellow'
+    backgroundColor: "yellow"
   },
   start: {
     margin: 10,
-    backgroundColor: 'yellow'
+    backgroundColor: "yellow"
   },
   stop: {
     margin: 10,
-    backgroundColor: 'yellow'
+    backgroundColor: "yellow"
   }
-})
+});
 
 const mapStateToProps = state => ({
   counter: state.counter
-})
+});
 
 export default connect(mapStateToProps)(Count);
