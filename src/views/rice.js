@@ -3,13 +3,16 @@ import {
   StyleSheet,
   Text,
   View,
+  Linking,
   ScrollView,
   Dimensions,
   TouchableOpacity
 } from "react-native";
 import Picker from "../component/form/picker";
+import QRCodeScanner from 'react-native-qrcode-scanner';
 import Icon from "react-native-vector-icons/Ionicons";
 import Icons from "react-native-vector-icons/FontAwesome";
+import QRCode from "react-native-qrcode"
 import Button from "../component/button";
 import Button1 from "../component/button/rn-button";
 import Button2 from "../component/button/rn-button2";
@@ -21,7 +24,6 @@ import Input from "../component/form/input";
 import InputArea from "../component/form/input-area";
 import Region from "../component/form/region";
 import DatePicker from "../component/form/date-picker";
-import MySwitch from "../component/form/switch";
 
 const width = Dimensions.get("window").width;
 
@@ -34,6 +36,7 @@ export default class Rice extends Component {
       name: "",
       sex: "",
       inputAreaText: "",
+      qrText: "人没有牺牲的话就什么也得不到",
       switchData: [{ value: 1, text: "关" }, { value: 2, text: "开" }]
     };
   }
@@ -44,6 +47,12 @@ export default class Rice extends Component {
       headerRight: <View />
     };
   };
+
+  onSuccess = (e) => {
+    Linking
+      .openURL(e.data)
+      .catch(err => console.error('An error occured', err));
+  }
 
   render() {
     return (
@@ -158,8 +167,28 @@ export default class Rice extends Component {
             value={this.state.inputAreaText}
             editable={true}
           />
+          <View style={{ alignItems: 'center', justifyContent: 'center', height: 80 }}>
+            <QRCode
+              value={this.state.qrText}
+              size={50}
+              bgColor='purple'
+              fgColor='white' />
+          </View>
+          <QRCodeScanner
+            onRead={this.onSuccess.bind(this)}
+            topContent={
+              <Text style={styles.centerText}>
+                Go to <Text style={styles.textBold}>wikipedia.org/wiki/QR_code</Text> on your computer and scan the QR code.
+          </Text>
+            }
+            bottomContent={
+              <TouchableOpacity style={styles.buttonTouchable}>
+                <Text style={styles.buttonText}>OK. Got it!</Text>
+              </TouchableOpacity>
+            }
+          />
         </ScrollView>
-      </View>
+      </View >
     );
   }
 }
@@ -200,5 +229,22 @@ const styles = StyleSheet.create({
   valueStyle: {
     fontSize: 16,
     color: "#666"
-  }
+  },
+  centerText: {
+    flex: 1,
+    fontSize: 18,
+    padding: 32,
+    color: '#777',
+  },
+  textBold: {
+    fontWeight: '500',
+    color: '#000',
+  },
+  buttonText: {
+    fontSize: 21,
+    color: 'rgb(0,122,255)',
+  },
+  buttonTouchable: {
+    padding: 16,
+  },
 });

@@ -66,12 +66,22 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>$(PRODUCT_NAME) would like access to your photo gallery</string>
+	<string>$(PRODUCT_NAME)想要访问你的照片库</string>
 	<key>NSCameraUsageDescription</key>
-	<string>$(PRODUCT_NAME) would like to use your camera</string>
+	<string>$(PRODUCT_NAME)想要访问你的相机</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>$(PRODUCT_NAME) would like to save photos to your photo gallery</string>
+	<string>$(PRODUCT_NAME)想保存照片到你的照片库</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>$(PRODUCT_NAME) would like to your microphone (for videos)</string>
+	<string>$(PRODUCT_NAME)想要访问你的麦克风（视频）</string>
+  <key>NSCameraUsageDescription</key>
+  <string>当第一次访问相机时，向用户发送消息</string>
+  
+  <!-- Include this only if you are planning to use the camera roll -->
+  <key>NSPhotoLibraryUsageDescription</key>
+  <string>当第一次访问照片库时，向用户发送消息</string>
+  
+  <!-- Include this only if you are planning to use the microphone for video recording -->
+  <key>NSMicrophoneUsageDescription</key>
+  <string>第一次访问MSPSPONE时向用户发送消息</string>
 </dict>
 </plist>

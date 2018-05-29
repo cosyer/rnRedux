@@ -7,8 +7,11 @@
 - Image报错Missing request token for request: <NSMutableURLRequest: 0x..>{URL:...png}(已解决:网络图必须不能为空能够访问)
 ### 第三方依赖库
 - react-native-video
+- react-native-camera
+- react-native-qrcode    
+- react-native-qrcode-scanner
 - react-native-button     ![progress](http://progressed.io/bar/100)
-- react-native-picker     ![progress](http://progressed.io/bar/100)
+- react-native-picker     
 - react-native-root-toast ![progress](http://progressed.io/bar/100)
 - react-native-root-modal
 - react-native-image-picker
