@@ -4,12 +4,13 @@ import {
   Text,
   View,
   Linking,
+  Clipboard,
   ScrollView,
   Dimensions,
   TouchableOpacity
 } from "react-native";
 import Picker from "../component/form/picker";
-import QRCodeScanner from 'react-native-qrcode-scanner';
+// import QRCodeScanner from 'react-native-qrcode-scanner';
 import Icon from "react-native-vector-icons/Ionicons";
 import Icons from "react-native-vector-icons/FontAwesome";
 import QRCode from "react-native-qrcode"
@@ -48,10 +49,18 @@ export default class Rice extends Component {
     };
   };
 
-  onSuccess = (e) => {
-    Linking
-      .openURL(e.data)
-      .catch(err => console.error('An error occured', err));
+  async _setClipboardContent() {
+    Clipboard.setString('Hello World');
+    try {
+      var content = await Clipboard.getString();
+      showHUDMessage('复制成功')
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  _call = (phone) => {
+    return Linking.openURL(`tel:${phone}`);
   }
 
   render() {
@@ -100,6 +109,20 @@ export default class Rice extends Component {
           >
             Hello! dialogLoading
           </Button2>
+          <Button
+            style={styles.btn}
+            textStyle={styles.countBtnText}
+            onPress={this._setClipboardContent}
+          >
+            Copy
+          </Button>
+          <Button
+            style={styles.btn}
+            textStyle={styles.countBtnText}
+            onPress={() => this._call(18883269663)}
+          >
+            Call
+          </Button>
           <DialogLoading visible={this.state.dialogVisible} title="加载中..." />
           <Input
             labelText="姓名"
@@ -174,7 +197,7 @@ export default class Rice extends Component {
               bgColor='purple'
               fgColor='white' />
           </View>
-          <QRCodeScanner
+          {/* <QRCodeScanner
             onRead={this.onSuccess.bind(this)}
             topContent={
               <Text style={styles.centerText}>
@@ -186,7 +209,7 @@ export default class Rice extends Component {
                 <Text style={styles.buttonText}>OK. Got it!</Text>
               </TouchableOpacity>
             }
-          />
+          /> */}
         </ScrollView>
       </View >
     );
