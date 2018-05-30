@@ -60,7 +60,7 @@ export default class Rice extends Component {
   }
 
   _call = (phone) => {
-    return Linking.openURL(`tel:${phone}`);
+    return Linking.openURL(`tel:${phone}`).catch(e => console.war(e));
   }
 
   render() {
@@ -119,9 +119,16 @@ export default class Rice extends Component {
           <Button
             style={styles.btn}
             textStyle={styles.countBtnText}
-            onPress={() => this._call(18883269663)}
+            onPress={() => this._call('18883269663')}
           >
             Call
+          </Button>
+          <Button
+            style={styles.btn}
+            textStyle={styles.countBtnText}
+            onPress={() => this.props.navigation.navigate('Geolocation')}
+          >
+            地理位置
           </Button>
           <DialogLoading visible={this.state.dialogVisible} title="加载中..." />
           <Input

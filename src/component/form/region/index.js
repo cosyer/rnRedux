@@ -2,7 +2,7 @@
  * @Author: chenyu 
  * @Date: 2018-05-26 18:00:09 
  * @Last Modified by: chenyu
- * @Last Modified time: 2018-05-26 18:24:43
+ * @Last Modified time: 2018-05-31 00:44:01
  */
 
 import React, { Component } from "react";
@@ -117,7 +117,7 @@ export default class Region extends Component {
         this.selectedItems = data;
         this.setState({ selectedValue: data });
       },
-      onPickerCancel: data => {},
+      onPickerCancel: data => { },
       onPickerSelect: data => {
         if (this.props.onSelectChange) {
           this.props.onSelectChange(data);
@@ -192,7 +192,7 @@ export default class Region extends Component {
     if (this.props.iconRender) {
       views.push(this.props.iconRender());
     } else {
-      views.push(<Icon name={"ios-arrow-forward"} size={25} color="#999" />);
+      views.push(<Icon name={"ios-arrow-forward"} size={25} color="#999" key="region" />);
     }
 
     return <RowLayout>{views}</RowLayout>;

@@ -2,7 +2,7 @@
  * @Author: chenyu 
  * @Date: 2018-05-26 17:00:15 
  * @Last Modified by: chenyu
- * @Last Modified time: 2018-05-26 18:06:27
+ * @Last Modified time: 2018-05-31 00:44:28
  */
 
 import React, { Component } from "react";
@@ -86,14 +86,14 @@ export default class Picker extends Component {
       ) {
         selectedValueText = selectedValue
           ? selectedValue
-              .map(item => {
-                if (this.props.field && item[this.props.field]) {
-                  return item[this.props.field];
-                } else {
-                  return item;
-                }
-              })
-              .join(" ")
+            .map(item => {
+              if (this.props.field && item[this.props.field]) {
+                return item[this.props.field];
+              } else {
+                return item;
+              }
+            })
+            .join(" ")
           : "";
       } else {
         if (this.props.field && selectedValue[this.props.field]) {
@@ -176,7 +176,7 @@ export default class Picker extends Component {
     if (this.props.iconRender) {
       views.push(this.props.iconRender());
     } else {
-      views.push(<Icon name={"ios-arrow-forward"} size={25} color="#999" />);
+      views.push(<Icon name={"ios-arrow-forward"} size={25} color="#999" key="picker" />);
     }
 
     return <RowLayout>{views}</RowLayout>;
@@ -234,8 +234,8 @@ export default class Picker extends Component {
         if (data && data.length > 0) {
           let realData = _this.props.field
             ? data.map(item => {
-                return _this.dataMap[item];
-              })
+              return _this.dataMap[item];
+            })
             : data;
 
           this.setState({ selectedValue: realData });
@@ -247,7 +247,7 @@ export default class Picker extends Component {
           _this.setState({ selectedValue: null });
         }
       },
-      onPickerCancel: data => {},
+      onPickerCancel: data => { },
       onPickerSelect: data => {
         if (_this.props.onSelectChange) {
           this.props.onSelectChange(data);

@@ -2,7 +2,7 @@
  * @Author: chenyu 
  * @Date: 2018-05-27 22:21:13 
  * @Last Modified by: chenyu
- * @Last Modified time: 2018-05-28 00:02:41
+ * @Last Modified time: 2018-05-31 00:44:54
  */
 
 import React, { Component } from "react";
@@ -126,7 +126,7 @@ export default class DatePicker extends Component {
       if (this.props.iconRender) {
         views.push(this.props.iconRender());
       } else {
-        views.push(<Icon name={"ios-arrow-forward"} size={25} color="#999" />);
+        views.push(<Icon name={"ios-arrow-forward"} size={25} color="#999" key="datePicker" />);
       }
     }
 
@@ -147,7 +147,7 @@ export default class DatePicker extends Component {
       period: this.props.period,
       startTime: that.props.startTime,
       lastTime: that.props.lastTime,
-      onSure: function(date, amfm) {
+      onSure: function (date, amfm) {
         let amfmString = "";
         if (that.props.timeMode == "day") {
           amfmString = amfm === 1 ? "下午" : amfm === 0 ? "上午" : "";
