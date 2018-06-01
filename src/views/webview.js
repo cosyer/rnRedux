@@ -24,7 +24,7 @@ export default class Webview extends Component {
                 style={{ flex: 1, backgroundColor: '#fff' }}
                 javaScriptEnabled={true}
                 scalesPageToFit={true}
-                source={{ 'https:chenyu.mydearest.cn'}}
+                source={{ uri: 'http://mydearest.cn/responsive/' }}
             />
         );
     }

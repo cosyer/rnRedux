@@ -9,6 +9,7 @@ import Login from "./views/login";
 import Detail from "./views/detail";
 import Rice from "./views/rice";
 import Geolocation from './views/geolocation'
+import WebView from './views/webview'
 
 // tab
 const MainScreenNavigator = TabNavigator(
@@ -120,7 +121,8 @@ const SimpleApp = StackNavigator(
     Login: { screen: Login },
     Detail: { screen: Detail },
     Rice: { screen: Rice },
-    Geolocation: { screen: Geolocation }
+    Geolocation: { screen: Geolocation },
+    WebView: { screen: WebView }
   },
   // 通用配置
   {

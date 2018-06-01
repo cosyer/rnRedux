@@ -340,13 +340,6 @@
 			remoteGlobalIDString = 4107012F1ACB723B00C6AA39;
 			remoteInfo = RNCamera;
 		};
-		DD2B99F720BDAE1200E31B1A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9BE816C43C4445748CC8FB34 /* ReactNativePermissions.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 9D23B34F1C767B80008B4819;
-			remoteInfo = ReactNativePermissions;
-		};
 		DD3B391420A67E4B00DF0C33 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A7BBFAFF570343C59B3989E2 /* RNVectorIcons.xcodeproj */;
@@ -442,7 +435,6 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		88AA116BD38F417DA54EFCA4 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		8DE824C97CCD4C06918C5020 /* libRNCamera.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNCamera.a; sourceTree = "<group>"; };
-		9BE816C43C4445748CC8FB34 /* ReactNativePermissions.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativePermissions.xcodeproj; path = "../node_modules/react-native-permissions/ios/ReactNativePermissions.xcodeproj"; sourceTree = "<group>"; };
 		A1BF3FC974D6407EB5F9E3A6 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		A56049F9D8DF40AB8D110DF5 /* libRCTVideo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTVideo.a; sourceTree = "<group>"; };
 		A7BBFAFF570343C59B3989E2 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
@@ -704,7 +696,6 @@
 				ED443AEEFF5F450A99EFA7F3 /* RCTVideo.xcodeproj */,
 				C81CF78015984F93A9AC7325 /* RCTBEEPickerManager.xcodeproj */,
 				AAC652E003234795A0CC858C /* RNCamera.xcodeproj */,
-				9BE816C43C4445748CC8FB34 /* ReactNativePermissions.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -758,14 +749,6 @@
 			isa = PBXGroup;
 			children = (
 				DD2B99B620BDA6B200E31B1A /* libRNCamera.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		DD2B99CA20BDAE1100E31B1A /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				DD2B99F820BDAE1200E31B1A /* libReactNativePermissions.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1003,10 +986,6 @@
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
-				},
-				{
-					ProductGroup = DD2B99CA20BDAE1100E31B1A /* Products */;
-					ProjectRef = 9BE816C43C4445748CC8FB34 /* ReactNativePermissions.xcodeproj */;
 				},
 				{
 					ProductGroup = DD2B99B220BDA6B200E31B1A /* Products */;
@@ -1300,13 +1279,6 @@
 			fileType = archive.ar;
 			path = libRNCamera.a;
 			remoteRef = DD2B99B520BDA6B200E31B1A /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		DD2B99F820BDAE1200E31B1A /* libReactNativePermissions.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libReactNativePermissions.a;
-			remoteRef = DD2B99F720BDAE1200E31B1A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		DD3B391520A67E4B00DF0C33 /* libRNVectorIcons.a */ = {

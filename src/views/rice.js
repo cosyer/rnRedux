@@ -7,6 +7,7 @@ import {
   Linking,
   Clipboard,
   ScrollView,
+  Platform,
   Dimensions,
   LayoutAnimation,
   UIManager,
@@ -30,7 +31,7 @@ import DatePicker from "../component/form/date-picker";
 
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
-
+const isAndroid = Platform.OS === 'android' ? true : false
 //动画方式
 const customAnimated = {
   customLinear: {
@@ -87,6 +88,7 @@ export default class Rice extends Component {
     }
   }
 
+  // 打电话
   _call = (phone) => {
     return Linking.openURL(`tel:${phone}`).catch(e => console.war(e));
   }
@@ -99,21 +101,28 @@ export default class Rice extends Component {
     } else {
       choosenType.push(type)
     }
+    LayoutAnimation.configureNext(customAnimated.customLinear);
     this.setState({
       choosenType: type === -1 ? [] : choosenType,
     });
+  }
+
+  // 重置
+  _onReset = () => {
+    this.setState({
+      choosenType: []
+    })
   }
 
   _renderModalContent = () => {
     return (
       <View style={styles.filterContainer}>
         <View style={{ backgroundColor: '#f3f4f5' }}>
-          <Text style={{ marginTop: 20, marginLeft: 16, fontSize: 14, color: '#666' }}>服务类型(多选)</Text>
+          <Text style={{ marginTop: 20, marginLeft: 16, fontSize: 14, color: '#666' }}>类型(多选)</Text>
           <ScrollView>
             <View style={styles.filterType}>
               {
                 this.state.itemList.map((item, index) => {
-                  console.log(1111, item)
                   return (
                     <TouchableOpacity
                       style={[styles.optionView, this.state.choosenType.indexOf(item.id) > -1 && styles.choosenView]}
@@ -141,8 +150,8 @@ export default class Rice extends Component {
           </ScrollView>
         </View>
         <View style={[styles.buttonGroup, { bottom: 64 }]}>
-          <TouchableOpacity activeOpacity={0.5} style={styles.leftButton}>
-            <Text style={{ fontSize: 18, color: '#fff' }}>重置</Text>
+          <TouchableOpacity activeOpacity={0.5} style={styles.leftButton} onPress={this._onReset}>
+            <Text style={{ fontSize: 18, color: '#333' }}>重置</Text>
           </TouchableOpacity>
           <TouchableOpacity activeOpacity={0.5} style={styles.rightButton}>
             <Text style={{ fontSize: 18, color: '#fff' }}>确定</Text>
@@ -224,6 +233,13 @@ export default class Rice extends Component {
             onPress={() => this.setState({ filterVisible: true })}
           >
             filter
+          </Button>
+          <Button
+            style={styles.btn}
+            textStyle={styles.countBtnText}
+            onPress={() => this.props.navigation.navigate('WebView')}
+          >
+            WebView
           </Button>
           <DialogLoading visible={this.state.dialogVisible} title="加载中..." />
           <Input
@@ -307,7 +323,7 @@ export default class Rice extends Component {
           visible={this.state.filterVisible}
           onRequestClose={() => this.setState({ filterVisible: false })}
         >
-          <TouchableOpacity style={{ flex: 1, marginTop: 44 }} activeOpacity={1} onPress={() => this.setState({ filterVisible: false })}>
+          <TouchableOpacity style={{ flex: 1, marginTop: isAndroid ? 44 : 64 }} activeOpacity={1} onPress={() => this.setState({ filterVisible: false })}>
             <View style={styles.modalContainer}>
               {this._renderModalContent()}
             </View>
@@ -415,9 +431,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
     paddingLeft: 10,
     paddingRight: 10,
-    marginLeft: 5,
-    marginRight: 5,
-    minWidth: 120,
+    minWidth: 100,
     height: 31,
     borderRadius: 16,
     backgroundColor: '#F8F8F8',

@@ -2,7 +2,7 @@
  * @Author: chenyu 
  * @Date: 2018-05-14 22:00:03 
  * @Last Modified by: chenyu
- * @Last Modified time: 2018-05-25 21:46:25
+ * @Last Modified time: 2018-06-02 00:42:12
  */
 
 import React, { Component } from "react";
@@ -29,7 +29,7 @@ export default class Button extends Component {
     style: {}, // 按钮样式，有默认值，可不传。
     textStyle: {}, // 按钮文字样式，有默认值，可不传。
     /*按钮press的回调*/
-    onPress: () => {},
+    onPress: () => { },
     // 默认透明度
     activeOpacity: 0.5,
 
@@ -38,7 +38,6 @@ export default class Button extends Component {
   };
 
   render() {
-    console.log(this.props.style.backgroundColor);
     return (
       <TouchableOpacity
         activeOpacity={this.props.activeOpacity}
