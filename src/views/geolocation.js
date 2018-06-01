@@ -25,9 +25,30 @@ export default class App extends Component {
     render() {
         return (
             <View style={styles.container}>
+                <Text style={styles.item} onPress={this.getCurrentPosition.bind(this)}>获取定位</Text>
                 <Text style={styles.item} onPress={this.beginWatch.bind(this)}>开始监听</Text>
                 <Text style={styles.item} onPress={this.stopWatch.bind(this)}>停止监听</Text>
             </View>
+        );
+    }
+
+    // 获取位置
+    getCurrentPosition() {
+        Geolocation.getCurrentPosition(
+            location => {
+                var result = "速度：" + location.coords.speed +
+                    "\n经度：" + location.coords.longitude +
+                    "\n纬度：" + location.coords.latitude +
+                    "\n准确度：" + location.coords.accuracy +
+                    "\n行进方向：" + location.coords.heading +
+                    "\n海拔：" + location.coords.altitude +
+                    "\n海拔准确度：" + location.coords.altitudeAccuracy +
+                    "\n时间戳：" + location.timestamp;
+                alert(result);
+            },
+            error => {
+                alert("获取位置失败：" + error)
+            }
         );
     }
 
