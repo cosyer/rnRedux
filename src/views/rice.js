@@ -14,8 +14,6 @@ import {
   TouchableOpacity
 } from "react-native";
 import Picker from "../component/form/picker";
-import Icon from "react-native-vector-icons/Ionicons";
-import Icons from "react-native-vector-icons/FontAwesome";
 import QRCode from "react-native-qrcode";
 import Button from "../component/button";
 import Button1 from "../component/button/rn-button";
@@ -267,6 +265,20 @@ export default class Rice extends Component {
             }
           >
             WebView
+          </Button>
+          <Button
+            style={styles.btn}
+            textStyle={styles.countBtnText}
+            onPress={() => this.props.navigation.navigate("VideoView")}
+          >
+            视频播放
+          </Button>
+          <Button
+            style={styles.btn}
+            textStyle={styles.countBtnText}
+            onPress={() => this.props.navigation.navigate("ImageShow")}
+          >
+            图片展示
           </Button>
           <DialogLoading visible={this.state.dialogVisible} title="加载中..." />
           <Input

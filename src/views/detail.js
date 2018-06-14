@@ -419,7 +419,6 @@ export default class Detail extends Component {
   }
 
   render() {
-    console.log(11111111111, width, height);
     let { videoOptions } = this.props.detail;
 
     return (

@@ -8,8 +8,10 @@ import Mine from "./views/mine";
 import Login from "./views/login";
 import Detail from "./views/detail";
 import Rice from "./views/rice";
-import Geolocation from './views/geolocation'
-import WebView from './views/webview'
+import Geolocation from "./views/geolocation";
+import WebView from "./views/webview";
+import VideoView from "./views/videoview";
+import ImageShow from "./views/imageShow";
 
 // tab
 const MainScreenNavigator = TabNavigator(
@@ -122,7 +124,9 @@ const SimpleApp = StackNavigator(
     Detail: { screen: Detail },
     Rice: { screen: Rice },
     Geolocation: { screen: Geolocation },
-    WebView: { screen: WebView }
+    WebView: { screen: WebView },
+    VideoView: { screen: VideoView },
+    ImageShow: { screen: ImageShow }
   },
   // 通用配置
   {

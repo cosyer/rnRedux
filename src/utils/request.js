@@ -2,7 +2,7 @@
  * @Author: chenyu 
  * @Date: 2018-04-30 17:43:12 
  * @Last Modified by: chenyu
- * @Last Modified time: 2018-05-23 16:17:08
+ * @Last Modified time: 2018-06-14 20:36:42
  */
 
 import Toast from "../component/toast";
@@ -56,7 +56,13 @@ export default class Request {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        jwtJson: JSON.stringify({
+          shopCode: "V00125",
+          shopType: "1",
+          mainShopCode: "V00125",
+          userCode: "B0000041"
+        })
       },
       body: JSON.stringify(params)
     })
