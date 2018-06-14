@@ -64,7 +64,7 @@ export default class Home extends Component {
         let payload = {};
         payload.accessToken = user.accessToken;
         payload.page = that.props.list.page;
-        // that.props.dispatch(refresh(payload));
+        that.props.dispatch(refresh(payload));
       }
     });
   }
@@ -126,20 +126,21 @@ export default class Home extends Component {
 
   render() {
     let list = this.props.list;
+    console.log("-----------start-----------------");
     return (
       <View style={styles.container}>
         {list.loading ? (
           <Loading />
         ) : (
-            <FlatList
-              data={list.dataList}
-              extraData={list}
-              onRefresh={this._pullDownRefresh}
-              refreshing={list.refreshing}
-              keyExtractor={(item, index) => item._id}
-              renderItem={this._renderItem}
-            />
-          )}
+          <FlatList
+            data={list.dataList}
+            extraData={list}
+            onRefresh={this._pullDownRefresh}
+            refreshing={list.refreshing}
+            keyExtractor={(item, index) => item._id}
+            renderItem={this._renderItem}
+          />
+        )}
       </View>
     );
   }

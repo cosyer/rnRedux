@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Icon from "react-native-vector-icons/Ionicons";
 import Icons from "react-native-vector-icons/FontAwesome";
+import Orientation from "react-native-orientation";
 import Video from "react-native-video";
 import Button from "../component/button";
 import {
@@ -15,10 +16,12 @@ import {
   TextInput,
   TouchableOpacity,
   AsyncStorage,
-  View
+  View,
+  Slider
 } from "react-native";
 import Actions from "../actions";
 const width = Dimensions.get("window").width;
+const height = Dimensions.get("window").height;
 const { detailParamsChange, queryCommentList, addComment } = Actions;
 
 const cachedResults = {
@@ -26,6 +29,21 @@ const cachedResults = {
   items: [],
   total: 0
 };
+
+function formatTime(second) {
+  let h = 0,
+    i = 0,
+    s = parseInt(second);
+  if (s > 60) {
+    i = parseInt(s / 60);
+    s = parseInt(s % 60);
+  }
+  // 补零
+  let zero = function(v) {
+    return v >> 0 < 10 ? "0" + v : v;
+  };
+  return [zero(h), zero(i), zero(s)].join(":");
+}
 
 @connect(state => ({
   detail: state.detail,
@@ -39,7 +57,7 @@ export default class Detail extends Component {
   componentDidMount() {
     // 获取评论
     // this._queryCommentList()
-    this._addComment();
+    // this._addComment();
   }
 
   static navigationOptions = ({ navigation, screenProps }) => {
@@ -89,35 +107,68 @@ export default class Detail extends Component {
     console.log("start");
   };
 
-  _onLoad = () => {
-    console.log("load");
-  };
-
-  _onProgress = data => {
+  // 屏幕旋转时宽高会发生变化，可以在onLayout的方法中做处理，比监听屏幕旋转更加及时获取宽高变化
+  _onLayout = event => {
+    //获取根View的宽高
+    let { width, height } = event.nativeEvent.layout;
     let { videoOptions } = this.props.detail;
+    console.log("通过onLayout得到的宽度：" + width);
+    console.log("通过onLayout得到的高度：" + height);
 
-    let duration = data.playableDuration;
-    let currentTime = data.currentTime;
-    let percent = Number((currentTime / duration).toFixed(2));
-    videoOptions.videoTotal = duration;
-    videoOptions.currentTime = Number(data.currentTime.toFixed(2));
-    videoOptions.videoProgress = percent;
-
-    if (!videoOptions.videoLoaded) {
-      videoOptions.videoLoaded = true;
+    // 一般设备横屏下都是宽大于高，这里可以用这个来判断横竖屏
+    let isLandscape = width > height;
+    if (isLandscape) {
+      videoOptions.width = width;
+      videoOptions.height = height;
+      videoOptions.isFullScreen = true;
+    } else {
+      videoOptions.width = width;
+      videoOptions.height = width * 9 / 16;
+      videoOptions.isFullScreen = false;
     }
-    if (!videoOptions.playing) {
-      videoOptions.playing = true;
-    }
+    Orientation.unlockAllOrientations();
     this.props.dispatch(
       detailParamsChange({ name: "videoOptions", value: videoOptions })
     );
   };
 
+  _onLoad = data => {
+    console.log("load");
+    let { videoOptions } = this.props.detail;
+    videoOptions.duration = data.duration;
+    this.props.dispatch(
+      detailParamsChange({ name: "videoOptions", value: videoOptions })
+    );
+  };
+
+  _onProgress = data => {
+    let { videoOptions } = this.props.detail;
+    if (!videoOptions.pause) {
+      let duration = videoOptions.duration;
+      let currentTime = data.currentTime;
+      let percent = Number((currentTime / duration).toFixed(2));
+      videoOptions.videoTotal = duration;
+      videoOptions.currentTime = Number(data.currentTime.toFixed(2));
+      videoOptions.videoProgress = percent;
+
+      if (!videoOptions.videoLoaded) {
+        videoOptions.videoLoaded = true;
+      }
+      if (videoOptions.pause) {
+        videoOptions.pause = false;
+      }
+      this.props.dispatch(
+        detailParamsChange({ name: "videoOptions", value: videoOptions })
+      );
+    }
+  };
+
   _onEnd() {
     let { videoOptions } = this.props.detail;
-    videoOptions.playing = false;
+    videoOptions.pause = true;
+    videoOptions.currentTime = 0;
     videoOptions.videoProgress = 1;
+    videoOptions.playFromBeginning = true; //是否重新播放
     this.props.dispatch(
       detailParamsChange({ name: "videoOptions", value: videoOptions })
     );
@@ -125,12 +176,18 @@ export default class Detail extends Component {
 
   _onError = err => {
     console.log(err);
-    console.log("error");
   };
 
   _togglePause = () => {
     let { videoOptions } = this.props.detail;
     videoOptions.pause = !videoOptions.pause;
+    if (!videoOptions.pause) {
+      videoOptions.showVideoCover = false;
+    }
+    if (videoOptions.playFromBeginning) {
+      videoOptions.playFromBeginning = false;
+      this.videoPlayer.seek(0);
+    }
     this.props.dispatch(
       detailParamsChange({ name: "videoOptions", value: videoOptions })
     );
@@ -139,6 +196,40 @@ export default class Detail extends Component {
   _onError() {
     let { videoOptions } = this.props.detail;
     videoOptions.videoOk = false;
+    this.props.dispatch(
+      detailParamsChange({ name: "videoOptions", value: videoOptions })
+    );
+  }
+
+  // 进度条值改变
+  onSliderValueChanged(currentTime) {
+    let { videoOptions } = this.props.detail;
+    this.videoPlayer.seek(currentTime);
+    if (!videoOptions.pause) {
+      videoOptions.currentTime = currentTime;
+    } else {
+      videoOptions.currentTime = currentTime;
+      videoOptions.pause = false;
+      videoOptions.showVideoCover = false;
+    }
+    this.props.dispatch(
+      detailParamsChange({ name: "videoOptions", value: videoOptions })
+    );
+  }
+
+  // 点击了工具栏上的全屏按钮
+  onControlShrinkPress() {
+    let { videoOptions } = this.props.detail;
+    if (videoOptions.isFullScreen) {
+      Orientation.lockToPortrait();
+      videoOptions.width = width;
+      videoOptions.height = width * 9 / 16;
+    } else {
+      Orientation.lockToLandscape();
+      videoOptions.width = height;
+      videoOptions.height = width - 66;
+    }
+    videoOptions.isFullScreen = !videoOptions.isFullScreen;
     this.props.dispatch(
       detailParamsChange({ name: "videoOptions", value: videoOptions })
     );
@@ -328,19 +419,28 @@ export default class Detail extends Component {
   }
 
   render() {
+    console.log(11111111111, width, height);
     let { videoOptions } = this.props.detail;
 
     return (
       <View style={styles.container}>
         <TouchableOpacity
-          style={styles.videoBox}
+          style={[
+            styles.videoBox,
+            { width: videoOptions.width, height: videoOptions.height }
+          ]}
           onPress={this._togglePause}
           activeOpacity={1}
         >
           <Video
-            ref="videoPlayer"
+            ref={ref => {
+              this.videoPlayer = ref;
+            }}
             source={{ uri: videoOptions.source }}
-            style={styles.video}
+            style={[
+              styles.video,
+              { width: videoOptions.width, height: videoOptions.height }
+            ]}
             volumn={videoOptions.volumn}
             paused={videoOptions.pause}
             rate={videoOptions.rate}
@@ -353,24 +453,104 @@ export default class Detail extends Component {
             onEnd={this._onEnd}
             onError={this._onError}
           />
+          {videoOptions.showVideoCover ? (
+            <Image
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: videoOptions.width,
+                height: videoOptions.height
+              }}
+              resizeMode={"cover"}
+              source={{ uri: videoOptions.videoCover }}
+            />
+          ) : null}
+
           {!videoOptions.videoOk && (
             <Text style={styles.errorText}>视频播放错误</Text>
           )}
+
           {// 加载动画
           !videoOptions.videoLoaded && (
-            <ActivityIndicator color="#ee735c" style={styles.loading} />
+            <ActivityIndicator
+              color="#ee735c"
+              style={[styles.loading, { width: videoOptions.width * 0.28 }]}
+            />
           )}
 
           {// 播放按钮
           videoOptions.videoLoaded && videoOptions.pause ? (
-            <Icon name="ios-play" size={48} style={styles.playIcon} />
+            <Icon
+              name="ios-play"
+              size={48}
+              style={[
+                styles.playIcon,
+                {
+                  top: videoOptions.isFullScreen
+                    ? videoOptions.width * 0.56 / 2 - 30 - 44
+                    : videoOptions.width * 0.56 / 2 - 30,
+                  left: videoOptions.width / 2 - 30
+                }
+              ]}
+            />
           ) : null}
-          <View style={styles.progressBox}>
+
+          {// 控制台
+          videoOptions.pause ? (
+            <View style={[styles.control, { width: videoOptions.width }]}>
+              <TouchableOpacity activeOpacity={0.3} onPress={this._togglePause}>
+                <Image
+                  style={styles.playControl}
+                  source={
+                    !videoOptions.pause
+                      ? require("../assets/image/icon_control_pause.png")
+                      : require("../assets/image/icon_control_play.png")
+                  }
+                />
+              </TouchableOpacity>
+              <Text style={styles.time}>
+                {formatTime(videoOptions.currentTime)}
+              </Text>
+              <Slider
+                style={{ flex: 1 }}
+                maximumTrackTintColor={"#999999"}
+                minimumTrackTintColor={"#00c06d"}
+                thumbImage={require("../assets/image/icon_control_slider.png")}
+                value={videoOptions.currentTime}
+                minimumValue={0}
+                maximumValue={videoOptions.duration}
+                onValueChange={currentTime => {
+                  this.onSliderValueChanged(currentTime);
+                }}
+              />
+              <Text style={styles.time}>
+                {formatTime(videoOptions.duration)}
+              </Text>
+              <TouchableOpacity
+                activeOpacity={0.3}
+                onPress={() => {
+                  this.onControlShrinkPress();
+                }}
+              >
+                <Image
+                  style={styles.shrinkControl}
+                  source={
+                    videoOptions.isFullScreen
+                      ? require("../assets/image/icon_control_shrink_screen.png")
+                      : require("../assets/image/icon_control_full_screen.png")
+                  }
+                />
+              </TouchableOpacity>
+            </View>
+          ) : null}
+
+          <View style={[styles.progressBox, { width: videoOptions.width }]}>
             <View
               style={[
                 styles.progressBar,
                 {
-                  width: width * videoOptions.videoProgress
+                  width: videoOptions.width * videoOptions.videoProgress
                 }
               ]}
             />
@@ -425,25 +605,18 @@ const styles = StyleSheet.create({
     color: "#ee753c"
   },
   videoBox: {
-    width: width,
-    height: width * 0.56,
     backgroundColor: "#000"
   },
   video: {
-    width: width,
-    height: width * 0.56,
     backgroundColor: "#000"
   },
   loading: {
     position: "absolute",
     left: 0,
-    top: width * 0.28,
-    width: width,
     alignSelf: "center",
     backgroundColor: "transparent"
   },
   progressBox: {
-    width: width,
     height: 2,
     backgroundColor: "#ccc"
   },
@@ -454,8 +627,6 @@ const styles = StyleSheet.create({
   },
   playIcon: {
     position: "absolute",
-    top: width * 0.28 - 30,
-    left: width / 2 - 30,
     width: 60,
     height: 60,
     paddingTop: 6,
@@ -589,5 +760,30 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     borderBottomWidth: 1,
     borderBottomColor: "#eee"
+  },
+  playControl: {
+    width: 24,
+    height: 24,
+    marginLeft: 15
+  },
+  shrinkControl: {
+    width: 15,
+    height: 15,
+    marginRight: 15
+  },
+  time: {
+    fontSize: 12,
+    color: "white",
+    marginLeft: 10,
+    marginRight: 10
+  },
+  control: {
+    flexDirection: "row",
+    height: 44,
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.8)",
+    position: "absolute",
+    bottom: 0,
+    left: 0
   }
 });

@@ -16,7 +16,7 @@ import {
 import Picker from "../component/form/picker";
 import Icon from "react-native-vector-icons/Ionicons";
 import Icons from "react-native-vector-icons/FontAwesome";
-import QRCode from "react-native-qrcode"
+import QRCode from "react-native-qrcode";
 import Button from "../component/button";
 import Button1 from "../component/button/rn-button";
 import Button2 from "../component/button/rn-button2";
@@ -31,14 +31,14 @@ import DatePicker from "../component/form/date-picker";
 
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
-const isAndroid = Platform.OS === 'android' ? true : false
+const isAndroid = Platform.OS === "android" ? true : false;
 //动画方式
 const customAnimated = {
   customLinear: {
     duration: 300,
     create: {
       type: LayoutAnimation.Types.linear,
-      property: LayoutAnimation.Properties.opacity,
+      property: LayoutAnimation.Properties.opacity
     },
     update: {
       type: LayoutAnimation.Types.easeInEaseOut
@@ -46,7 +46,8 @@ const customAnimated = {
   }
 };
 // 使用LayoutAnimation.configureNext(customAnimated.customLinear);
-UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);//启用android Layout动画
+UIManager.setLayoutAnimationEnabledExperimental &&
+  UIManager.setLayoutAnimationEnabledExperimental(true); //启用android Layout动画
 
 export default class Rice extends Component {
   constructor(props) {
@@ -59,13 +60,13 @@ export default class Rice extends Component {
       inputAreaText: "",
       filterVisible: false,
       itemList: [
-        { id: 1, name: '处女座' },
-        { id: 2, name: '双子座' },
-        { id: 3, name: '天马座' },
-        { id: 4, name: '仙女座' },
-        { id: 5, name: '水瓶座' },
-        { id: 6, name: '双鱼座' },
-        { id: 7, name: '天秤座' }
+        { id: 1, name: "处女座" },
+        { id: 2, name: "双子座" },
+        { id: 3, name: "天马座" },
+        { id: 4, name: "仙女座" },
+        { id: 5, name: "水瓶座" },
+        { id: 6, name: "双鱼座" },
+        { id: 7, name: "天秤座" }
       ],
       choosenType: [1]
     };
@@ -79,86 +80,107 @@ export default class Rice extends Component {
   };
 
   async _setClipboardContent() {
-    Clipboard.setString('Hello World');
+    Clipboard.setString("Hello World");
     try {
       var content = await Clipboard.getString();
-      showHUDMessage('复制成功')
+      showHUDMessage("复制成功");
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
   }
 
   // 打电话
-  _call = (phone) => {
+  _call = phone => {
     return Linking.openURL(`tel:${phone}`).catch(e => console.war(e));
-  }
+  };
 
   // 选择服务类型
-  _changeType = (type) => {
-    let choosenType = this.state.choosenType
+  _changeType = type => {
+    let choosenType = this.state.choosenType;
     if (choosenType.indexOf(type) > -1) {
-      choosenType.splice(choosenType.indexOf(type), 1)
+      choosenType.splice(choosenType.indexOf(type), 1);
     } else {
-      choosenType.push(type)
+      choosenType.push(type);
     }
     LayoutAnimation.configureNext(customAnimated.customLinear);
     this.setState({
-      choosenType: type === -1 ? [] : choosenType,
+      choosenType: type === -1 ? [] : choosenType
     });
-  }
+  };
 
   // 重置
   _onReset = () => {
     this.setState({
       choosenType: []
-    })
-  }
+    });
+  };
 
   _renderModalContent = () => {
     return (
       <View style={styles.filterContainer}>
-        <View style={{ backgroundColor: '#f3f4f5' }}>
-          <Text style={{ marginTop: 20, marginLeft: 16, fontSize: 14, color: '#666' }}>类型(多选)</Text>
+        <View style={{ backgroundColor: "#f3f4f5" }}>
+          <Text
+            style={{
+              marginTop: 20,
+              marginLeft: 16,
+              fontSize: 14,
+              color: "#666"
+            }}
+          >
+            类型(多选)
+          </Text>
           <ScrollView>
             <View style={styles.filterType}>
-              {
-                this.state.itemList.map((item, index) => {
-                  return (
-                    <TouchableOpacity
-                      style={[styles.optionView, this.state.choosenType.indexOf(item.id) > -1 && styles.choosenView]}
-                      key={item.id}
-                      onPress={() => this._changeType(item.id)}>
-                      <Text style={[styles.optionText, this.state.choosenType.indexOf(item.id) > -1 && styles.choosenOption]}>
-                        {item.name}
-                      </Text>
-                    </TouchableOpacity>
-                  )
-                })
-              }
+              {this.state.itemList.map((item, index) => {
+                return (
+                  <TouchableOpacity
+                    style={[
+                      styles.optionView,
+                      this.state.choosenType.indexOf(item.id) > -1 &&
+                        styles.choosenView
+                    ]}
+                    key={item.id}
+                    onPress={() => this._changeType(item.id)}
+                  >
+                    <Text
+                      style={[
+                        styles.optionText,
+                        this.state.choosenType.indexOf(item.id) > -1 &&
+                          styles.choosenOption
+                      ]}
+                    >
+                      {item.name}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
               {
                 // 奇数个填补空白
               }
-              {
-                this.state.itemList.length % 2 === 1 &&
+              {this.state.itemList.length % 2 === 1 && (
                 <TouchableOpacity
-                  style={[styles.optionView, { backgroundColor: '#f3f4f5' }]}
-                >
-                </TouchableOpacity>
-              }
-              <View style={styles.separatorStyle}></View>
+                  style={[styles.optionView, { backgroundColor: "#f3f4f5" }]}
+                />
+              )}
+              <View style={styles.separatorStyle} />
             </View>
           </ScrollView>
         </View>
         <View style={[styles.buttonGroup, { bottom: 64 }]}>
-          <TouchableOpacity activeOpacity={0.5} style={styles.leftButton} onPress={this._onReset}>
-            <Text style={{ fontSize: 18, color: '#333' }}>重置</Text>
+          <TouchableOpacity
+            activeOpacity={0.5}
+            style={styles.leftButton}
+            onPress={this._onReset}
+          >
+            <Text style={{ fontSize: 18, color: "#333" }}>重置</Text>
           </TouchableOpacity>
           <TouchableOpacity activeOpacity={0.5} style={styles.rightButton}>
-            <Text style={{ fontSize: 18, color: '#fff' }}>确定</Text>
+            <Text style={{ fontSize: 18, color: "#fff" }}>确定</Text>
           </TouchableOpacity>
         </View>
-      </View >)
-  }
+      </View>
+    );
+  };
 
   render() {
     return (
@@ -216,14 +238,14 @@ export default class Rice extends Component {
           <Button
             style={styles.btn}
             textStyle={styles.countBtnText}
-            onPress={() => this._call('18883269663')}
+            onPress={() => this._call("18883269663")}
           >
             Call
           </Button>
           <Button
             style={styles.btn}
             textStyle={styles.countBtnText}
-            onPress={() => this.props.navigation.navigate('Geolocation')}
+            onPress={() => this.props.navigation.navigate("Geolocation")}
           >
             地理位置
           </Button>
@@ -237,7 +259,12 @@ export default class Rice extends Component {
           <Button
             style={styles.btn}
             textStyle={styles.countBtnText}
-            onPress={() => this.props.navigation.navigate('WebView')}
+            onPress={() =>
+              this.props.navigation.navigate("WebView", {
+                url:
+                  "http://124.129.157.208:8810/SD/2017qingdao/xiaoxueEnglish/grade3/b/1.mp4"
+              })
+            }
           >
             WebView
           </Button>
@@ -308,12 +335,19 @@ export default class Rice extends Component {
             value={this.state.inputAreaText}
             editable={true}
           />
-          <View style={{ alignItems: 'center', justifyContent: 'center', height: 80 }}>
+          <View
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+              height: 80
+            }}
+          >
             <QRCode
               value={this.state.qrText}
               size={50}
-              bgColor='purple'
-              fgColor='white' />
+              bgColor="purple"
+              fgColor="white"
+            />
           </View>
         </ScrollView>
 
@@ -323,13 +357,17 @@ export default class Rice extends Component {
           visible={this.state.filterVisible}
           onRequestClose={() => this.setState({ filterVisible: false })}
         >
-          <TouchableOpacity style={{ flex: 1, marginTop: isAndroid ? 44 : 64 }} activeOpacity={1} onPress={() => this.setState({ filterVisible: false })}>
+          <TouchableOpacity
+            style={{ flex: 1, marginTop: isAndroid ? 44 : 64 }}
+            activeOpacity={1}
+            onPress={() => this.setState({ filterVisible: false })}
+          >
             <View style={styles.modalContainer}>
               {this._renderModalContent()}
             </View>
           </TouchableOpacity>
         </Modal>
-      </View >
+      </View>
     );
   }
 }
@@ -375,57 +413,57 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 18,
     padding: 32,
-    color: '#777',
+    color: "#777"
   },
   textBold: {
-    fontWeight: '500',
-    color: '#000',
+    fontWeight: "500",
+    color: "#000"
   },
   buttonText: {
     fontSize: 21,
-    color: 'rgb(0,122,255)',
+    color: "rgb(0,122,255)"
   },
   buttonTouchable: {
-    padding: 16,
+    padding: 16
   },
   modalContainer: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: "rgba(0, 0, 0, 0.5)"
   },
   filterContainer: {
     width: width * 0.8,
     height: height,
-    backgroundColor: '#efefef',
-    position: 'absolute',
+    backgroundColor: "#efefef",
+    position: "absolute",
     right: 0
   },
   filterType: {
     width: width * 0.8,
     minHeight: 126,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    alignItems: 'center'
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+    alignItems: "center"
   },
   buttonGroup: {
     width: width * 0.8,
     height: 50,
-    position: 'absolute',
-    flexDirection: 'row',
+    position: "absolute",
+    flexDirection: "row",
     borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: '#DCDCDC'
+    borderTopColor: "#DCDCDC"
   },
   leftButton: {
     flex: 1,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center'
+    backgroundColor: "#fff",
+    justifyContent: "center",
+    alignItems: "center"
   },
   rightButton: {
     flex: 1,
-    backgroundColor: '#5AA9FA',
-    justifyContent: 'center',
-    alignItems: 'center'
+    backgroundColor: "#5AA9FA",
+    justifyContent: "center",
+    alignItems: "center"
   },
   optionView: {
     marginTop: 16,
@@ -434,24 +472,24 @@ const styles = StyleSheet.create({
     minWidth: 100,
     height: 31,
     borderRadius: 16,
-    backgroundColor: '#F8F8F8',
-    justifyContent: 'center',
-    alignItems: 'center'
+    backgroundColor: "#F8F8F8",
+    justifyContent: "center",
+    alignItems: "center"
   },
   optionText: {
-    fontFamily: 'PingFangSC-Regular',
+    fontFamily: "PingFangSC-Regular",
     fontSize: 14,
-    color: '#999'
+    color: "#999"
   },
   choosenOption: {
-    color: '#fff'
+    color: "#fff"
   },
   choosenView: {
-    backgroundColor: '#5AA9FA'
+    backgroundColor: "#5AA9FA"
   },
   separatorStyle: {
     width: width,
     height: StyleSheet.hairlineWidth,
-    backgroundColor: '#eee'
+    backgroundColor: "#eee"
   }
 });
