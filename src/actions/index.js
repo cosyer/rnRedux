@@ -7,3 +7,6 @@ export default {
   ...list,
   ...detail
 };
+
+// const result={  ...login,...list,...detail }
+// export default result

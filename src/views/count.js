@@ -3,7 +3,8 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import Icons from "react-native-vector-icons/FontAwesome";
 import { connect } from "react-redux";
-import { increase, decrease, reset } from "../actions";
+import Action from "../actions";
+const { increase, decrease, reset } = Action;
 
 class Count extends Component {
   _onPressReset() {

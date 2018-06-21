@@ -17,6 +17,7 @@ import Loading from "../component/dialog-loading";
 import CModal from "../component/custom-modal";
 import Button from "../component/button";
 import Action from "../actions";
+import Count from "./count";
 const width = Dimensions.get("window").width;
 const isAndroid = Platform.OS === "android";
 
@@ -193,6 +194,7 @@ export default class Login extends Component {
             )
           }
         />
+        {/* <Count/> */}
       </View>
     );
   }
