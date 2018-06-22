@@ -3,12 +3,14 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import Icons from "react-native-vector-icons/FontAwesome";
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import Action from "../actions";
 const { increase, decrease, reset } = Action;
 
 class Count extends Component {
   _onPressReset() {
-    this.props.dispatch(reset()); // this.props.dispatch({type:"reset"});
+    //this.props.dispatch(reset()); // this.props.dispatch({type:"reset"});
+    this.props.reset();
   }
 
   _onPressInc() {
@@ -77,4 +79,10 @@ const mapStateToProps = state => ({
   counter: state.counter
 });
 
-export default connect(mapStateToProps)(Count);
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    reset: bindActionCreators(reset, dispatch)
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Count);
