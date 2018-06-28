@@ -344,8 +344,8 @@ export default class VideoPlayScreen extends Component {
         videoHeight: width * 9 / 16,
         isFullScreen: false
       });
+      Orientation.unlockAllOrientations();
     }
-    Orientation.unlockAllOrientations();
   };
 
   /// -------外部调用事件方法-------

@@ -203,10 +203,10 @@ export default class Login extends Component {
 const styles = StyleSheet.create({
   inputField: {
     height: 40,
-    paddingTop: 10, // android底边框
+    paddingTop: 0,
+    paddingBottom: 0,
     paddingLeft: 10,
     color: "#666",
-    lineHeight: 16,
     fontSize: 16,
     borderRadius: 4,
     backgroundColor: "#fff",
@@ -214,13 +214,16 @@ const styles = StyleSheet.create({
     borderColor: "#CCC"
   },
   verifyCodeInput: {
+    textAlign: "left",
+    textAlignVertical: "center",
+    paddingTop: 0,
+    paddingBottom: 0,
+    paddingLeft: 10,
+    fontSize: 16,
+    marginRight: 10,
     width: 200,
     height: 40,
-    padding: 0, // android底边框
-    paddingLeft: 10,
-    marginRight: 10,
     color: "#666",
-    fontSize: 16,
     borderRadius: 4,
     backgroundColor: "#fff",
     borderWidth: 1,
