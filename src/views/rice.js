@@ -89,7 +89,7 @@ export default class Rice extends Component {
 
   // 打电话
   _call = phone => {
-    return Linking.openURL(`tel:${phone}`).catch(e => console.war(e));
+    return Linking.openURL(`tel:${phone}`).catch(e => console.warn(e));
   };
 
   // 选择服务类型
