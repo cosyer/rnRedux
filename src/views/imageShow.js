@@ -81,7 +81,7 @@ export default class DayPhoto extends Component {
   };
 
   componentDidMount() {
-    this._queryUserInfo();
+    // this._queryUserInfo();
     this._queryDailyChartLabList();
   }
 
@@ -142,7 +142,7 @@ export default class DayPhoto extends Component {
           }}
           renderItem={that._renderItem}
           onRefresh={() => {
-            that._queryDailyChartList(0, value);
+            // that._queryDailyChartList(0, value);
           }}
           refreshing={that.state.refreshing}
           ListEmptyComponent={that._emptyComponent}
@@ -215,55 +215,61 @@ export default class DayPhoto extends Component {
               { height: modelContentHeight, width: modelContentWith }
             ]}
           >
-            <ImageBackground
-              source={{ uri: this.state.selectPhoto.picUrl }}
-              style={{
-                justifyContent: "flex-end",
-                width: modelContentWith,
-                height: modelImageHeight
+            <TouchableOpacity
+              onPress={() => {
+                this.setState({ showModal: false });
               }}
             >
-              {this.state.isCreatePhoto ? (
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    backgroundColor: "rgba(0,0,0,0.3)",
-                    paddingHorizontal: 6,
-                    paddingVertical: 6
-                  }}
-                >
-                  <Image
-                    source={{ uri: `${this.state.user.photo}@667h_375w_0e` }}
-                    style={{ width: 37, height: 37, borderRadius: 18.5 }}
-                  />
+              <ImageBackground
+                source={{ uri: this.state.selectPhoto.picUrl }}
+                style={{
+                  justifyContent: "flex-end",
+                  width: modelContentWith,
+                  height: modelImageHeight
+                }}
+                resizeMode="contain"
+              >
+                {this.state.isCreatePhoto ? (
                   <View
                     style={{
-                      flex: 1,
-                      justifyContent: "center",
-                      marginHorizontal: 9
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      backgroundColor: "rgba(0,0,0,0.3)",
+                      paddingHorizontal: 6,
+                      paddingVertical: 6
                     }}
                   >
-                    <Text
-                      style={{ color: "white", fontSize: 11 }}
-                      numberOfLines={2}
-                    >{`${this.state.user.name} ${this.state.user.companyName ||
-                      ""}`}</Text>
-                    <Text
-                      style={{ color: "white", fontSize: 10 }}
-                      numberOfLines={1}
-                    >{`${this.state.user.phone || ""}`}</Text>
+                    <Image
+                      source={{ uri: `${this.state.user.photo}@667h_375w_0e` }}
+                      style={{ width: 37, height: 37, borderRadius: 18.5 }}
+                    />
+                    <View
+                      style={{
+                        flex: 1,
+                        justifyContent: "center",
+                        marginHorizontal: 9
+                      }}
+                    >
+                      <Text
+                        style={{ color: "white", fontSize: 11 }}
+                        numberOfLines={2}
+                      >{`${this.state.user.name} ${this.state.user
+                        .companyName || ""}`}</Text>
+                      <Text
+                        style={{ color: "white", fontSize: 10 }}
+                        numberOfLines={1}
+                      >{`${this.state.user.phone || ""}`}</Text>
+                    </View>
+
+                    <Image
+                      source={{ uri: this.state.user.qrCode }}
+                      style={{ width: 50, height: 50 }}
+                    />
                   </View>
-
-                  <Image
-                    source={{ uri: this.state.user.qrCode }}
-                    style={{ width: 50, height: 50 }}
-                  />
-                </View>
-              ) : null}
-            </ImageBackground>
-
+                ) : null}
+              </ImageBackground>
+            </TouchableOpacity>
             {this.state.isCreatePhoto ? (
               <View style={{ flexDirection: "row" }}>
                 <TouchableOpacity
@@ -337,12 +343,13 @@ export default class DayPhoto extends Component {
         }}
       >
         <Image
-          source={{ uri: `${item.picUrl}@667h_375w_0e` }}
+          source={{ uri: `${item.picUrl}` }}
           style={{
             height: this.photoHeight,
             width: this.photoWidth,
             marginLeft: marginHorizontal
           }}
+          resizeMode="contain"
         />
         <Text style={styles.contentText}>{item.name}</Text>
       </TouchableOpacity>
@@ -355,7 +362,7 @@ export default class DayPhoto extends Component {
    */
   _queryUserInfo() {
     let that = this;
-    // 有空把request再封一层api,j就可以用async/await
+    // 有空把request再封一层api,就可以用async/await
     Request.post(
       "https://gatewaytest.bm001.com/fw/user/queryInfoCount",
       {},
@@ -389,12 +396,28 @@ export default class DayPhoto extends Component {
       {},
       res => {
         if (res.data) {
+          // 处理datasource
+          let dataSource = {
+            科技: [
+              {
+                picUrl: "https://static.mydearest.cn/img/avatar.jpg"
+              },
+              {
+                picUrl: "https://static.mydearest.cn/img/avatar.jpg"
+              },
+              {
+                picUrl: "https://static.mydearest.cn/img/avatar.jpg"
+              }
+            ]
+          };
           that.setState({
-            typeArray: res.data.dataList
+            // typeArray: res.data.dataList
+            typeArray: ["科技", "教育", "节日", "文化"],
+            dataSource
           });
-          res.data.dataList.map(function(value) {
-            that._queryDailyChartList(0, value);
-          });
+          // res.data.dataList.map(function(value) {
+          //   that._queryDailyChartList(0, value);
+          // });
         }
       }
     );
@@ -423,7 +446,7 @@ export default class DayPhoto extends Component {
     }
 
     Request.post(
-      "https://gatewaytest.bm001.com/fw/dailychart/list",
+      "https://gateway.bm001.com/fw/dailychart/list",
       params,
       res => {
         let dataList = res.data.dataList;
@@ -460,7 +483,7 @@ export default class DayPhoto extends Component {
     }
 
     this.pageNum = this.pageNum + 1;
-    this._queryDailyChartList(this.pageNum, lab);
+    // this._queryDailyChartList(this.pageNum, lab);
   }
 
   /**

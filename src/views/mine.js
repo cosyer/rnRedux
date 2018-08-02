@@ -6,7 +6,6 @@
 
 import React, { Component } from "react";
 import {
-  AppRegistry,
   StyleSheet,
   Text,
   View,
@@ -186,7 +185,7 @@ export default class Mine extends Component {
               source={{
                 uri: user.avatar
                   ? "http://p33v4b0bc.bkt.clouddn.com/" + user.avatar
-                  : "https://mydearest.cn/static/img/avatar.jpg"
+                  : "https://static.mydearest.cn/img/avatar.jpg"
               }}
               style={styles.avatarContainer}
             />

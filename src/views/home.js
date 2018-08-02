@@ -64,7 +64,7 @@ export default class Home extends Component {
         let payload = {};
         payload.accessToken = user.accessToken;
         payload.page = that.props.list.page;
-        that.props.dispatch(refresh(payload));
+        // that.props.dispatch(refresh(payload));
       }
     });
   }
@@ -89,7 +89,7 @@ export default class Home extends Component {
         <TouchableOpacity onPress={() => this._onSelect(item)}>
           <Text style={styles.title}>{item.title}</Text>
           <Image
-            source={{ uri: "https://mydearest.cn/static/img/avatar.jpg" }}
+            source={{ uri: "https://static.mydearest.cn/img/avatar.jpg" }}
             style={styles.thumb}
           />
         </TouchableOpacity>

@@ -1,20 +1,6 @@
 import React, { Component } from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  Button,
-  Image,
-  Platform,
-  BackHandler,
-  ToastAndroid
-} from "react-native";
-import {
-  StackNavigator,
-  TabNavigator,
-  addNavigationHelpers,
-  NavigationActions
-} from "react-navigation";
+import { BackHandler, ToastAndroid } from "react-native";
+import { addNavigationHelpers, NavigationActions } from "react-navigation";
 import SplashScreen from "react-native-splash-screen";
 import { Provider, connect } from "react-redux";
 

@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -42,6 +43,7 @@
 		3A92A4C72BD44BDD9C0817EB /* libRCTBEEPickerManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0325058233F346E9933C8CC2 /* libRCTBEEPickerManager.a */; };
 		5AA8B22C245440309B3E2985 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CA831404E79342AC8E8A64DC /* Entypo.ttf */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
+		73223D8A45E94F94BBA40F62 /* libRCTOrientation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BE4FFB2C857447698F30C2F /* libRCTOrientation.a */; };
 		816ADAE525F341E38D9B9654 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 367E411EC088430081B5F0EA /* Feather.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		94F8852EE4564CA58D14A427 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E1476E8C646E41ECB0ACB99D /* MaterialIcons.ttf */; };
@@ -56,7 +58,6 @@
 		DDA27F3F20B6BEF100E12C66 /* libART.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DDA27F3C20B6BE9700E12C66 /* libART.a */; };
 		E65620A6487B4A56946E8C68 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 353D37EA44B842C4B5B1C87D /* libRNImagePicker.a */; };
 		FD1AE7F78F324959AFFDCF02 /* libReactNativePermissions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 51E7158DFD4A40288D8FAC70 /* libReactNativePermissions.a */; };
-		73223D8A45E94F94BBA40F62 /* libRCTOrientation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BE4FFB2C857447698F30C2F /* libRCTOrientation.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -389,6 +390,13 @@
 			remoteGlobalIDString = 641E28441F0EEC8500443AF6;
 			remoteInfo = "RCTVideo-tvOS";
 		};
+		DDB306C12112985800E23573 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 391E26ADD9344F59925D4DDF /* RCTOrientation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RCTOrientation;
+		};
 		DDC930BE20AF165B0096F125 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CB60FAF6F896443582665AF1 /* RNImagePicker.xcodeproj */;
@@ -427,11 +435,13 @@
 		303024E8FABC4FAE9CC594CC /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		353D37EA44B842C4B5B1C87D /* libRNImagePicker.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNImagePicker.a; sourceTree = "<group>"; };
 		367E411EC088430081B5F0EA /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
+		391E26ADD9344F59925D4DDF /* RCTOrientation.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTOrientation.xcodeproj; path = "../node_modules/react-native-orientation/iOS/RCTOrientation.xcodeproj"; sourceTree = "<group>"; };
 		3946425FED6544DFBB0D2B94 /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
 		51E7158DFD4A40288D8FAC70 /* libReactNativePermissions.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativePermissions.a; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		5FE97093BE794645A3802647 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
+		7BE4FFB2C857447698F30C2F /* libRCTOrientation.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTOrientation.a; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		88AA116BD38F417DA54EFCA4 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		8DE824C97CCD4C06918C5020 /* libRNCamera.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNCamera.a; sourceTree = "<group>"; };
@@ -449,8 +459,6 @@
 		E1476E8C646E41ECB0ACB99D /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		E89269DAD98D4D8EABAEAE82 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		ED443AEEFF5F450A99EFA7F3 /* RCTVideo.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTVideo.xcodeproj; path = "../node_modules/react-native-video/ios/RCTVideo.xcodeproj"; sourceTree = "<group>"; };
-		391E26ADD9344F59925D4DDF /* RCTOrientation.xcodeproj */ = {isa = PBXFileReference; name = "RCTOrientation.xcodeproj"; path = "../node_modules/react-native-orientation/iOS/RCTOrientation.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		7BE4FFB2C857447698F30C2F /* libRCTOrientation.a */ = {isa = PBXFileReference; name = "libRCTOrientation.a"; path = "libRCTOrientation.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -766,6 +774,7 @@
 				0325058233F346E9933C8CC2 /* libRCTBEEPickerManager.a */,
 				8DE824C97CCD4C06918C5020 /* libRNCamera.a */,
 				51E7158DFD4A40288D8FAC70 /* libReactNativePermissions.a */,
+				7BE4FFB2C857447698F30C2F /* libRCTOrientation.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -808,6 +817,14 @@
 			children = (
 				DDA27F6820B6F83B00E12C66 /* libRCTVideo.a */,
 				DDA27F6A20B6F83B00E12C66 /* libRCTVideo.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DDB306BE2112985100E23573 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DDB306C22112985800E23573 /* libRCTOrientation.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -966,6 +983,10 @@
 				{
 					ProductGroup = 00C302D41ABCB9D200DB3ED1 /* Products */;
 					ProjectRef = 00C302D31ABCB9D200DB3ED1 /* RCTNetwork.xcodeproj */;
+				},
+				{
+					ProductGroup = DDB306BE2112985100E23573 /* Products */;
+					ProjectRef = 391E26ADD9344F59925D4DDF /* RCTOrientation.xcodeproj */;
 				},
 				{
 					ProductGroup = 139105B71AF99BAD00B5F7CC /* Products */;
@@ -1334,6 +1355,13 @@
 			remoteRef = DDA27F6920B6F83B00E12C66 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		DDB306C22112985800E23573 /* libRCTOrientation.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTOrientation.a;
+			remoteRef = DDB306C12112985800E23573 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		DDC930BF20AF165B0096F125 /* libRNImagePicker.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1498,7 +1526,7 @@
 					"$(SRCROOT)..\node_modules\neact-native-pickeriosRCTBEEPickerManager",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-permissions/ios/**",
-					"$(SRCROOT)\..\node_modules\react-native-orientation\iOS\RCTOrientation/**",
+					"$(SRCROOT)..\node_modules\neact-native-orientationiOSRCTOrientation/**",
 				);
 				INFOPLIST_FILE = rnReduxTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1535,7 +1563,7 @@
 					"$(SRCROOT)..\node_modules\neact-native-pickeriosRCTBEEPickerManager",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-permissions/ios/**",
-					"$(SRCROOT)\..\node_modules\react-native-orientation\iOS\RCTOrientation/**",
+					"$(SRCROOT)..\node_modules\neact-native-orientationiOSRCTOrientation/**",
 				);
 				INFOPLIST_FILE = rnReduxTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1577,7 +1605,7 @@
 					"$(SRCROOT)..\node_modules\neact-native-pickeriosRCTBEEPickerManager",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-permissions/ios/**",
-					"$(SRCROOT)\..\node_modules\react-native-orientation\iOS\RCTOrientation/**",
+					"$(SRCROOT)..\node_modules\neact-native-orientationiOSRCTOrientation/**",
 				);
 				INFOPLIST_FILE = rnRedux/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1608,7 +1636,7 @@
 					"$(SRCROOT)..\node_modules\neact-native-pickeriosRCTBEEPickerManager",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-permissions/ios/**",
-					"$(SRCROOT)\..\node_modules\react-native-orientation\iOS\RCTOrientation/**",
+					"$(SRCROOT)..\node_modules\neact-native-orientationiOSRCTOrientation/**",
 				);
 				INFOPLIST_FILE = rnRedux/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1642,7 +1670,7 @@
 					"$(SRCROOT)..\node_modules\neact-native-pickeriosRCTBEEPickerManager",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-permissions/ios/**",
-					"$(SRCROOT)\..\node_modules\react-native-orientation\iOS\RCTOrientation/**",
+					"$(SRCROOT)..\node_modules\neact-native-orientationiOSRCTOrientation/**",
 				);
 				INFOPLIST_FILE = "rnRedux-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1688,7 +1716,7 @@
 					"$(SRCROOT)..\node_modules\neact-native-pickeriosRCTBEEPickerManager",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-permissions/ios/**",
-					"$(SRCROOT)\..\node_modules\react-native-orientation\iOS\RCTOrientation/**",
+					"$(SRCROOT)..\node_modules\neact-native-orientationiOSRCTOrientation/**",
 				);
 				INFOPLIST_FILE = "rnRedux-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1733,7 +1761,7 @@
 					"$(SRCROOT)..\node_modules\neact-native-pickeriosRCTBEEPickerManager",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-permissions/ios/**",
-					"$(SRCROOT)\..\node_modules\react-native-orientation\iOS\RCTOrientation/**",
+					"$(SRCROOT)..\node_modules\neact-native-orientationiOSRCTOrientation/**",
 				);
 				INFOPLIST_FILE = "rnRedux-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1778,7 +1806,7 @@
 					"$(SRCROOT)..\node_modules\neact-native-pickeriosRCTBEEPickerManager",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-permissions/ios/**",
-					"$(SRCROOT)\..\node_modules\react-native-orientation\iOS\RCTOrientation/**",
+					"$(SRCROOT)..\node_modules\neact-native-orientationiOSRCTOrientation/**",
 				);
 				INFOPLIST_FILE = "rnRedux-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

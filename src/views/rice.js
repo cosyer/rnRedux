@@ -9,6 +9,7 @@ import {
   ScrollView,
   Platform,
   Dimensions,
+  Switch,
   LayoutAnimation,
   UIManager,
   TouchableOpacity
@@ -26,6 +27,9 @@ import Input from "../component/form/input";
 import InputArea from "../component/form/input-area";
 import Region from "../component/form/region";
 import DatePicker from "../component/form/date-picker";
+import Icon from "react-native-vector-icons/Ionicons";
+import Swiper from "react-native-swiper";
+import Counter from "../component/counter";
 
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
@@ -51,10 +55,13 @@ export default class Rice extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      count: 0,
+      switchValue: true,
       modalVisible: false,
       dialogVisible: false,
       name: "",
       sex: "",
+      address: "",
       inputAreaText: "",
       filterVisible: false,
       itemList: [
@@ -65,6 +72,13 @@ export default class Rice extends Component {
         { id: 5, name: "水瓶座" },
         { id: 6, name: "双鱼座" },
         { id: 7, name: "天秤座" }
+      ],
+      rateList: [
+        { value: 0, text: "专业技能", id: "professionalSkillsLevel" },
+        { value: 0, text: "沟通能力", id: "communicationSkillsLevel" },
+        { value: 0, text: "诚实守信", id: "honestyLevel" },
+        { value: 0, text: "适应能力", id: "adaptLevel" },
+        { value: 0, text: "踏实勤快", id: "diligentlevel" }
       ],
       choosenType: [1]
     };
@@ -113,6 +127,63 @@ export default class Rice extends Component {
     });
   };
 
+  // 评分
+  _changeRate = (index, value) => {
+    let rateList = this.state.rateList;
+    // 重复点击清0
+    if (rateList[index].value === value) {
+      rateList[index].value = 0;
+    } else {
+      rateList[index].value = value;
+    }
+    this.setState({
+      rateList
+    });
+  };
+
+  // 渲染星星
+  _renderRate = (value, totalIndex) => {
+    let checkedList = [];
+    let leftList = [];
+    for (let i = 0; i < value; i++) {
+      checkedList.push({});
+    }
+    for (let i = 0; i < 5 - value; i++) {
+      leftList.push({});
+    }
+    return (
+      <View style={styles.rateIcon}>
+        {checkedList.map((item, index) => {
+          return (
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={() => this._changeRate(totalIndex, index + 1)}
+            >
+              <Icon name={"ios-star"} size={28} style={{ color: "orange" }} />
+            </TouchableOpacity>
+          );
+        })}
+        {leftList.map((item, index) => {
+          return (
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={() =>
+                this._changeRate(totalIndex, checkedList.length + index + 1)
+              }
+            >
+              <Icon
+                name={"ios-star-outline"}
+                size={28}
+                style={{ color: "orange" }}
+              />
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+    );
+  };
+
+  // 渲染模态框内容
   _renderModalContent = () => {
     return (
       <View style={styles.filterContainer}>
@@ -182,7 +253,12 @@ export default class Rice extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View
+        style={[
+          styles.container,
+          { backgroundColor: this.state.switchValue ? "#f3f4f5" : "grey" }
+        ]}
+      >
         <ScrollView>
           <Button
             style={styles.btn}
@@ -226,6 +302,13 @@ export default class Rice extends Component {
           >
             Hello! dialogLoading
           </Button2>
+          <Button
+            style={styles.btn}
+            textStyle={styles.countBtnText}
+            onPress={() => this.props.navigation.navigate("TextFlatList")}
+          >
+            FlatList
+          </Button>
           <Button
             style={styles.btn}
             textStyle={styles.countBtnText}
@@ -281,6 +364,12 @@ export default class Rice extends Component {
             图片展示
           </Button>
           <DialogLoading visible={this.state.dialogVisible} title="加载中..." />
+          <Counter
+            leftName={"选择数量"}
+            value={this.state.count}
+            style={styles.wigetStyle}
+            onBack={num => this.setState({ count: num })}
+          />
           <Input
             labelText="姓名"
             placeholder="请输入姓名"
@@ -330,8 +419,16 @@ export default class Rice extends Component {
             showArea={true} //不显示区域
             valueStyle={styles.valueStyle}
             style={styles.inputStyle}
-            value={[]}
-            placeholder="请选择"
+            value={
+              this.state.address
+                ? [
+                    this.state.address.split(" ")[0],
+                    this.state.address.split(" ")[1],
+                    this.state.address.split(" ")[2]
+                  ]
+                : []
+            }
+            placeholder="请选择地址"
             onChange={item => {
               let address = item[0] + " " + item[1] + " " + item[2];
               this.setState({
@@ -339,6 +436,15 @@ export default class Rice extends Component {
               });
             }}
           />
+          {this.state.rateList.map((item, index) => {
+            return (
+              <View style={styles.rateRow}>
+                <Text style={styles.rateText}>{item.text}</Text>
+                {this._renderRate(item.value, index)}
+              </View>
+            );
+          })}
+
           <InputArea
             style={{ marginTop: 10, backgroundColor: "#fff" }}
             valueStyle={{ height: 80 }}
@@ -347,6 +453,44 @@ export default class Rice extends Component {
             value={this.state.inputAreaText}
             editable={true}
           />
+          <Swiper
+            style={styles.wrapper}
+            showsButtons={true}
+            height={200}
+            loop={true}
+          >
+            <View style={styles.slide1}>
+              <Text style={styles.text}>Hello Swiper</Text>
+            </View>
+            <View style={styles.slide2}>
+              <Text style={styles.text}>Beautiful</Text>
+            </View>
+            <View style={styles.slide3}>
+              <Text style={styles.text}>And simple</Text>
+            </View>
+          </Swiper>
+
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              height: 40
+            }}
+          >
+            <Text style={{ fontSize: 18 }}>
+              {this.state.switchValue ? "开灯" : "关灯"}
+            </Text>
+            <Switch
+              value={this.state.switchValue}
+              onValueChange={switchValue => {
+                this.setState({
+                  switchValue: switchValue
+                });
+              }}
+            />
+          </View>
+
           <View
             style={{
               alignItems: "center",
@@ -386,8 +530,7 @@ export default class Rice extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#f3f4f5"
+    flex: 1
   },
   btn: {
     marginTop: 10,
@@ -503,5 +646,50 @@ const styles = StyleSheet.create({
     width: width,
     height: StyleSheet.hairlineWidth,
     backgroundColor: "#eee"
+  },
+  rateRow: {
+    height: 35,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingLeft: 16,
+    backgroundColor: "#fff"
+  },
+  rateText: {
+    fontSize: 16,
+    color: "#333"
+  },
+  rateIcon: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingRight: 16
+  },
+  wrapper: {},
+  slide1: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#9DD6EB"
+  },
+  slide2: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#97CAE5"
+  },
+  slide3: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#92BBD9"
+  },
+  text: {
+    color: "#fff",
+    fontSize: 30,
+    fontWeight: "bold"
+  },
+  wigetStyle: {
+    borderBottomColor: "#EEEEEE",
+    borderBottomWidth: StyleSheet.hairlineWidth
   }
 });

@@ -12,6 +12,7 @@ import Geolocation from "./views/geolocation";
 import WebView from "./views/webview";
 import VideoView from "./views/videoview";
 import ImageShow from "./views/imageShow";
+import TextFlatList from "./views/flatlist";
 
 // tab
 const MainScreenNavigator = TabNavigator(
@@ -126,7 +127,8 @@ const SimpleApp = StackNavigator(
     Geolocation: { screen: Geolocation },
     WebView: { screen: WebView },
     VideoView: { screen: VideoView },
-    ImageShow: { screen: ImageShow }
+    ImageShow: { screen: ImageShow },
+    TextFlatList: { screen: TextFlatList }
   },
   // 通用配置
   {
