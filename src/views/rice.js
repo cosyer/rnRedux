@@ -30,6 +30,7 @@ import DatePicker from "../component/form/date-picker";
 import Icon from "react-native-vector-icons/Ionicons";
 import Swiper from "react-native-swiper";
 import Counter from "../component/counter";
+import SpeechInput from "../component/speech-input";
 
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
@@ -307,7 +308,7 @@ export default class Rice extends Component {
             textStyle={styles.countBtnText}
             onPress={() => this.props.navigation.navigate("TextFlatList")}
           >
-            FlatList
+            FlatList手势侧滑
           </Button>
           <Button
             style={styles.btn}
@@ -362,6 +363,13 @@ export default class Rice extends Component {
             onPress={() => this.props.navigation.navigate("ImageShow")}
           >
             图片展示
+          </Button>
+          <Button
+            style={styles.btn}
+            textStyle={styles.countBtnText}
+            onPress={() => this.props.navigation.navigate("TestAnimate")}
+          >
+            animate
           </Button>
           <DialogLoading visible={this.state.dialogVisible} title="加载中..." />
           <Counter
@@ -506,7 +514,18 @@ export default class Rice extends Component {
             />
           </View>
         </ScrollView>
-
+        <SpeechInput
+          speechInputShow={true}
+          key={"all"}
+          text={""}
+          type={"all"}
+          onSend={text => {
+            console.log(text);
+          }}
+          onTouch={text => {
+            console.log(text);
+          }}
+        />
         <Modal
           animationType={"fade"}
           transparent={true}

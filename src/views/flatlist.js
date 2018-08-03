@@ -14,6 +14,7 @@ export default class TestFlatList extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isScrollEnabled: true,
       auntList: [
         {
           auntId: 1,
@@ -95,7 +96,34 @@ export default class TestFlatList extends Component {
   };
 
   // 上拉刷新
-  _onEndReached = () => {};
+  _onEndReached = () => {
+    let auntList = this.state.auntList;
+    let obj = {
+      auntId: Math.random().toFixed(2),
+      name: "张阿姨",
+      phone: 18883269663,
+      auntHeadPhoto: "https://static.mydearest.cn/img/avatar.jpg",
+      addressInfo: {
+        address: "软件谷人才公寓B2栋701"
+      }
+    };
+    auntList.push(obj);
+  };
+
+  // 上拉加载
+  _refresh = () => {
+    let auntList = this.state.auntList;
+    let obj = {
+      auntId: Math.random().toFixed(2),
+      name: "陈阿姨",
+      phone: 18883269663,
+      auntHeadPhoto: "https://static.mydearest.cn/img/avatar.jpg",
+      addressInfo: {
+        address: "软件谷人才公寓B2栋701"
+      }
+    };
+    auntList.unshift(obj);
+  };
 
   //渲染
   render() {
@@ -112,7 +140,7 @@ export default class TestFlatList extends Component {
           onEndReachedThreshold={0.15}
           keyboardDismissMode="on-drag"
           keyExtractor={item => item.auntId}
-          scrollEnabled={true}
+          scrollEnabled={this.state.isScrollEnabled}
         />
       </View>
     );
