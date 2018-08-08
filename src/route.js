@@ -14,6 +14,7 @@ import VideoView from "./views/videoview";
 import ImageShow from "./views/imageShow";
 import TextFlatList from "./views/flatlist";
 import TestAnimate from "./views/animate";
+import Test from "./views/test";
 
 // tab
 const MainScreenNavigator = TabNavigator(
@@ -130,7 +131,8 @@ const SimpleApp = StackNavigator(
     VideoView: { screen: VideoView },
     ImageShow: { screen: ImageShow },
     TextFlatList: { screen: TextFlatList },
-    TestAnimate: { screen: TestAnimate }
+    TestAnimate: { screen: TestAnimate },
+    Test: { screen: Test }
   },
   // 通用配置
   {
