@@ -39,14 +39,14 @@ export default class Login extends Component {
   };
 
   componentDidMount() {
-    // 判断用户是否登陆过
-    let that = this;
-    AsyncStorage.getItem("user").then(data => {
-      console.log(data);
-      if (data) {
-        that.props.navigation.navigate("Home");
-      }
-    });
+    // // 判断用户是否登陆过
+    // let that = this;
+    // AsyncStorage.getItem("user").then(data => {
+    //   console.log(data);
+    //   if (data) {
+    //     that.props.navigation.navigate("Home");
+    //   }
+    // });
   }
 
   // 发送验证码 多个dispatch多次渲染

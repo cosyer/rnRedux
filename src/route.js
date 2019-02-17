@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { StackNavigator, TabNavigator } from "react-navigation";
-import { Platform, AsyncStorage, View, TouchableOpacity } from "react-native";
+import { Platform, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 
 import Home from "./views/home";
@@ -15,7 +15,7 @@ import ImageShow from "./views/imageShow";
 import TextFlatList from "./views/flatlist";
 import TestAnimate from "./views/animate";
 import Test from "./views/test";
-
+import StartPage from "./views/startPage";
 // tab
 const MainScreenNavigator = TabNavigator(
   {
@@ -35,7 +35,7 @@ const MainScreenNavigator = TabNavigator(
               <Icon
                 name={focused ? "ios-home" : "ios-home-outline"}
                 size={20}
-                color="#5AA9FA"
+                color={tintColor}
                 style={{ width: 20, height: 20, fontSize: 20 }}
               />
             </View>
@@ -52,7 +52,7 @@ const MainScreenNavigator = TabNavigator(
             <Icon
               name={focused ? "ios-videocam" : "ios-videocam-outline"}
               size={20}
-              color="#5AA9FA"
+              color={tintColor}
               style={{ width: 20, height: 20, fontSize: 20 }}
             />
           );
@@ -68,7 +68,7 @@ const MainScreenNavigator = TabNavigator(
             <Icon
               name={focused ? "ios-person" : "ios-person-outline"}
               size={20}
-              color="#5AA9FA"
+              color={tintColor}
               style={{ width: 20, height: 20, fontSize: 20 }}
             />
           );
@@ -82,12 +82,13 @@ const MainScreenNavigator = TabNavigator(
     swipeEnabled: false, // 禁止左右滑动
     backBehavior: "none", // 按 back 键是否跳转到第一个 Tab， none 为不跳转
     tabBarOptions: {
-      activeTintColor: "#008AC9", // 文字和图片选中颜色
+      activeTintColor: "#5AA9FA", // 文字和图片选中颜色
       inactiveTintColor: "#999", // 文字和图片默认颜色
       showIcon: true, // android 默认不显示 icon, 需要设置为 true 才会显示
       indicatorStyle: { height: 0 }, // android 中TabBar下面会显示一条线，高度设为 0 后就不显示线了
       style: {
         backgroundColor: "#fff" // TabBar 背景色
+        // height: 50
       },
       labelStyle: {
         margin: 0,
@@ -113,7 +114,7 @@ MainScreenNavigator.navigationOptions = ({ navigation }) => {
   };
 };
 
-// 路由
+// 路由 最后index.js需要的就是stacknavigator的配置
 const SimpleApp = StackNavigator(
   {
     Home: {
@@ -132,7 +133,8 @@ const SimpleApp = StackNavigator(
     ImageShow: { screen: ImageShow },
     TextFlatList: { screen: TextFlatList },
     TestAnimate: { screen: TestAnimate },
-    Test: { screen: Test }
+    Test: { screen: Test },
+    StartPage: { screen: StartPage }
   },
   // 通用配置
   {
@@ -159,7 +161,13 @@ const SimpleApp = StackNavigator(
       },
       headerBackTitle: null // 箭头后面文字
     }),
-    initialRouteName: "Login"
+    initialRouteName: "StartPage",
+    mode: "screen",
+    // headerMode: "none", // 不启用头部，可以自己自定义
+    cardStyle: {},
+    navigationOptions: {
+      gesturesEnabled: true
+    }
   }
 );
 
